@@ -1,0 +1,58 @@
+@media (max-width: 480px) {
+
+    .header-title {
+        font-size: 18px;
+    }
+
+    .live-time {
+        font-size: 34px;
+    }
+
+    .hero-section {
+        min-height: 220px;
+    }
+
+    .quran-selector {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .go-btn {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+
+    .arabic {
+        font-size: 24px;
+        line-height: 2.1;
+    }
+
+    .drawer {
+        width: 290px;
+    }
+}
+
+
+@media (min-width: 700px) {
+
+    #app {
+        max-width: 700px;
+        margin: 0 auto;
+
+        background: var(--bg);
+    }
+
+    .top-header {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .bottom-nav {
+        max-width: 700px;
+        left: 50%;
+        right: auto;
+
+        width: 700px;
+
+        transform: translateX(-50%);
+    }
+}

@@ -1,0 +1,6599 @@
+/* =========================================================
+   QURAN SHARIF APP
+   MAIN STYLE.CSS
+========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --green-dark: #006b52;
+    --green: #00876b;
+    --green-light: #e9f5ef;
+
+    --gold: #c5a24a;
+
+    --white: #ffffff;
+
+    --text: #18352d;
+    --text-light: #44534e;
+
+    --muted: #71817b;
+
+    --border: #dfe8e3;
+
+    --bg: #f5f8f6;
+
+    --ayah-bg: #ffffff;
+    --highlight-bg: #e7f4eb;
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Noto Sans Bengali",
+        sans-serif;
+
+    background: var(--bg);
+
+    color: var(--text);
+
+    overflow-x: hidden;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+#app {
+    min-height: 100vh;
+
+    padding-bottom: 72px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.top-header {
+    height: 60px;
+
+    background: var(--green-dark);
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 14px;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+}
+
+
+.header-title {
+    font-size: 20px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+.icon-btn {
+    width: 42px;
+
+    height: 42px;
+
+    border: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 23px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+
+.icon-btn:active {
+    transform: scale(0.92);
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page {
+    display: none;
+
+    min-height: calc(100vh - 132px);
+}
+
+
+.page.active {
+    display: block;
+}
+
+
+/* =========================================================
+   QURAN SELECTOR
+========================================================= */
+
+.quran-selector {
+    padding: 14px;
+
+    background: white;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 14px;
+
+    position: sticky;
+
+    top: 60px;
+
+    z-index: 900;
+
+    border-bottom: 1px solid var(--border);
+
+    box-shadow:
+        0 2px 8px
+        rgba(0, 0, 0, 0.03);
+}
+
+
+.quran-selector select {
+    width: 100%;
+
+    min-width: 0;
+
+    height: 54px;
+
+    padding: 0 14px;
+
+    border: 1px solid #bfcfc8;
+
+    border-radius: 14px;
+
+    background: white;
+
+    color: var(--text);
+
+    font-size: 16px;
+
+    outline: none;
+
+    appearance: auto;
+}
+
+
+.quran-selector select:focus {
+    border-color: var(--green);
+
+    box-shadow:
+        0 0 0 2px
+        rgba(0, 135, 107, 0.08);
+}
+
+
+.quran-selector select:disabled {
+    background: #f3f5f4;
+
+    color: #8a9691;
+
+    opacity: 1;
+}
+
+
+/* =========================================================
+   GO BUTTON
+========================================================= */
+
+.go-btn {
+    width: 100%;
+
+    height: 54px;
+
+    grid-column: 1 / -1;
+
+    padding: 0 17px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: var(--green-dark);
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 10px
+        rgba(0, 107, 82, 0.12);
+}
+
+
+.go-btn:active {
+    transform: scale(0.98);
+}
+
+
+/* =========================================================
+   QURAN READER
+========================================================= */
+
+.quran-reader {
+    padding: 18px 12px 35px;
+
+    max-width: 900px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   EMPTY READER
+========================================================= */
+
+.reader-empty {
+    text-align: center;
+
+    padding: 80px 20px;
+
+    color: var(--muted);
+}
+
+
+.reader-icon {
+    font-size: 50px;
+
+    margin-bottom: 15px;
+}
+
+
+.reader-empty h2 {
+    color: var(--green-dark);
+
+    font-size: 20px;
+
+    margin-bottom: 8px;
+}
+
+
+.reader-empty p {
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   SURAH HEADER
+========================================================= */
+
+.surah-heading {
+    background: white;
+
+    text-align: center;
+
+    padding: 25px 15px 24px;
+
+    margin-bottom: 14px;
+
+    border-radius: 18px;
+
+    border: 1px solid var(--border);
+
+    box-shadow:
+        0 2px 10px
+        rgba(0, 0, 0, 0.03);
+}
+
+
+.surah-number {
+    color: var(--green-dark);
+
+    font-size: 15px;
+
+    margin-bottom: 5px;
+}
+
+
+.surah-heading h1 {
+    font-size: 30px;
+
+    line-height: 1.4;
+
+    color: var(--green-dark);
+
+    margin-bottom: 8px;
+
+    font-weight: 800;
+}
+
+
+.surah-arabic-name {
+    direction: rtl;
+
+    font-family:
+        "Noto Naskh Arabic",
+        "Amiri",
+        serif;
+
+    font-size: 25px;
+
+    line-height: 1.8;
+
+    margin-bottom: 6px;
+
+    color: #263f36;
+}
+
+
+.surah-info {
+    color: var(--muted);
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   BISMILLAH
+========================================================= */
+
+.bismillah-box {
+    text-align: center;
+
+    padding: 20px 15px 25px;
+
+    margin: 0 5px 15px;
+
+    background: transparent;
+}
+
+
+.bismillah {
+    direction: rtl;
+
+    font-family:
+        "Noto Naskh Arabic",
+        "Amiri",
+        serif;
+
+    font-size: 30px;
+
+    line-height: 2;
+
+    color: #176b45;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   AYAH CARD
+========================================================= */
+
+.ayah {
+    background: var(--ayah-bg);
+
+    border-radius: 16px;
+
+    margin-bottom: 14px;
+
+    padding: 18px;
+
+    border: 1px solid var(--border);
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+
+    scroll-margin-top: 145px;
+}
+
+
+.ayah.highlight {
+    background: var(--highlight-bg);
+
+    border-color: #79b79d;
+
+    box-shadow:
+        0 4px 16px
+        rgba(0, 100, 75, 0.12);
+}
+
+
+/* =========================================================
+   AYAH NUMBER
+========================================================= */
+
+.ayah-number {
+    color: var(--green-dark);
+
+    font-weight: 700;
+
+    font-size: 15px;
+
+    margin-bottom: 14px;
+}
+
+
+/* =========================================================
+   ARABIC AYAH
+========================================================= */
+
+.arabic {
+    direction: rtl;
+
+    text-align: right;
+
+    font-family:
+        "Noto Naskh Arabic",
+        "Amiri",
+        serif;
+
+    font-size: 30px;
+
+    line-height: 2.25;
+
+    margin-bottom: 14px;
+
+    color: #18352d;
+
+    word-spacing: 3px;
+}
+
+
+/* =========================================================
+   BENGALI TRANSLATION
+========================================================= */
+
+.translation {
+    font-size: 17px;
+
+    line-height: 2;
+
+    color: var(--text-light);
+
+    text-align: left;
+}
+
+
+/* =========================================================
+   AYAH ACTIONS
+========================================================= */
+
+.ayah-actions {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 16px;
+}
+
+
+.ayah-action {
+    border: none;
+
+    background: var(--green-dark);
+
+    color: white;
+
+    border-radius: 8px;
+
+    padding: 9px 13px;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+
+.ayah-action:active {
+    transform: scale(0.95);
+}
+
+
+/* =========================================================
+   WORD BY WORD PANEL
+========================================================= */
+
+.word-panel {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 99999;
+
+    visibility: hidden;
+}
+
+
+.word-panel.show {
+    visibility: visible;
+}
+
+
+/* =========================================================
+   PANEL OVERLAY
+========================================================= */
+
+.word-panel-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        rgba(0, 0, 0, 0.45);
+
+    opacity: 0;
+
+    transition:
+        opacity 0.25s ease;
+}
+
+
+.word-panel.show .word-panel-overlay {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   PANEL BOX
+========================================================= */
+
+.word-panel-box {
+    position: absolute;
+
+    left: 0;
+
+    right: 0;
+
+    bottom: 0;
+
+    max-height: 82vh;
+
+    overflow-y: auto;
+
+    background: #ffffff;
+
+    border-radius:
+        22px 22px 0 0;
+
+    transform:
+        translateY(100%);
+
+    transition:
+        transform 0.25s ease;
+
+    padding-bottom: 25px;
+
+    box-shadow:
+        0 -5px 25px
+        rgba(0, 0, 0, 0.12);
+}
+
+
+.word-panel.show .word-panel-box {
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   PANEL HEADER
+========================================================= */
+
+.word-panel-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 18px 20px;
+
+    border-bottom:
+        1px solid #e5e5e5;
+
+    position: sticky;
+
+    top: 0;
+
+    background: white;
+
+    z-index: 2;
+}
+
+
+.word-panel-header strong {
+    display: block;
+
+    color: #176b45;
+
+    font-size: 18px;
+}
+
+
+.word-panel-header small {
+    display: block;
+
+    color: #777;
+
+    margin-top: 4px;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.word-close-btn {
+    width: 38px;
+
+    height: 38px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f1f5f2;
+
+    color: #176b45;
+
+    font-size: 25px;
+
+    cursor: pointer;
+}
+
+
+.word-close-btn:active {
+    transform: scale(0.9);
+}
+
+
+/* =========================================================
+   WORD PANEL ARABIC
+========================================================= */
+
+.word-arabic {
+    direction: rtl;
+
+    text-align: center;
+
+    padding: 22px 18px;
+
+    font-family:
+        "Noto Naskh Arabic",
+        "Amiri",
+        serif;
+
+    font-size: 28px;
+
+    line-height: 2;
+
+    color: #123f2d;
+
+    border-bottom:
+        1px solid #eeeeee;
+}
+
+
+/* =========================================================
+   WORD LIST
+========================================================= */
+
+.word-list {
+    padding: 15px;
+}
+
+
+/* =========================================================
+   WORD ITEM
+========================================================= */
+
+.word-item {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 15px;
+
+    margin-bottom: 10px;
+
+    background: #f7faf8;
+
+    border: 1px solid #e1ebe5;
+
+    border-radius: 12px;
+}
+
+
+/* =========================================================
+   WORD NUMBER
+========================================================= */
+
+.word-number {
+    min-width: 28px;
+
+    height: 28px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--green-dark);
+
+    color: white;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   SMALL ARABIC WORD
+========================================================= */
+
+.word-arabic-small {
+    direction: rtl;
+
+    font-family:
+        "Noto Naskh Arabic",
+        "Amiri",
+        serif;
+
+    font-size: 24px;
+
+    color: #123f2d;
+
+    flex: 1;
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   BENGALI WORD MEANING
+========================================================= */
+
+.word-bangla {
+    text-align: right;
+
+    font-size: 16px;
+
+    color: #333;
+
+    line-height: 1.6;
+
+    flex: 1;
+}
+
+
+/* =========================================================
+   TRANSLITERATION
+========================================================= */
+
+.word-transliteration {
+    display: block;
+
+    direction: ltr;
+
+    text-align: right;
+
+    font-size: 12px;
+
+    color: #888;
+
+    margin-top: 5px;
+}
+
+
+/* =========================================================
+   WORD LOADING / ERROR
+========================================================= */
+
+.word-loading,
+.word-error {
+    text-align: center;
+
+    padding: 25px;
+
+    color: #777;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   DRAWER OVERLAY
+========================================================= */
+
+.drawer-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(0, 0, 0, 0.45);
+
+    z-index: 2000;
+
+    display: none;
+}
+
+
+.drawer-overlay.active {
+    display: block;
+}
+
+
+/* =========================================================
+   DRAWER
+========================================================= */
+
+.drawer {
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 310px;
+
+    max-width: 85vw;
+
+    height: 100vh;
+
+    background: white;
+
+    z-index: 2001;
+
+    transform:
+        translateX(-100%);
+
+    transition:
+        transform 0.25s ease;
+
+    overflow-y: auto;
+}
+
+
+.drawer.open {
+    transform:
+        translateX(0);
+}
+
+
+/* =========================================================
+   DRAWER HEADER
+========================================================= */
+
+.drawer-header {
+    min-height: 90px;
+
+    padding: 16px;
+
+    background:
+        var(--green-dark);
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.drawer-logo {
+    font-size: 38px;
+}
+
+
+.drawer-header strong {
+    display: block;
+
+    font-size: 18px;
+}
+
+
+.drawer-header small {
+    display: block;
+
+    margin-top: 3px;
+
+    opacity: 0.8;
+}
+
+
+.drawer-close {
+    margin-left: auto;
+
+    background: transparent;
+
+    border: none;
+
+    color: white;
+
+    font-size: 30px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   DRAWER MENU
+========================================================= */
+
+.drawer-menu {
+    padding: 10px;
+}
+
+
+.drawer-menu button {
+    width: 100%;
+
+    min-height: 52px;
+
+    border: none;
+
+    border-bottom:
+        1px solid #edf1ef;
+
+    background: white;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 0 10px;
+
+    font-size: 16px;
+
+    color: var(--text);
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+
+.drawer-menu button:active {
+    background: var(--green-light);
+}
+
+
+.drawer-menu button span {
+    flex: 1;
+}
+
+
+.drawer-menu button b {
+    color: #9aa9a3;
+}
+
+
+/* =========================================================
+   DRAWER FOOTER
+========================================================= */
+
+.drawer-footer {
+    margin: 15px;
+
+    padding: 15px;
+
+    background:
+        var(--green-light);
+
+    border-radius: 12px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    color: var(--green-dark);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   BOTTOM NAVIGATION
+========================================================= */
+
+.bottom-nav {
+    position: fixed;
+
+    bottom: 0;
+
+    left: 0;
+
+    right: 0;
+
+    height: 68px;
+
+    background: white;
+
+    border-top:
+        1px solid var(--border);
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    z-index: 1500;
+
+    box-shadow:
+        0 -2px 10px
+        rgba(0, 0, 0, 0.04);
+}
+
+
+.bottom-nav-btn {
+    border: none;
+
+    background: transparent;
+
+    color: #7b8883;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 3px;
+
+    cursor: pointer;
+}
+
+
+.bottom-nav-btn span {
+    font-size: 21px;
+
+    line-height: 1;
+}
+
+
+.bottom-nav-btn small {
+    font-size: 11px;
+}
+
+
+.bottom-nav-btn.active {
+    color: var(--green-dark);
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background: #b9c9c2;
+
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .top-header {
+        height: 60px;
+
+        padding: 0 10px;
+    }
+
+
+    .header-title {
+        font-size: 20px;
+    }
+
+
+    .quran-selector {
+        padding: 14px;
+
+        gap: 12px;
+    }
+
+
+    .quran-selector select {
+        height: 54px;
+
+        font-size: 15px;
+    }
+
+
+    .go-btn {
+        height: 54px;
+
+        font-size: 16px;
+    }
+
+
+    .quran-reader {
+        padding:
+            14px 12px 35px;
+    }
+
+
+    .surah-heading {
+        padding:
+            22px 12px;
+    }
+
+
+    .surah-heading h1 {
+        font-size: 28px;
+    }
+
+
+    .surah-arabic-name {
+        font-size: 24px;
+    }
+
+
+    .bismillah {
+        font-size: 28px;
+    }
+
+
+    .ayah {
+        padding: 16px;
+
+        border-radius: 14px;
+    }
+
+
+    .arabic {
+        font-size: 28px;
+
+        line-height: 2.2;
+    }
+
+
+    .translation {
+        font-size: 16px;
+
+        line-height: 1.9;
+    }
+
+
+    .ayah-actions {
+        gap: 6px;
+    }
+
+
+    .ayah-action {
+        padding:
+            8px 10px;
+
+        font-size: 12px;
+    }
+
+
+    .word-item {
+        gap: 10px;
+
+        padding: 12px;
+    }
+
+
+    .word-arabic-small {
+        font-size: 22px;
+    }
+
+
+    .word-bangla {
+        font-size: 15px;
+    }
+
+
+    .word-arabic {
+        font-size: 26px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .quran-selector {
+        display: flex;
+align-items: center;
+gap: 6px;
+width: 100%;
+    }
+
+
+    .quran-selector select {
+        flex: 1;
+min-width: 0;
+height: 38px;
+padding: 0 8px;
+font-size: 14px;
+border-radius: 6px;
+    }
+
+
+    .go-btn {
+        height: 38px;
+padding: 0 14px;
+font-size: 14px;
+border-radius: 6px;
+white-space: nowrap;
+    }
+
+
+    .arabic {
+        font-size: 25px;
+
+        line-height: 2.15;
+    }
+
+
+    .translation {
+        font-size: 15px;
+    }
+
+
+    .surah-heading h1 {
+        font-size: 25px;
+    }
+
+
+    .bismillah {
+        font-size: 25px;
+    }
+
+}
+
+
+/* =========================================================
+   TABLET / LARGE SCREEN
+========================================================= */
+
+@media (min-width: 768px) {
+
+    .quran-reader {
+        padding-left: 20px;
+
+        padding-right: 20px;
+    }
+
+
+    .quran-selector {
+        padding-left: 20px;
+
+        padding-right: 20px;
+    }
+
+
+    .ayah {
+        padding: 22px;
+    }
+
+
+    .arabic {
+        font-size: 32px;
+    }
+
+
+    .translation {
+        font-size: 18px;
+    }
+
+}
+/* =========================================================
+   QURAN SELECTOR - ONE LINE MOBILE FIX
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .quran-selector {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        padding: 10px 12px;
+
+        width: 100%;
+
+        position: sticky;
+        top: 60px;
+    }
+
+    .quran-selector select {
+        flex: 1;
+
+        width: 0;
+        min-width: 0;
+
+        height: 42px;
+
+        padding: 0 8px;
+
+        border-radius: 8px;
+
+        font-size: 14px;
+    }
+
+    .go-btn {
+        flex: 0 0 62px;
+
+        width: 62px;
+
+        height: 42px;
+
+        padding: 0;
+
+        border-radius: 8px;
+
+        font-size: 14px;
+
+        white-space: nowrap;
+    }
+}
+/* =========================
+   SEARCH PAGE
+========================= */
+
+.search-section {
+    padding: 18px 14px 90px;
+}
+
+.search-title {
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--green-dark);
+    margin-bottom: 14px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 18px;
+}
+
+.search-box input {
+    flex: 1;
+    min-width: 0;
+    height: 46px;
+    padding: 0 13px;
+    border: 1px solid #bfcfc8;
+    border-radius: 10px;
+    background: #fff;
+    color: var(--text);
+    font-size: 15px;
+    outline: none;
+}
+
+.search-box input:focus {
+    border-color: var(--green-dark);
+}
+
+.search-submit-btn {
+    flex: 0 0 48px;
+    width: 48px;
+    height: 46px;
+    border: none;
+    border-radius: 10px;
+    background: var(--green-dark);
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.search-results {
+    width: 100%;
+}
+
+.search-empty {
+    padding: 30px 15px;
+    text-align: center;
+    color: #777;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.search-result-item {
+    margin-bottom: 12px;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.search-result-surah {
+    margin-bottom: 8px;
+    color: var(--green-dark);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.search-result-arabic {
+    margin-bottom: 8px;
+    direction: rtl;
+    text-align: right;
+    font-size: 22px;
+    line-height: 2;
+}
+
+.search-result-translation {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* =========================================================
+   SEARCH HIGHLIGHT
+========================================================= */
+
+.search-highlight {
+    background: #ffe066;
+    color: #000000;
+    padding: 1px 4px;
+    border-radius: 4px;
+    font-weight: 700;
+}
+/* =========================================================
+   BOOKMARK PAGE
+========================================================= */
+
+.bookmark-list {
+    width: calc(100% - 28px);
+    max-width: 520px;
+    margin: 18px auto 30px;
+}
+
+
+/* =========================
+   BOOKMARK ITEM
+========================= */
+
+.bookmark-item {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    margin-bottom: 12px;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+
+/* =========================
+   OPEN BUTTON
+========================= */
+
+.bookmark-open-btn {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 44px 14px 14px;
+    border: none;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+
+/* =========================
+   BOOKMARK ICON
+========================= */
+
+.bookmark-item-icon {
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--green-light);
+    border-radius: 10px;
+    font-size: 21px;
+}
+
+
+/* =========================
+   TEXT
+========================= */
+
+.bookmark-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+
+.bookmark-item-surah {
+    color: var(--green-dark);
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.5;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.bookmark-item-ayah {
+    margin-top: 3px;
+    color: var(--text-light);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* =========================
+   ARROW
+========================= */
+
+.bookmark-item-arrow {
+    flex: 0 0 auto;
+    color: var(--green-dark);
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+
+/* =========================
+   DELETE BUTTON
+========================= */
+
+.bookmark-delete-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #f5f5f5;
+    color: #777777;
+
+    font-size: 20px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+
+.bookmark-delete-btn:active {
+    transform: scale(0.92);
+    background: #eeeeee;
+}
+
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.bookmark-empty {
+    padding: 35px 20px;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+}
+
+
+.bookmark-empty-icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+
+.bookmark-empty-title {
+    color: var(--green-dark);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+
+.bookmark-empty-text {
+    color: var(--text-light);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .bookmark-list {
+        width: calc(100% - 24px);
+        margin: 14px auto 25px;
+    }
+
+
+    .bookmark-item {
+        border-radius: 13px;
+    }
+
+
+    .bookmark-open-btn {
+        gap: 10px;
+        padding: 13px 42px 13px 12px;
+    }
+
+
+    .bookmark-item-icon {
+        flex: 0 0 40px;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+
+
+    .bookmark-item-surah {
+        font-size: 16px;
+    }
+
+
+    .bookmark-item-ayah {
+        font-size: 13px;
+    }
+
+
+    .bookmark-item-arrow {
+        font-size: 26px;
+    }
+
+
+    .bookmark-delete-btn {
+        width: 28px;
+        height: 28px;
+        top: 7px;
+        right: 7px;
+        font-size: 19px;
+    }
+
+
+    .bookmark-empty {
+        padding: 30px 16px;
+    }
+
+
+    .bookmark-empty-icon {
+        font-size: 38px;
+    }
+    .search-title {
+    color: var(--green-dark);
+    margin-bottom: 14px;
+    overflow: hidden;
+}
+
+    .bookmark-empty-title {
+        font-size: 17px;
+    }
+
+}
+/* =========================================================
+   SETTINGS PAGE
+========================================================= */
+
+.settings-section {
+    width: calc(100% - 28px);
+    max-width: 520px;
+    margin: 18px auto 35px;
+}
+
+
+.settings-title {
+    color: var(--green-dark);
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+
+.settings-card {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    margin-bottom: 14px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+}
+
+
+.settings-card-title {
+    padding: 15px 16px;
+    color: var(--green-dark);
+    background: var(--green-light);
+    font-size: 16px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--border);
+}
+
+
+.setting-row {
+    min-height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+
+.setting-row:last-child {
+    border-bottom: none;
+}
+
+
+.setting-row-column {
+    display: block;
+}
+
+
+.setting-info {
+    flex: 1;
+    min-width: 0;
+}
+
+
+.setting-info strong {
+    display: block;
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+
+.setting-info small {
+    display: block;
+    margin-top: 3px;
+    color: var(--text-light);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+/* =========================
+   SELECT
+========================= */
+
+.setting-row select {
+    min-width: 110px;
+    height: 40px;
+    padding: 0 9px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #ffffff;
+    color: var(--text);
+    font-size: 13px;
+}
+
+
+/* =========================
+   FONT SIZE CONTROL
+========================= */
+
+.font-size-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 13px;
+}
+
+
+.font-size-control button {
+    width: 42px;
+    height: 40px;
+    border: none;
+    border-radius: 9px;
+    background: var(--green-dark);
+    color: #ffffff;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+
+.font-size-control button:active {
+    transform: scale(0.94);
+}
+
+
+.font-size-control span {
+    min-width: 55px;
+    text-align: center;
+    color: var(--green-dark);
+    font-size: 15px;
+    font-weight: 700;
+}
+
+
+/* =========================
+   VOLUME
+========================= */
+
+#audioVolume {
+    width: 125px;
+    accent-color: var(--green-dark);
+}
+
+
+/* =========================
+   SWITCH
+========================= */
+
+.settings-switch {
+    position: relative;
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 48px;
+    height: 27px;
+}
+
+
+.settings-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+
+.settings-switch span {
+    position: absolute;
+    inset: 0;
+    border-radius: 30px;
+    background: #cccccc;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+
+.settings-switch span::before {
+    content: "";
+    position: absolute;
+    width: 21px;
+    height: 21px;
+    left: 3px;
+    top: 3px;
+    border-radius: 50%;
+    background: #ffffff;
+    transition: 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+
+.settings-switch input:checked + span {
+    background: var(--green-dark);
+}
+
+
+.settings-switch input:checked + span::before {
+    transform: translateX(21px);
+}
+
+
+/* =========================
+   HIDE TRANSLATION
+========================= */
+
+.hide-translation .ayah-bangla {
+    display: none !important;
+}
+
+
+/* =========================
+   SETTINGS RESET
+========================= */
+
+.settings-reset-card {
+    padding: 12px;
+}
+
+
+.settings-reset-btn {
+    width: 100%;
+    min-height: 45px;
+    border: none;
+    border-radius: 10px;
+    background: #f3f3f3;
+    color: #555555;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+
+.settings-reset-btn:active {
+    transform: scale(0.98);
+}
+
+
+/* =========================
+   SAVE INFO
+========================= */
+
+.settings-save-info {
+    padding: 5px 10px 20px;
+    color: var(--text-light);
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+body.dark-mode {
+    background: #121212;
+    color: #eeeeee;
+}
+
+
+body.dark-mode .top-header {
+    background: #181818;
+    color: #ffffff;
+}
+
+
+body.dark-mode .settings-card,
+body.dark-mode .bookmark-item,
+body.dark-mode .bookmark-empty {
+    background: #1e1e1e;
+    border-color: #333333;
+}
+
+
+body.dark-mode .settings-card-title {
+    background: #173b2d;
+    border-color: #333333;
+}
+
+
+body.dark-mode .settings-title,
+body.dark-mode .setting-info strong,
+body.dark-mode .font-size-control span,
+body.dark-mode .settings-card-title {
+    color: #8de0b5;
+}
+
+
+body.dark-mode .setting-info small,
+body.dark-mode .settings-save-info {
+    color: #aaaaaa;
+}
+
+
+body.dark-mode .setting-row {
+    border-color: #333333;
+}
+
+
+body.dark-mode .setting-row select {
+    background: #252525;
+    color: #eeeeee;
+    border-color: #444444;
+}
+
+
+body.dark-mode .settings-reset-btn {
+    background: #292929;
+    color: #dddddd;
+}
+
+
+body.dark-mode .bookmark-item-surah {
+    color: #8de0b5;
+}
+
+
+body.dark-mode .bookmark-item-ayah {
+    color: #aaaaaa;
+}
+
+
+/* =========================
+   QURAN DARK MODE
+========================= */
+
+body.dark-mode .quran-reader,
+body.dark-mode .quran-selector,
+body.dark-mode .ayah {
+    background: #121212;
+}
+
+
+body.dark-mode .ayah {
+    border-color: #333333;
+}
+
+
+body.dark-mode .ayah-bangla {
+    color: #cccccc;
+}
+
+
+body.dark-mode .ayah-arabic {
+    color: #f1f1f1;
+}
+
+
+body.dark-mode .quran-selector select {
+    background: #222222;
+    color: #eeeeee;
+    border-color: #444444;
+}
+
+
+/* =========================================================
+   FONT SIZE VARIABLES
+========================================================= */
+
+.ayah-arabic {
+    font-size: var(--arabic-font-size, 28px);
+}
+
+
+.ayah-bangla {
+    font-size: var(--bangla-font-size, 16px);
+}
+
+
+/* =========================================================
+   MOBILE SETTINGS
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .settings-section {
+        width: calc(100% - 24px);
+        margin-top: 14px;
+    }
+
+
+    .settings-title {
+        font-size: 20px;
+    }
+
+
+    .settings-card-title {
+        padding: 14px;
+        font-size: 15px;
+    }
+
+
+    .setting-row {
+        padding: 12px 14px;
+        gap: 10px;
+    }
+
+
+    .setting-info strong {
+        font-size: 14px;
+    }
+
+
+    .setting-info small {
+        font-size: 11px;
+    }
+
+
+    .setting-row select {
+        min-width: 100px;
+        font-size: 12px;
+    }
+
+
+    #audioVolume {
+        width: 105px;
+    }
+
+}
+/* =========================================================
+   TAFSIR LOADING / ERROR
+========================================================= */
+
+.tafsir-loading {
+    padding: 35px 10px;
+    text-align: center;
+    color: #168653;
+    font-size: 16px;
+}
+
+.tafsir-error {
+    padding: 25px 15px;
+    text-align: center;
+    color: #8a3d3d;
+}
+
+.tafsir-error-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.tafsir-error-text {
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* =====================================================
+   TAFSIR PAGE
+===================================================== */
+
+#tafsirPage {
+    width: 100%;
+    min-height: 100%;
+    background: #f5f8f6;
+    padding-bottom: 80px;
+}
+
+/* =====================================================
+   TAFSIR HEADER
+===================================================== */
+
+.tafsir-page-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 14px;
+    background: #ffffff;
+    border-bottom: 1px solid #dce8e1;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.tafsir-page-header button {
+    flex: 0 0 42px;
+    width: 42px;
+    height: 40px;
+    border: 0;
+    border-radius: 9px;
+    background: #e8f3ed;
+    color: #126b45;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.tafsir-page-header button:active {
+    transform: scale(0.95);
+}
+
+#tafsirSurahTitle {
+    flex: 1;
+    text-align: center;
+    color: #126b45;
+    font-size: 19px;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* =====================================================
+   AYAH HORIZONTAL NAVIGATION
+===================================================== */
+
+#tafsirAyahScroll {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 9px 8px;
+    background: #ffffff;
+    border-bottom: 1px solid #dce8e1;
+}
+
+#tafsirAyahScroll::-webkit-scrollbar {
+    display: none;
+}
+
+.tafsir-ayah-number,
+.tafsir-ayah-nav-arrow {
+    flex: 0 0 auto;
+    min-width: 88px;
+    height: 42px;
+    padding: 0 13px;
+    border: 1px solid #d5e5dc;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #315c48;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.tafsir-ayah-number.active {
+    background: #168653;
+    border-color: #168653;
+    color: #ffffff;
+    box-shadow: 0 2px 7px rgba(22, 134, 83, 0.25);
+}
+
+.tafsir-ayah-nav-arrow {
+    min-width: 42px;
+    background: #edf7f1;
+    color: #126b45;
+    font-size: 18px;
+}
+
+.tafsir-ayah-number:active,
+.tafsir-ayah-nav-arrow:active {
+    transform: scale(0.96);
+}
+
+/* =====================================================
+   TAFSIR SOURCE — ONE LINE HORIZONTAL SCROLL
+===================================================== */
+
+.tafsir-selector-scroll {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 8px 10px 10px;
+    white-space: nowrap;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    background: #f5f8f6;
+}
+
+.tafsir-selector-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.tafsir-selector-scroll .tafsir-source-tab {
+    flex: 0 0 auto;
+    min-width: max-content;
+    height: 44px;
+    padding: 0 18px;
+    border: 1px solid #d8e1dd;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #36584b;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.tafsir-selector-scroll .tafsir-source-tab.active {
+    background: #168b5a;
+    color: #ffffff;
+    border-color: #168b5a;
+    box-shadow: 0 2px 7px rgba(22, 134, 83, 0.20);
+}
+
+.tafsir-selector-scroll .tafsir-source-tab:active {
+    transform: scale(0.97);
+}
+
+/* =====================================================
+   SELECTED AYAH CARD
+===================================================== */
+
+.tafsir-ayah-card {
+    width: calc(100% - 20px);
+    max-width: 800px;
+    margin: 8px auto 14px;
+    padding: 16px;
+    background: #ffffff;
+    border: 1px solid #dce8e1;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+#tafsirAyahTitle {
+    margin: 0 0 14px;
+    color: #126b45;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+#tafsirArabic {
+    margin: 0;
+    padding: 15px 8px;
+    color: #111111;
+    font-family: "Amiri", "Noto Naskh Arabic", serif;
+    font-size: 29px;
+    line-height: 2.15;
+    text-align: right;
+    direction: rtl;
+}
+
+#tafsirBengali {
+    margin: 14px 0 0;
+    padding-top: 13px;
+    border-top: 1px solid #e4eee8;
+    color: #333333;
+    font-size: 17px;
+    line-height: 2;
+}
+
+/* =====================================================
+   TAFSIR CONTENT CARD
+===================================================== */
+
+.tafsir-content-card {
+    width: calc(100% - 20px);
+    max-width: 800px;
+    margin: 0 auto 20px;
+    padding: 17px;
+    background: #ffffff;
+    border: 1px solid #dce8e1;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.tafsir-content-heading {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 10px;
+    padding-bottom: 11px;
+    border-bottom: 1px solid #e1ece6;
+    color: #126b45;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.tafsir-content-icon {
+    font-size: 18px;
+}
+
+.tafsir-selected-name {
+    margin-bottom: 13px;
+    color: #168653;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+#tafsirPageContent {
+    color: #303030;
+    font-size: 17px;
+    line-height: 2.05;
+}
+
+#tafsirPageContent p {
+    margin: 0 0 14px;
+}
+
+#tafsirPageContent p:last-child {
+    margin-bottom: 0;
+}
+
+#tafsirPageContent strong {
+    color: #126b45;
+}
+
+#tafsirPageContent h1,
+#tafsirPageContent h2,
+#tafsirPageContent h3,
+#tafsirPageContent h4 {
+    color: #126b45;
+    line-height: 1.6;
+    margin-top: 18px;
+    margin-bottom: 10px;
+}
+
+/* =====================================================
+   TAFSIR MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    #tafsirPage {
+        padding-bottom: 75px;
+    }
+
+    .tafsir-page-header {
+        padding: 9px 10px;
+    }
+
+    .tafsir-page-header button {
+        width: 40px;
+        height: 38px;
+        flex-basis: 40px;
+        font-size: 18px;
+    }
+
+    #tafsirSurahTitle {
+        font-size: 17px;
+    }
+
+    #tafsirAyahScroll {
+        gap: 8px;
+        padding: 8px 7px;
+    }
+
+    .tafsir-ayah-number,
+    .tafsir-ayah-nav-arrow {
+        height: 40px;
+        min-width: 86px;
+        padding: 0 12px;
+        font-size: 14px;
+    }
+
+    .tafsir-ayah-nav-arrow {
+        min-width: 40px;
+    }
+
+    .tafsir-selector-scroll {
+        gap: 8px;
+        padding: 6px 8px 9px;
+    }
+
+    .tafsir-selector-scroll .tafsir-source-tab {
+        height: 42px;
+        padding: 0 16px;
+        font-size: 14px;
+        border-radius: 11px;
+    }
+
+    .tafsir-ayah-card {
+        width: calc(100% - 16px);
+        margin: 7px auto 12px;
+        padding: 13px;
+        border-radius: 12px;
+    }
+
+    #tafsirAyahTitle {
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    #tafsirArabic {
+        padding: 10px 3px;
+        font-size: 25px;
+        line-height: 2.1;
+    }
+
+    #tafsirBengali {
+        font-size: 16px;
+        line-height: 1.9;
+        margin-top: 10px;
+        padding-top: 10px;
+    }
+
+    .tafsir-content-card {
+        width: calc(100% - 16px);
+        margin-bottom: 15px;
+        padding: 13px;
+        border-radius: 12px;
+    }
+
+    .tafsir-content-heading {
+        font-size: 15px;
+        margin-bottom: 9px;
+    }
+
+    .tafsir-selected-name {
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+
+    #tafsirPageContent {
+        font-size: 16px;
+        line-height: 2;
+    }
+}
+
+@media (max-width: 380px) {
+
+    #tafsirSurahTitle {
+        font-size: 16px;
+    }
+
+    .tafsir-page-header button {
+        width: 36px;
+        flex-basis: 36px;
+    }
+
+    #tafsirArabic {
+        font-size: 24px;
+    }
+
+    #tafsirPageContent {
+        font-size: 15px;
+        line-height: 1.95;
+    }
+}
+
+/* =========================================================
+   HOME PAGE — MODERN QURAN UI
+   Matches the current index.html Home Page
+========================================================= */
+
+#homePage {
+    background: linear-gradient(180deg, #edf7f2 0%, #f5f8f6 28%, #f5f8f6 100%);
+    padding-bottom: 20px;
+    overflow-x: hidden;
+}
+
+/* =========================================================
+   HOME HERO
+========================================================= */
+
+.home-hero-banner {
+    position: relative;
+    width: 100%;
+    min-height: 190px;
+    padding: 28px 20px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,0.16), transparent 45%),
+        linear-gradient(135deg, #006b52, #008b6b);
+    color: #ffffff;
+    border-radius: 0 0 28px 28px;
+    box-shadow: 0 8px 24px rgba(0, 90, 70, 0.18);
+}
+
+.home-hero-banner::before,
+.home-hero-banner::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.13);
+}
+
+.home-hero-banner::before {
+    width: 180px;
+    height: 180px;
+    left: -90px;
+    bottom: -90px;
+}
+
+.home-hero-banner::after {
+    width: 220px;
+    height: 220px;
+    right: -110px;
+    top: -120px;
+}
+
+.home-hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.home-bismillah {
+    font-family: serif;
+    font-size: 25px;
+    line-height: 1.8;
+    direction: rtl;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.home-hero-title {
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    opacity: 0.95;
+}
+
+.home-hero-divider {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    opacity: 0.8;
+}
+
+.home-hero-divider span:nth-child(2) {
+    font-size: 18px;
+}
+
+.home-hero-decoration {
+    position: absolute;
+    z-index: 2;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.10);
+    font-size: 20px;
+}
+
+.home-hero-decoration.left {
+    left: 18px;
+    top: 25px;
+}
+
+.home-hero-decoration.right {
+    right: 18px;
+    bottom: 25px;
+}
+
+/* =========================================================
+   HOME TIME + LOCATION
+========================================================= */
+
+.home-time-card {
+    width: calc(100% - 28px);
+    max-width: 520px;
+    margin: -18px auto 14px;
+    position: relative;
+    z-index: 5;
+    padding: 18px 18px 15px;
+    background: #ffffff;
+    border: 1px solid #e0ebe6;
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(25, 75, 60, 0.10);
+    text-align: center;
+}
+
+.home-time-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.home-time-card .live-time {
+    margin: 0;
+    color: #006b52;
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: 1px;
+}
+
+.home-time-card .today-date {
+    margin-top: 6px;
+    color: #65756f;
+    font-size: 13px;
+}
+
+.home-time-card .location-text {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid #edf2ef;
+    color: #63736d;
+    font-size: 13px;
+}
+
+.home-time-card .location-text span {
+    color: #31584b;
+    font-weight: 600;
+}
+
+/* =========================================================
+   PRAYER CARD
+========================================================= */
+
+#homePage .prayer-card {
+    width: calc(100% - 28px);
+    max-width: 520px;
+    margin: 14px auto;
+    padding: 18px 18px 14px;
+    background: linear-gradient(145deg, #006b52, #00876b);
+    color: #ffffff;
+    border: none;
+    border-radius: 18px;
+    box-shadow: 0 10px 26px rgba(0, 100, 75, 0.20);
+}
+
+#homePage .section-title {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+#homePage .prayer-card .section-title {
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+#homePage .prayer-list {
+    width: 100%;
+}
+
+#homePage .prayer-row {
+    min-height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 3px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    font-size: 13px;
+}
+
+#homePage .prayer-row:last-child {
+    border-bottom: none;
+}
+
+#homePage .prayer-row span {
+    opacity: 0.95;
+}
+
+#homePage .prayer-row strong {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* =========================================================
+   LAST READ
+========================================================= */
+
+#homePage .last-read-card {
+    width: calc(100% - 28px);
+    max-width: 520px;
+    margin: 14px auto;
+    padding: 17px;
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    column-gap: 12px;
+    background: #ffffff;
+    border: 1px solid #e0ebe6;
+    border-radius: 18px;
+    box-shadow: 0 7px 22px rgba(30, 70, 55, 0.08);
+}
+
+#homePage .last-read-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #e9f5ef;
+    font-size: 21px;
+}
+
+#homePage .last-read-content {
+    min-width: 0;
+}
+
+#homePage .last-read-card .section-title {
+    margin: 1px 0 6px;
+    color: #006b52;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+#homePage .last-read-info {
+    margin: 0;
+    padding: 9px 11px;
+    background: #f1f8f4;
+    border: 1px solid #e1eee8;
+    border-radius: 11px;
+}
+
+#homePage #lastReadSurah {
+    color: #176b55;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+#homePage #lastReadAyah {
+    margin-top: 3px;
+    color: #71817b;
+    font-size: 12px;
+}
+
+#homePage #lastReadBtn {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-height: 43px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 11px;
+    background: #006b52;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 5px 12px rgba(0,107,82,0.16);
+}
+
+#homePage #lastReadBtn:active {
+    transform: scale(0.98);
+}
+
+/* =========================================================
+   QUICK ACCESS
+========================================================= */
+
+.home-quick-section {
+    width: calc(100% - 28px);
+    max-width: 520px;
+    margin: 18px auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.home-feature-card {
+    position: relative;
+    min-width: 0;
+    min-height: 82px;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid #dfe9e4;
+    border-radius: 16px;
+    background: #ffffff;
+    color: #18352d;
+    text-align: left;
+    box-shadow: 0 5px 16px rgba(30, 70, 55, 0.07);
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.home-feature-card:active {
+    transform: scale(0.97);
+}
+
+.home-feature-icon {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #e9f5ef;
+    font-size: 20px;
+}
+
+.home-feature-text {
+    min-width: 0;
+    margin-left: 9px;
+    display: flex;
+    flex-direction: column;
+}
+
+.home-feature-text strong {
+    color: #205448;
+    font-size: 14px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.home-feature-text span {
+    margin-top: 3px;
+    color: #7a8984;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.home-feature-arrow {
+    margin-left: auto;
+    color: #8a9b95;
+    font-size: 22px;
+    line-height: 1;
+}
+
+.home-feature-quran .home-feature-icon { background: #e7f5ef; }
+.home-feature-audio .home-feature-icon { background: #eef4ff; }
+.home-feature-search .home-feature-icon { background: #f3f0ff; }
+.home-feature-bookmark .home-feature-icon { background: #fff6df; }
+.home-feature-tafsir .home-feature-icon { background: #f0f4e8; }
+.home-feature-hadith .home-feature-icon { background: #fff0ee; }
+.home-feature-dua .home-feature-icon { background: #eef8f7; }
+
+/* =========================================================
+   TODAY'S AYAH
+========================================================= */
+
+.today-ayah-card {
+    width: calc(100% - 28px);
+    max-width: 520px;
+    margin: 18px auto;
+    padding: 20px 18px;
+    background: linear-gradient(145deg, #ffffff, #f8fbf9);
+    border: 1px solid #dce9e3;
+    border-radius: 18px;
+    box-shadow: 0 7px 22px rgba(30, 70, 55, 0.08);
+}
+
+.today-ayah-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #006b52;
+    font-size: 16px;
+}
+
+.today-ayah-heading span {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #e9f5ef;
+    font-size: 17px;
+}
+
+.today-ayah-heading strong {
+    font-weight: 800;
+}
+
+.today-ayah-arabic {
+    margin-top: 20px;
+    padding: 4px 5px;
+    color: #174f41;
+    font-family: serif;
+    font-size: 28px;
+    line-height: 2;
+    text-align: right;
+}
+
+.today-ayah-bengali {
+    margin-top: 12px;
+    padding: 12px 13px;
+    background: #f1f8f4;
+    border-left: 3px solid #00876b;
+    border-radius: 9px;
+    color: #40564f;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.today-ayah-reference {
+    margin-top: 12px;
+    color: #71817b;
+    font-size: 12px;
+    text-align: right;
+}
+
+/* =========================================================
+   SURAH LIST HOME BUTTON
+========================================================= */
+
+.surah-list-home-btn {
+    width: calc(100% - 28px);
+    max-width: 520px;
+    min-height: 70px;
+    margin: 18px auto;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #dce9e3;
+    border-radius: 16px;
+    background: #ffffff;
+    color: #18352d;
+    box-shadow: 0 6px 18px rgba(30, 70, 55, 0.07);
+    cursor: pointer;
+    text-align: left;
+}
+
+.surah-list-icon {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #e9f5ef;
+    font-size: 21px;
+}
+
+.surah-list-text {
+    min-width: 0;
+    margin-left: 11px;
+    display: flex;
+    flex-direction: column;
+}
+
+.surah-list-text strong {
+    color: #176b55;
+    font-size: 15px;
+}
+
+.surah-list-text small {
+    margin-top: 3px;
+    color: #788983;
+    font-size: 11px;
+}
+
+.surah-list-arrow {
+    margin-left: auto;
+    color: #006b52;
+    font-size: 24px;
+}
+
+.home-bottom-space {
+    height: 15px;
+}
+
+/* =========================================================
+   HOME MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    #homePage {
+        padding-bottom: 82px;
+    }
+
+    .home-hero-banner {
+        min-height: 175px;
+        padding: 25px 16px 22px;
+        border-radius: 0 0 24px 24px;
+    }
+
+    .home-bismillah {
+        font-size: 22px;
+    }
+
+    .home-hero-title {
+        font-size: 14px;
+    }
+
+    .home-hero-decoration {
+        width: 36px;
+        height: 36px;
+        font-size: 17px;
+    }
+
+    .home-hero-decoration.left {
+        left: 12px;
+        top: 20px;
+    }
+
+    .home-hero-decoration.right {
+        right: 12px;
+        bottom: 20px;
+    }
+
+    .home-time-card {
+        width: calc(100% - 24px);
+        margin-top: -15px;
+        padding: 16px 14px 13px;
+        border-radius: 16px;
+    }
+
+    .home-time-card .live-time {
+        font-size: 31px;
+    }
+
+    #homePage .prayer-card,
+    #homePage .last-read-card,
+    .today-ayah-card,
+    .surah-list-home-btn {
+        width: calc(100% - 24px);
+    }
+
+    .home-quick-section {
+        width: calc(100% - 24px);
+        gap: 8px;
+    }
+
+    .home-feature-card {
+        min-height: 76px;
+        padding: 10px;
+    }
+
+    .home-feature-icon {
+        width: 36px;
+        height: 36px;
+        flex-basis: 36px;
+        font-size: 18px;
+    }
+
+    .home-feature-text {
+        margin-left: 7px;
+    }
+
+    .home-feature-text strong {
+        font-size: 13px;
+    }
+
+    .home-feature-text span {
+        font-size: 9px;
+    }
+
+    .home-feature-arrow {
+        font-size: 19px;
+    }
+
+    .today-ayah-card {
+        padding: 17px 14px;
+    }
+
+    .today-ayah-arabic {
+        font-size: 25px;
+        line-height: 2;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .home-bismillah {
+        font-size: 20px;
+    }
+
+    .home-time-card .live-time {
+        font-size: 28px;
+    }
+
+    .home-quick-section {
+        grid-template-columns: 1fr;
+    }
+
+    .home-feature-card {
+        min-height: 66px;
+    }
+
+    .home-feature-icon {
+        width: 38px;
+        height: 38px;
+        flex-basis: 38px;
+    }
+
+    .today-ayah-arabic {
+        font-size: 23px;
+    }
+}
+
+
+/* =========================================================
+   CATEGORY LIST
+========================================================= */
+
+.dua-category-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+/* =========================================================
+   CATEGORY CARD
+========================================================= */
+
+.dua-category-card {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    padding: 14px;
+
+    box-sizing: border-box;
+
+    border: 1px solid var(--border-color, #e5e5e5);
+    border-radius: 15px;
+
+    background: var(--card-bg, #ffffff);
+
+    color: inherit;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.dua-category-card:active {
+    transform: scale(0.98);
+}
+
+.dua-category-card:hover {
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.07);
+}
+
+
+/* Number */
+
+.dua-category-number {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    background: rgba(0, 0, 0, 0.05);
+}
+
+
+/* Category information */
+
+.dua-category-info {
+    flex: 1;
+    min-width: 0;
+
+    margin-left: 12px;
+}
+
+.dua-category-info h3 {
+    margin: 0;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    line-height: 1.6;
+
+    word-break: break-word;
+}
+
+.dua-category-info p {
+    margin: 3px 0 0;
+
+    font-size: 12px;
+
+    opacity: 0.65;
+}
+
+
+/* Arrow */
+
+.dua-category-arrow {
+    margin-left: 10px;
+
+    font-size: 26px;
+
+    opacity: 0.45;
+}
+
+
+/* =========================================================
+   DUA LIST
+========================================================= */
+
+#duaList {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+/* =========================================================
+   DUA LIST CARD
+========================================================= */
+
+.dua-list-card {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    padding: 14px;
+
+    box-sizing: border-box;
+
+    border: 1px solid var(--border-color, #e5e5e5);
+    border-radius: 15px;
+
+    background: var(--card-bg, #ffffff);
+    color: inherit;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.dua-list-card:active {
+    transform: scale(0.98);
+}
+
+.dua-list-card:hover {
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.07);
+}
+
+
+/* List Number */
+
+.dua-list-number {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    background: rgba(0, 0, 0, 0.05);
+}
+
+
+/* List Information */
+
+.dua-list-info {
+    flex: 1;
+    min-width: 0;
+
+    margin-left: 12px;
+}
+
+.dua-list-info h3 {
+    margin: 0;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    line-height: 1.7;
+
+    word-break: break-word;
+}
+
+.dua-list-info p {
+    margin: 3px 0 0;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    opacity: 0.6;
+}
+
+
+/* List Arrow */
+
+.dua-list-arrow {
+    margin-left: 10px;
+
+    font-size: 25px;
+
+    opacity: 0.45;
+}
+
+
+/* =========================================================
+   READER
+========================================================= */
+
+#duaReaderContent {
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+
+/* Reader heading */
+
+.dua-reader-heading {
+    padding: 16px;
+
+    margin-bottom: 2px;
+
+    border-radius: 15px;
+
+    background: var(--card-bg, #ffffff);
+    border: 1px solid var(--border-color, #e5e5e5);
+}
+
+.dua-reader-heading h2 {
+    margin: 0;
+
+    font-size: 19px;
+
+    line-height: 1.7;
+}
+
+.dua-reader-heading p {
+    margin: 5px 0 0;
+
+    font-size: 13px;
+
+    opacity: 0.65;
+}
+
+
+/* =========================================================
+   SEGMENT CARD
+========================================================= */
+
+.dua-segment-card {
+    position: relative;
+
+    width: 100%;
+
+    padding: 18px;
+
+    box-sizing: border-box;
+
+    border-radius: 17px;
+
+    background: var(--card-bg, #ffffff);
+    border: 1px solid var(--border-color, #e5e5e5);
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+
+/* Segment number */
+
+.dua-segment-number {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 12px;
+
+    border-radius: 50%;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    background: rgba(0, 0, 0, 0.05);
+}
+
+
+/* =========================================================
+   TOP / BOTTOM TEXT
+========================================================= */
+
+.dua-top-text,
+.dua-bottom-text {
+    font-size: 14px;
+
+    line-height: 1.9;
+
+    margin: 10px 0;
+}
+
+.dua-bottom-text {
+    padding-top: 12px;
+
+    border-top: 1px solid var(--border-color, #e5e5e5);
+}
+
+
+/* =========================================================
+   ARABIC
+========================================================= */
+
+.dua-arabic {
+    direction: rtl;
+
+    text-align: right;
+
+    margin: 12px 0 20px;
+
+    font-family:
+        "Noto Naskh Arabic",
+        "Amiri",
+        "Traditional Arabic",
+        serif;
+
+    font-size: 29px;
+
+    line-height: 2.25;
+
+    font-weight: 400;
+}
+
+
+/* =========================================================
+   TRANSLITERATION
+========================================================= */
+
+.dua-transliteration {
+    display: block;
+
+    padding: 12px 14px;
+
+    margin-top: 10px;
+
+    border-radius: 11px;
+
+    background: rgba(0, 0, 0, 0.04);
+
+    font-size: 14px;
+
+    line-height: 1.8;
+}
+
+.dua-transliteration strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   TRANSLATION
+========================================================= */
+
+.dua-translation {
+    margin-top: 15px;
+
+    font-size: 16px;
+
+    line-height: 2;
+
+    text-align: left;
+}
+
+.dua-label {
+    margin-bottom: 6px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    opacity: 0.7;
+}
+
+
+/* =========================================================
+   WORD TOGGLE
+========================================================= */
+
+.dua-word-toggle {
+    width: 100%;
+
+    margin-top: 17px;
+
+    padding: 11px 14px;
+
+    border: 1px solid var(--border-color, #e5e5e5);
+    border-radius: 10px;
+
+    background: transparent;
+    color: inherit;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.dua-word-toggle:active {
+    transform: scale(0.98);
+}
+
+
+/* =========================================================
+   WORD PANEL
+========================================================= */
+
+.dua-words-panel {
+    margin-top: 12px;
+
+    padding: 12px;
+
+    border-radius: 12px;
+
+    background: rgba(0, 0, 0, 0.035);
+}
+
+.dua-words-panel[hidden] {
+    display: none !important;
+}
+
+
+/* Word grid */
+
+.dua-words-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(75px, 1fr));
+
+    gap: 8px;
+
+    direction: rtl;
+}
+
+
+/* Word item */
+
+.dua-word-item {
+    min-width: 0;
+
+    padding: 9px 7px;
+
+    border-radius: 9px;
+
+    background: var(--card-bg, #ffffff);
+
+    text-align: center;
+}
+
+.dua-word-arabic {
+    font-family:
+        "Noto Naskh Arabic",
+        "Amiri",
+        serif;
+
+    font-size: 20px;
+
+    line-height: 1.7;
+
+    direction: rtl;
+}
+
+.dua-word-bn {
+    margin-top: 4px;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    direction: ltr;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   REFERENCE
+========================================================= */
+
+.dua-reference {
+    margin-top: 17px;
+
+    padding-top: 13px;
+
+    border-top: 1px solid var(--border-color, #e5e5e5);
+
+    font-size: 13px;
+
+    line-height: 1.8;
+
+    opacity: 0.8;
+}
+
+
+/* =========================================================
+   CATEGORY TAGS
+========================================================= */
+
+.dua-categories-box {
+    padding: 15px;
+
+    border-radius: 14px;
+
+    background: var(--card-bg, #ffffff);
+    border: 1px solid var(--border-color, #e5e5e5);
+}
+
+.dua-categories-box h3 {
+    margin: 0 0 10px;
+
+    font-size: 15px;
+}
+
+.dua-category-tags {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 7px;
+}
+
+.dua-category-tags span {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    background: rgba(0, 0, 0, 0.05);
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.dua-loading {
+    width: 100%;
+
+    min-height: 150px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.dua-loading p {
+    margin: 10px 0 0;
+
+    font-size: 14px;
+
+    opacity: 0.65;
+}
+
+
+/* Spinner */
+
+.dua-spinner {
+    width: 30px;
+    height: 30px;
+
+    border: 3px solid rgba(0, 0, 0, 0.12);
+
+    border-top-color: currentColor;
+
+    border-radius: 50%;
+
+    animation:
+        duaSpinner 0.8s linear infinite;
+}
+
+@keyframes duaSpinner {
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.dua-empty {
+    width: 100%;
+
+    padding: 35px 15px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+
+    opacity: 0.7;
+}
+
+.dua-empty-icon {
+    font-size: 38px;
+
+    margin-bottom: 10px;
+}
+
+.dua-empty p {
+    margin: 0;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.dua-error {
+    width: 100%;
+
+    padding: 30px 15px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+}
+
+.dua-error-icon {
+    font-size: 35px;
+
+    margin-bottom: 10px;
+}
+
+.dua-error h3 {
+    margin: 0 0 7px;
+
+    font-size: 17px;
+}
+
+.dua-error p {
+    margin: 0 0 15px;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    opacity: 0.7;
+}
+
+.dua-retry-btn {
+    padding: 10px 18px;
+
+    border: 0;
+    border-radius: 9px;
+
+    background: var(--accent-color, #333);
+    color: #fff;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .dua-container,
+    .dua-reader-container {
+        padding: 12px;
+    }
+
+
+    .dua-intro-card {
+        padding: 14px;
+
+        gap: 12px;
+    }
+
+
+    .dua-intro-icon {
+        width: 46px;
+        height: 46px;
+        min-width: 46px;
+
+        font-size: 25px;
+    }
+
+
+    .dua-intro-card h3 {
+        font-size: 17px;
+    }
+
+
+    .dua-category-card {
+        padding: 13px;
+    }
+
+
+    .dua-category-number {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+    }
+
+
+    .dua-category-info h3 {
+        font-size: 15px;
+    }
+
+
+    .dua-list-card {
+        padding: 13px;
+    }
+
+
+    .dua-list-number {
+        width: 35px;
+        height: 35px;
+        min-width: 35px;
+    }
+
+
+    .dua-list-info h3 {
+        font-size: 14px;
+    }
+
+
+    .dua-segment-card {
+        padding: 15px;
+    }
+
+
+    .dua-arabic {
+        font-size: 25px;
+
+        line-height: 2.2;
+    }
+
+
+    .dua-translation {
+        font-size: 15px;
+
+        line-height: 1.9;
+    }
+
+
+    .dua-word-item {
+        padding: 8px 5px;
+    }
+
+
+    .dua-word-arabic {
+        font-size: 18px;
+    }
+
+}
+
+
+/* =========================================================
+   DUA — DOWNLOAD ALL OFFLINE
+   ========================================================= */
+
+.dua-offline-download-card {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 0 0 20px;
+
+    padding: 14px;
+
+    border-radius: 20px;
+
+    background: var(--card-bg, #ffffff);
+
+    border: 1px solid var(--border-color, #e5e5e5);
+
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+}
+
+
+.dua-offline-download-icon {
+    flex: 0 0 48px;
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background: rgba(0, 0, 0, 0.045);
+
+    font-size: 25px;
+}
+
+
+.dua-offline-download-info {
+    flex: 1 1 auto;
+
+    min-width: 0;
+}
+
+
+.dua-offline-download-info h3 {
+    margin: 0 0 3px;
+
+    font-size: 16px;
+
+    line-height: 1.45;
+}
+
+
+.dua-offline-download-info p {
+    margin: 0;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    opacity: 0.65;
+
+    overflow-wrap: anywhere;
+}
+
+
+.dua-download-all-btn {
+    flex: 0 0 auto;
+
+    min-height: 40px;
+
+    padding: 8px 13px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #008f72;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+
+.dua-download-all-btn:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+}
+
+
+.dua-download-progress {
+    width: 100%;
+
+    margin: -8px 0 20px;
+
+    padding: 12px 14px;
+
+    border-radius: 16px;
+
+    background: var(--card-bg, #ffffff);
+
+    border: 1px solid var(--border-color, #e5e5e5);
+
+    box-sizing: border-box;
+}
+
+
+.dua-download-progress-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 8px;
+
+    font-size: 12px;
+}
+
+
+.dua-download-progress-bar {
+    width: 100%;
+
+    height: 8px;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background: rgba(0, 0, 0, 0.08);
+}
+
+
+.dua-download-progress-fill {
+    width: 0%;
+
+    height: 100%;
+
+    border-radius: 20px;
+
+    background: #008f72;
+
+    transition: width 0.25s ease;
+}
+
+
+@media (max-width: 400px) {
+
+    .dua-offline-download-card {
+        gap: 9px;
+
+        padding: 11px;
+    }
+
+    .dua-offline-download-icon {
+        flex-basis: 43px;
+
+        width: 43px;
+        height: 43px;
+
+        font-size: 22px;
+    }
+
+    .dua-offline-download-info h3 {
+        font-size: 14px;
+    }
+
+    .dua-offline-download-info p {
+        font-size: 11px;
+    }
+
+    .dua-download-all-btn {
+        padding: 8px 10px;
+
+        font-size: 12px;
+    }
+}
+/* =========================================================
+   DAILY CONTENT
+   আজকের আয়াত + হাদিস + দোয়া
+========================================================= */
+
+.daily-content-card {
+    width: 100%;
+    margin: 18px 0;
+    padding: 0;
+    background: #ffffff;
+    border: 1px solid #e2e8e5;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================================================
+   DAILY ITEM
+========================================================= */
+
+.daily-item {
+    width: 100%;
+    padding: 22px 20px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #e5ebe8;
+}
+
+.daily-item:last-child {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   DAILY HEADING
+========================================================= */
+
+.daily-item-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 18px;
+
+    font-size: 21px;
+    font-weight: 700;
+
+    color: #075f4f;
+}
+
+
+.daily-item-heading span {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #edf8f4;
+    border-radius: 12px;
+
+    font-size: 23px;
+}
+
+
+.daily-item-heading strong {
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   TODAY'S AYAH
+========================================================= */
+
+.daily-ayah {
+    background: #ffffff;
+}
+
+
+.daily-ayah-arabic {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    margin: 5px 0 18px;
+
+    padding: 12px 5px;
+
+    font-family:
+        "Noto Naskh Arabic",
+        "Amiri",
+        "Traditional Arabic",
+        serif;
+
+    font-size: 30px;
+    line-height: 2.1;
+
+    text-align: right;
+
+    color: #174f43;
+
+    direction: rtl;
+
+    word-break: normal;
+    overflow-wrap: break-word;
+}
+
+
+.daily-ayah-bengali {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 15px 16px;
+
+    background: #f0f7f4;
+
+    border-left: 4px solid #07866f;
+
+    border-radius: 0 14px 14px 0;
+
+    font-size: 17px;
+    line-height: 1.8;
+
+    color: #30453f;
+
+    text-align: left;
+}
+
+
+.daily-ayah-reference {
+    margin-top: 12px;
+
+    padding-right: 5px;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    color: #71807b;
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   TODAY'S HADITH
+========================================================= */
+
+.daily-hadith {
+    background: #ffffff;
+}
+
+
+.daily-hadith-arabic {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    margin: 5px 0 16px;
+
+    padding: 5px 0;
+
+    font-family:
+        "Noto Naskh Arabic",
+        "Amiri",
+        "Traditional Arabic",
+        serif;
+
+    font-size: 26px;
+    line-height: 2;
+
+    text-align: right;
+
+    direction: rtl;
+
+    color: #174f43;
+
+    overflow-wrap: break-word;
+}
+
+
+.daily-hadith-bengali {
+    font-size: 17px;
+    line-height: 1.85;
+
+    color: #344740;
+
+    padding: 0 2px;
+}
+
+
+.daily-hadith-reference {
+    margin-top: 12px;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    color: #71807b;
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   TODAY'S DUA
+========================================================= */
+
+.daily-dua {
+    background: #ffffff;
+}
+
+
+.daily-dua-arabic {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    margin: 5px 0 16px;
+
+    padding: 5px 0;
+
+    font-family:
+        "Noto Naskh Arabic",
+        "Amiri",
+        "Traditional Arabic",
+        serif;
+
+    font-size: 27px;
+    line-height: 2.05;
+
+    text-align: right;
+
+    direction: rtl;
+
+    color: #174f43;
+
+    overflow-wrap: break-word;
+}
+
+
+.daily-dua-bengali {
+    font-size: 17px;
+    line-height: 1.85;
+
+    color: #344740;
+
+    padding: 0 2px;
+}
+
+
+.daily-dua-reference {
+    margin-top: 12px;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    color: #71807b;
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   LOADING STATE
+========================================================= */
+
+.daily-content-card .daily-loading {
+    padding: 30px 20px;
+
+    text-align: center;
+
+    color: #71807b;
+}
+
+
+.daily-content-card .daily-loading p {
+    margin: 8px 0 0;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   ERROR / EMPTY STATE
+========================================================= */
+
+.daily-error {
+    padding: 25px 20px;
+
+    text-align: center;
+
+    color: #777;
+
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   DAILY CONTENT — HOVER
+========================================================= */
+
+@media (hover: hover) {
+
+    .daily-item {
+        transition:
+            background-color 0.2s ease;
+    }
+
+    .daily-item:hover {
+        background-color: #fbfdfc;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .daily-content-card {
+        margin: 16px 0;
+
+        border-radius: 20px;
+    }
+
+
+    .daily-item {
+        padding: 19px 16px;
+    }
+
+
+    .daily-item-heading {
+        margin-bottom: 14px;
+
+        font-size: 19px;
+    }
+
+
+    .daily-item-heading span {
+        width: 36px;
+        height: 36px;
+
+        border-radius: 10px;
+
+        font-size: 20px;
+    }
+
+
+    .daily-ayah-arabic {
+        font-size: 27px;
+
+        line-height: 2;
+
+        padding: 8px 2px;
+    }
+
+
+    .daily-ayah-bengali {
+        padding: 13px 14px;
+
+        font-size: 16px;
+
+        line-height: 1.8;
+    }
+
+
+    .daily-ayah-reference {
+        font-size: 13px;
+    }
+
+
+    .daily-hadith-arabic {
+        font-size: 24px;
+
+        line-height: 1.95;
+    }
+
+
+    .daily-hadith-bengali {
+        font-size: 16px;
+
+        line-height: 1.8;
+    }
+
+
+    .daily-hadith-reference {
+        font-size: 13px;
+    }
+
+
+    .daily-dua-arabic {
+        font-size: 25px;
+
+        line-height: 2;
+    }
+
+
+    .daily-dua-bengali {
+        font-size: 16px;
+
+        line-height: 1.8;
+    }
+
+
+    .daily-dua-reference {
+        font-size: 13px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .daily-item {
+        padding: 17px 13px;
+    }
+
+
+    .daily-item-heading {
+        font-size: 18px;
+    }
+
+
+    .daily-ayah-arabic {
+        font-size: 24px;
+    }
+
+
+    .daily-hadith-arabic {
+        font-size: 22px;
+    }
+
+
+    .daily-dua-arabic {
+        font-size: 23px;
+    }
+
+
+    .daily-ayah-bengali,
+    .daily-hadith-bengali,
+    .daily-dua-bengali {
+        font-size: 15px;
+    }
+
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+body.dark .daily-content-card {
+    background: #1d2523;
+
+    border-color: #303b38;
+
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+
+body.dark .daily-item {
+    background: #1d2523;
+
+    border-bottom-color: #303b38;
+}
+
+
+body.dark .daily-item:hover {
+    background: #202a27;
+}
+
+
+body.dark .daily-item-heading {
+    color: #72cdb8;
+}
+
+
+body.dark .daily-item-heading span {
+    background: #263d37;
+}
+
+
+body.dark .daily-ayah-arabic,
+body.dark .daily-hadith-arabic,
+body.dark .daily-dua-arabic {
+    color: #b9e5d9;
+}
+
+
+body.dark .daily-ayah-bengali {
+    background: #26332f;
+
+    border-left-color: #159b80;
+
+    color: #d2ddd9;
+}
+
+
+body.dark .daily-hadith-bengali,
+body.dark .daily-dua-bengali {
+    color: #d2ddd9;
+}
+
+
+body.dark .daily-ayah-reference,
+body.dark .daily-hadith-reference,
+body.dark .daily-dua-reference {
+    color: #94a59f;
+}
+
+/* =========================================================
+   QURAN SHARIF
+   ১১৪টি সূরা তালিকা
+========================================================= */
+
+.surah-list {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 18px 14px 90px;
+    background: #f7f9f8;
+}
+
+.surah-list-title {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 14px;
+    padding: 0 6px;
+
+    font-size: 22px;
+    font-weight: 700;
+    color: #173f35;
+
+    text-align: left;
+}
+
+/* =========================================================
+   Grid
+========================================================= */
+
+.surah-list-grid {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* =========================================================
+   Surah Item
+========================================================= */
+
+.surah-list-item {
+    width: 100%;
+    min-height: 76px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+
+    padding: 12px 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0e7e4;
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        transform 0.15s ease,
+        background-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+/* Touch feedback */
+
+.surah-list-item:active {
+    transform: scale(0.98);
+    background: #eef7f4;
+}
+
+/* =========================================================
+   Number
+========================================================= */
+
+.surah-list-number {
+    width: 46px;
+    height: 46px;
+
+    flex: 0 0 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 13px;
+
+    border-radius: 50%;
+
+    background: #e8f4f0;
+
+    color: #007a63;
+
+    font-size: 17px;
+    font-weight: 700;
+}
+
+/* =========================================================
+   Info
+========================================================= */
+
+.surah-list-info {
+    min-width: 0;
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: 4px;
+}
+
+/* =========================================================
+   Surah Name
+========================================================= */
+
+.surah-list-name {
+    width: 100%;
+
+    color: #173f35;
+
+    font-size: 19px;
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* =========================================================
+   Ayah Count
+========================================================= */
+
+.surah-list-meta {
+    color: #71817c;
+
+    font-size: 14px;
+
+    line-height: 1.3;
+}
+
+/* =========================================================
+   Arrow
+========================================================= */
+
+.surah-list-arrow {
+    flex: 0 0 auto;
+
+    margin-left: 10px;
+
+    color: #00866e;
+
+    font-size: 32px;
+    font-weight: 300;
+
+    line-height: 1;
+
+    transform: translateY(-1px);
+}
+
+/* =========================================================
+   Hover — শুধু mouse/device-এর জন্য
+========================================================= */
+
+@media (hover: hover) {
+
+    .surah-list-item:hover {
+        background: #f2faf7;
+
+        border-color: #c8ddd7;
+
+        box-shadow:
+            0 4px 14px rgba(0, 80, 60, 0.08);
+
+        transform: translateY(-1px);
+    }
+
+}
+
+/* =========================================================
+   Tablet / Larger Screen
+========================================================= */
+
+@media (min-width: 600px) {
+
+    .surah-list {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .surah-list-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+    }
+
+    .surah-list-title {
+        font-size: 24px;
+    }
+
+}
+
+/* =========================================================
+   Small Mobile
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .surah-list {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .surah-list-item {
+        min-height: 70px;
+        padding: 10px 11px;
+    }
+
+    .surah-list-number {
+        width: 40px;
+        height: 40px;
+        flex-basis: 40px;
+
+        margin-right: 10px;
+
+        font-size: 15px;
+    }
+
+    .surah-list-name {
+        font-size: 17px;
+    }
+
+    .surah-list-meta {
+        font-size: 13px;
+    }
+
+    .surah-list-arrow {
+        font-size: 28px;
+    }
+
+}
+
+/* =========================================================
+   Dark Mode
+========================================================= */
+
+@media (prefers-color-scheme: dark) {
+
+    .surah-list {
+        background: #101715;
+    }
+
+    .surah-list-title {
+        color: #e4f2ed;
+    }
+
+    .surah-list-item {
+        background: #17211f;
+
+        border-color: #293936;
+    }
+
+    .surah-list-item:active {
+        background: #1d2d29;
+    }
+
+    .surah-list-number {
+        background: #203d35;
+
+        color: #71d8bd;
+    }
+
+    .surah-list-name {
+        color: #e6f2ee;
+    }
+
+    .surah-list-meta {
+        color: #9aada7;
+    }
+
+    .surah-list-arrow {
+        color: #65cdb2;
+    }
+
+    @media (hover: hover) {
+
+        .surah-list-item:hover {
+            background: #1b2926;
+            border-color: #365149;
+
+            box-shadow:
+                0 4px 14px rgba(0, 0, 0, 0.25);
+        }
+
+    }
+
+}
+/* =========================================================
+   QURAN SHARIF
+   HADITH SECTION CSS
+   ========================================================= */
+
+
+/* =========================================================
+   HADITH BOOK LIST
+   ========================================================= */
+
+#hadithBookList,
+#hadithDownloadBookList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HADITH BOOK CARD
+   ========================================================= */
+
+.hadith-book-card,
+.hadith-download-card {
+    width: 100%;
+    min-height: 72px;
+    padding: 16px 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+
+    color: #222222;
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+}
+
+.hadith-book-card:hover,
+.hadith-download-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+}
+
+.hadith-book-card:active,
+.hadith-download-card:active {
+    transform: scale(0.98);
+}
+
+
+/* =========================================================
+   HADITH CHAPTER LIST
+   ========================================================= */
+
+#hadithChapterList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HADITH CHAPTER CARD
+   ========================================================= */
+
+.hadith-chapter-card {
+    width: 100%;
+    padding: 14px 16px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+
+    text-align: left;
+    color: #222222;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.hadith-chapter-card:hover {
+    background: #f8faf9;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.hadith-chapter-card:active {
+    transform: scale(0.985);
+}
+
+.hadith-chapter-card strong {
+    width: 100%;
+
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.6;
+
+    color: #222222;
+}
+
+.hadith-chapter-card span {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #777777;
+}
+
+
+/* =========================================================
+   HADITH READER LIST
+   ========================================================= */
+
+#hadithReaderList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HADITH CARD
+   ========================================================= */
+
+.hadith-card {
+    width: 100%;
+    padding: 18px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+    border: 1px solid #e4e7e5;
+    border-radius: 16px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   HADITH NUMBER
+   ========================================================= */
+
+.hadith-card h3 {
+    margin: 0 0 12px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    color: #16805f;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   NARRATOR
+   ========================================================= */
+
+.hadith-narrator {
+    margin: 0 0 14px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    line-height: 1.8;
+
+    color: #555555;
+}
+
+
+/* =========================================================
+   ARABIC HADITH
+   ========================================================= */
+
+.hadith-arabic {
+    width: 100%;
+
+    margin: 0 0 18px;
+    padding: 16px;
+
+    box-sizing: border-box;
+
+    direction: rtl;
+    text-align: right;
+
+    font-family:
+        "Noto Naskh Arabic",
+        "Amiri",
+        "Scheherazade New",
+        "Traditional Arabic",
+        serif;
+
+    font-size: 24px;
+    font-weight: 500;
+
+    line-height: 2.15;
+
+    color: #171717;
+
+    background: #fafafa;
+
+    border-right: 4px solid #16805f;
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   BENGALI HADITH
+   ========================================================= */
+
+.hadith-bengali {
+    margin: 0;
+
+    font-size: 16px;
+    font-weight: 400;
+
+    line-height: 2;
+
+    color: #333333;
+
+    white-space: pre-line;
+}
+
+
+/* =========================================================
+   HADITH GRADE
+   ========================================================= */
+
+.hadith-grade {
+    margin-top: 16px;
+    padding: 8px 12px;
+
+    display: inline-block;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    line-height: 1.5;
+
+    border-radius: 8px;
+
+    background: #eef8f4;
+}
+
+
+/* =========================================================
+   HADITH NOTE
+   ========================================================= */
+
+.hadith-note {
+    margin-top: 14px;
+    padding: 12px 14px;
+
+    font-size: 14px;
+    line-height: 1.8;
+
+    color: #666666;
+
+    background: #f7f7f7;
+
+    border-left: 3px solid #c9c9c9;
+    border-radius: 8px;
+
+    white-space: pre-line;
+}
+
+
+/* =========================================================
+   HADITH BACK BUTTON
+   ========================================================= */
+
+#hadithBooksBack,
+#hadithChaptersBack {
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease;
+}
+
+#hadithBooksBack:active,
+#hadithChaptersBack:active {
+    transform: scale(0.94);
+}
+
+
+/* =========================================================
+   DOWNLOAD BUTTON
+   ========================================================= */
+
+#abudaudDownloadBtn,
+#nasaiDownloadBtn {
+    min-height: 42px;
+
+    padding: 9px 14px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #16805f;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
+}
+
+#abudaudDownloadBtn:hover,
+#nasaiDownloadBtn:hover {
+    background: #116b4f;
+}
+
+#abudaudDownloadBtn:active,
+#nasaiDownloadBtn:active {
+    transform: scale(0.96);
+}
+
+#abudaudDownloadBtn:disabled,
+#nasaiDownloadBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   DOWNLOAD STATUS
+   ========================================================= */
+
+#abudaudDownloadStatus,
+#nasaiDownloadStatus {
+    margin-top: 8px;
+
+    font-size: 13px;
+    line-height: 1.6;
+
+    color: #666666;
+}
+
+
+/* =========================================================
+   DOWNLOAD PROGRESS
+   ========================================================= */
+
+#abudaudDownloadProgress,
+#nasaiDownloadProgress {
+    width: 100%;
+    height: 6px;
+
+    margin-top: 10px;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background: #e5e7eb;
+
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+#abudaudDownloadProgress::-webkit-progress-bar,
+#nasaiDownloadProgress::-webkit-progress-bar {
+    background: #e5e7eb;
+    border-radius: 20px;
+}
+
+#abudaudDownloadProgress::-webkit-progress-value,
+#nasaiDownloadProgress::-webkit-progress-value {
+    background: #16805f;
+    border-radius: 20px;
+}
+
+#abudaudDownloadProgress::-moz-progress-bar,
+#nasaiDownloadProgress::-moz-progress-bar {
+    background: #16805f;
+    border-radius: 20px;
+}
+
+
+/* =========================================================
+   HADITH LOADING / EMPTY MESSAGE
+   ========================================================= */
+
+#hadithChapterList > p,
+#hadithReaderList > p {
+    margin: 15px 0;
+
+    padding: 16px;
+
+    text-align: center;
+
+    font-size: 14px;
+    line-height: 1.7;
+
+    color: #777777;
+
+    background: #f8f8f8;
+
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   MOBILE RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    #hadithBookList,
+    #hadithDownloadBookList,
+    #hadithChapterList,
+    #hadithReaderList {
+        gap: 10px;
+    }
+
+    .hadith-book-card,
+    .hadith-download-card {
+        min-height: 64px;
+        padding: 13px 14px;
+
+        border-radius: 12px;
+    }
+
+    .hadith-chapter-card {
+        padding: 12px 14px;
+        border-radius: 11px;
+    }
+
+    .hadith-chapter-card strong {
+        font-size: 15px;
+    }
+
+    .hadith-chapter-card span {
+        font-size: 12px;
+    }
+
+    .hadith-card {
+        padding: 14px;
+
+        border-radius: 13px;
+    }
+
+    .hadith-card h3 {
+        font-size: 15px;
+    }
+
+    .hadith-narrator {
+        font-size: 13px;
+    }
+
+    .hadith-arabic {
+        padding: 13px;
+
+        font-size: 21px;
+        line-height: 2.05;
+
+        border-right-width: 3px;
+    }
+
+    .hadith-bengali {
+        font-size: 15px;
+        line-height: 1.9;
+    }
+
+    .hadith-grade {
+        font-size: 12px;
+        padding: 7px 10px;
+    }
+
+    .hadith-note {
+        font-size: 13px;
+        line-height: 1.75;
+    }
+
+    #abudaudDownloadBtn,
+    #nasaiDownloadBtn {
+        min-height: 40px;
+        padding: 8px 11px;
+        font-size: 13px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL SCREEN
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .hadith-card {
+        padding: 12px;
+    }
+
+    .hadith-arabic {
+        padding: 11px;
+
+        font-size: 19px;
+        line-height: 2;
+    }
+
+    .hadith-bengali {
+        font-size: 14px;
+    }
+
+    .hadith-narrator {
+        font-size: 12px;
+    }
+}
+
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+@media (prefers-color-scheme: dark) {
+
+    .hadith-book-card,
+    .hadith-download-card,
+    .hadith-chapter-card,
+    .hadith-card {
+        background: #1c1c1c;
+        border-color: #333333;
+        color: #eeeeee;
+    }
+
+    .hadith-book-card:hover,
+    .hadith-download-card:hover,
+    .hadith-chapter-card:hover {
+        background: #242424;
+    }
+
+    .hadith-chapter-card strong {
+        color: #eeeeee;
+    }
+
+    .hadith-chapter-card span {
+        color: #999999;
+    }
+
+    .hadith-card h3 {
+        color: #54c49b;
+    }
+
+    .hadith-narrator {
+        color: #bbbbbb;
+    }
+
+    .hadith-arabic {
+        color: #f5f5f5;
+        background: #242424;
+        border-right-color: #16805f;
+    }
+
+    .hadith-bengali {
+        color: #dddddd;
+    }
+
+    .hadith-note {
+        color: #aaaaaa;
+        background: #252525;
+        border-left-color: #555555;
+    }
+
+    #hadithChapterList > p,
+    #hadithReaderList > p {
+        color: #aaaaaa;
+        background: #242424;
+    }
+
+    #abudaudDownloadStatus,
+    #nasaiDownloadStatus {
+        color: #aaaaaa;
+    }
+
+    #abudaudDownloadProgress,
+    #nasaiDownloadProgress {
+        background: #333333;
+    }
+
+    #abudaudDownloadProgress::-webkit-progress-bar,
+    #nasaiDownloadProgress::-webkit-progress-bar {
+        background: #333333;
+    }
+}
+/* =========================================================
+   QURAN SHARIF — HADITH CSS
+   গ্রন্থ → অধ্যায় → হাদিস
+========================================================= */
+
+
+/* =========================================================
+   HADITH COMMON
+========================================================= */
+
+#hadithPage,
+#hadithChapterPage,
+#hadithReaderPage {
+    width: 100%;
+    box-sizing: border-box;
+    background: #f7faf9;
+}
+
+
+/* =========================================================
+   HADITH PAGE CONTAINER
+========================================================= */
+
+.hadith-container {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px 14px 90px;
+}
+
+
+/* =========================================================
+   HADITH BOOK LIST
+========================================================= */
+
+.hadith-book-list,
+#hadithBookList,
+#hadithDownloadBookList {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HADITH BOOK CARD
+========================================================= */
+
+.hadith-book-card {
+    width: 100%;
+    min-height: 88px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+
+    padding: 15px 16px;
+    margin-bottom: 12px;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e9e6;
+    border-radius: 18px;
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.05);
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        transform .15s ease,
+        background .15s ease,
+        box-shadow .15s ease;
+}
+
+.hadith-book-card:active {
+    transform: scale(.985);
+    background: #f0faf7;
+}
+
+
+/* =========================================================
+   HADITH BOOK ICON
+========================================================= */
+
+.hadith-book-icon {
+    width: 58px;
+    height: 58px;
+
+    min-width: 58px;
+
+    margin-right: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e8f6f1;
+
+    font-size: 29px;
+}
+
+
+/* =========================================================
+   HADITH BOOK INFO
+========================================================= */
+
+.hadith-book-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.hadith-book-name {
+    font-size: 21px;
+    font-weight: 700;
+
+    line-height: 1.35;
+
+    color: #075f50;
+}
+
+.hadith-book-meta {
+    margin-top: 4px;
+
+    font-size: 14px;
+
+    color: #8a9692;
+}
+
+
+/* =========================================================
+   HADITH CARD ARROW
+========================================================= */
+
+.hadith-book-arrow {
+    width: 28px;
+    min-width: 28px;
+
+    margin-left: 8px;
+
+    text-align: center;
+
+    font-size: 31px;
+
+    color: #087761;
+}
+
+
+/* =========================================================
+   HADITH CHAPTER PAGE
+========================================================= */
+
+#hadithChapterPage .page-header,
+#hadithReaderPage .page-header {
+    position: relative;
+    z-index: 5;
+
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+
+    min-height: 64px;
+
+    box-sizing: border-box;
+
+    padding: 8px 12px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e2e8e6;
+}
+
+
+/* =========================================================
+   HADITH PAGE BACK BUTTON
+========================================================= */
+
+#hadithBooksBack,
+#hadithChaptersBack {
+    width: 44px;
+    height: 44px;
+
+    min-width: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: #075f50;
+
+    font-size: 27px;
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================================================
+   HADITH HEADER TITLE
+========================================================= */
+
+#hadithChapterPage .page-header-title,
+#hadithReaderPage .page-header-title {
+    flex: 1;
+
+    min-width: 0;
+
+    margin-left: 5px;
+
+    overflow: hidden;
+}
+
+#hadithChapterPage .page-header-title h2,
+#hadithReaderPage .page-header-title h2 {
+    margin: 0;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    line-height: 1.3;
+
+    color: #075f50;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+#hadithChapterPage .page-header-title span,
+#hadithReaderPage .page-header-title span {
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 13px;
+
+    color: #8b9693;
+}
+
+
+/* =========================================================
+   CHAPTER LIST
+========================================================= */
+
+#hadithChapterList {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 14px 14px 90px;
+}
+
+
+/* =========================================================
+   CHAPTER CARD
+========================================================= */
+
+.hadith-chapter-card {
+    width: 100%;
+    min-height: 76px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+
+    padding: 13px 15px;
+
+    margin-bottom: 10px;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e8e6;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 2px 7px rgba(0,0,0,.05);
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+.hadith-chapter-card:active {
+    background: #f0faf7;
+    transform: scale(.99);
+}
+
+
+/* =========================================================
+   CHAPTER NUMBER
+========================================================= */
+
+.hadith-chapter-number {
+    width: 48px;
+    height: 48px;
+
+    min-width: 48px;
+
+    margin-right: 13px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e9f7f2;
+
+    color: #087761;
+
+    font-size: 17px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   CHAPTER INFO
+========================================================= */
+
+.hadith-chapter-info {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.hadith-chapter-name {
+    font-size: 18px;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    color: #243f3a;
+}
+
+.hadith-chapter-count {
+    margin-top: 3px;
+
+    font-size: 14px;
+
+    color: #8b9693;
+}
+
+
+/* =========================================================
+   HADITH READER
+========================================================= */
+
+#hadithReaderList {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 12px 0 100px;
+}
+
+
+/* =========================================================
+   HADITH ITEM
+========================================================= */
+
+.hadith-item {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 22px 18px 24px;
+
+    margin-bottom: 10px;
+
+    background: #ffffff;
+
+    border-top: 1px solid #e4e9e7;
+    border-bottom: 1px solid #e4e9e7;
+}
+
+
+/* =========================================================
+   HADITH NUMBER
+========================================================= */
+
+.hadith-number {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 42px;
+    min-height: 32px;
+
+    padding: 4px 10px;
+
+    margin-bottom: 16px;
+
+    border-radius: 16px;
+
+    background: #e9f7f2;
+
+    color: #087761;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   ARABIC HADITH
+========================================================= */
+
+.hadith-arabic {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    margin: 0 0 18px;
+
+    padding: 4px 2px;
+
+    direction: rtl;
+
+    text-align: right;
+
+    font-family:
+        "Noto Naskh Arabic",
+        "Amiri",
+        "Scheherazade New",
+        serif;
+
+    font-size: 28px;
+
+    font-weight: 500;
+
+    line-height: 2.15;
+
+    color: #183f37;
+
+    word-break: normal;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   HADITH BANGLA
+========================================================= */
+
+.hadith-bengali,
+.hadith-translation {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    margin: 0;
+
+    font-size: 19px;
+
+    line-height: 1.95;
+
+    color: #394946;
+
+    text-align: left;
+
+    word-break: normal;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   HADITH REFERENCE
+========================================================= */
+
+.hadith-reference {
+    width: 100%;
+
+    margin-top: 17px;
+
+    padding-top: 12px;
+
+    border-top: 1px solid #edf0ef;
+
+    text-align: right;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    color: #8a9491;
+}
+
+
+/* =========================================================
+   HADITH ACTION BUTTONS
+========================================================= */
+
+.hadith-actions {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    margin-top: 16px;
+}
+
+.hadith-action-btn {
+    min-width: 42px;
+    height: 38px;
+
+    padding: 5px 11px;
+
+    border: 1px solid #dce7e3;
+
+    border-radius: 10px;
+
+    background: #f7faf9;
+
+    color: #087761;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   HADITH LOADING
+========================================================= */
+
+.hadith-loading {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 50px 20px;
+
+    text-align: center;
+
+    color: #7c8985;
+}
+
+.hadith-spinner {
+    width: 32px;
+    height: 32px;
+
+    margin: 0 auto 12px;
+
+    border: 3px solid #dcebe6;
+
+    border-top-color: #087761;
+
+    border-radius: 50%;
+
+    animation: hadithSpin .8s linear infinite;
+}
+
+@keyframes hadithSpin {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* =========================================================
+   HADITH EMPTY / ERROR
+========================================================= */
+
+.hadith-empty,
+.hadith-error {
+    margin: 20px 14px;
+
+    padding: 25px 18px;
+
+    border-radius: 15px;
+
+    background: #ffffff;
+
+    border: 1px solid #e3e9e7;
+
+    text-align: center;
+
+    color: #7b8784;
+
+    font-size: 16px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .hadith-container {
+        padding: 12px 10px 85px;
+    }
+
+    .hadith-book-card {
+        min-height: 80px;
+
+        padding: 12px 13px;
+
+        margin-bottom: 9px;
+
+        border-radius: 16px;
+    }
+
+    .hadith-book-icon {
+        width: 52px;
+        height: 52px;
+
+        min-width: 52px;
+
+        margin-right: 12px;
+
+        font-size: 26px;
+    }
+
+    .hadith-book-name {
+        font-size: 19px;
+    }
+
+    .hadith-book-meta {
+        font-size: 13px;
+    }
+
+    .hadith-book-arrow {
+        font-size: 28px;
+    }
+
+    #hadithChapterList {
+        padding: 10px 10px 85px;
+    }
+
+    .hadith-chapter-card {
+        min-height: 70px;
+
+        padding: 11px 12px;
+
+        border-radius: 14px;
+    }
+
+    .hadith-chapter-number {
+        width: 44px;
+        height: 44px;
+
+        min-width: 44px;
+
+        margin-right: 11px;
+    }
+
+    .hadith-chapter-name {
+        font-size: 17px;
+    }
+
+    #hadithReaderList {
+        padding-bottom: 90px;
+    }
+
+    .hadith-item {
+        padding: 18px 14px 20px;
+    }
+
+    .hadith-arabic {
+        font-size: 25px;
+
+        line-height: 2.05;
+    }
+
+    .hadith-bengali,
+    .hadith-translation {
+        font-size: 18px;
+
+        line-height: 1.9;
+    }
+
+    .hadith-reference {
+        font-size: 13px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .hadith-book-icon {
+        width: 48px;
+        height: 48px;
+
+        min-width: 48px;
+    }
+
+    .hadith-book-name {
+        font-size: 18px;
+    }
+
+    .hadith-arabic {
+        font-size: 23px;
+    }
+
+    .hadith-bengali,
+    .hadith-translation {
+        font-size: 17px;
+    }
+
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+@media (prefers-color-scheme: dark) {
+
+    #hadithPage,
+    #hadithChapterPage,
+    #hadithReaderPage {
+        background: #121918;
+    }
+
+    #hadithChapterPage .page-header,
+    #hadithReaderPage .page-header {
+        background: #18211f;
+        border-color: #2d3936;
+    }
+
+    #hadithChapterPage .page-header-title h2,
+    #hadithReaderPage .page-header-title h2 {
+        color: #70d1bb;
+    }
+
+    #hadithBooksBack,
+    #hadithChaptersBack {
+        color: #70d1bb;
+    }
+
+    .hadith-book-card,
+    .hadith-chapter-card,
+    .hadith-item,
+    .hadith-empty,
+    .hadith-error {
+        background: #1a2321;
+        border-color: #303b38;
+    }
+
+    .hadith-book-icon,
+    .hadith-chapter-number,
+    .hadith-number {
+        background: #183b34;
+        color: #70d1bb;
+    }
+
+    .hadith-book-name,
+    .hadith-chapter-name {
+        color: #e3efec;
+    }
+
+    .hadith-book-meta,
+    .hadith-chapter-count {
+        color: #9ba8a4;
+    }
+
+    .hadith-arabic {
+        color: #e3f0ed;
+    }
+
+    .hadith-bengali,
+    .hadith-translation {
+        color: #c7d2cf;
+    }
+
+    .hadith-reference {
+        color: #9ba8a4;
+        border-color: #303b38;
+    }
+
+    .hadith-action-btn {
+        background: #202b28;
+        border-color: #35433f;
+        color: #70d1bb;
+    }
+
+}
+/* =========================================================
+   FIX — HADITH HORIZONTAL OVERFLOW
+========================================================= */
+
+#hadithPage,
+#hadithChapterPage,
+#hadithReaderPage {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+/* সব direct content যেন viewport-এর বাইরে না যায় */
+#hadithPage *,
+#hadithChapterPage *,
+#hadithReaderPage * {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+/* Header/title overflow fix */
+#hadithChapterPage .page-header,
+#hadithReaderPage .page-header {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+/* Header title যেন অতিরিক্ত width না নেয় */
+#hadithChapterPage .page-header-title,
+#hadithReaderPage .page-header-title {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: calc(100% - 50px);
+    overflow: hidden;
+}
+
+/* Heading নিজে বাইরে যাবে না */
+#hadithChapterPage .page-header-title h2,
+#hadithReaderPage .page-header-title h2 {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Chapter list */
+#hadithChapterList {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+/* Reader */
+#hadithReaderList {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+/* Card text কখনো viewport-এর বাইরে যাবে না */
+.hadith-book-info,
+.hadith-chapter-info {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.hadith-book-name,
+.hadith-chapter-name {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}

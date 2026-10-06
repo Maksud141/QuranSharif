@@ -1,0 +1,3870 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <title>কুরআন শরীফ</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <link rel="stylesheet" href="css/prayer-location-qibla.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     APP
+===================================================== -->
+
+<div id="app">
+
+
+    <!-- =================================================
+         HEADER
+    ================================================== -->
+
+    <header class="top-header">
+
+        <button
+            class="icon-btn"
+            id="menuBtn"
+            aria-label="মেনু"
+            type="button"
+        >
+            ☰
+        </button>
+
+
+        <div class="header-title">
+
+            <span>
+                কুরআন শরীফ
+            </span>
+
+        </div>
+
+
+        <button
+            class="icon-btn"
+            id="searchBtn"
+            aria-label="সার্চ"
+            type="button"
+            onclick="showPage('searchPage')"
+        >
+            🔍
+        </button>
+
+    </header>
+
+
+
+    <!-- =================================================
+         HOME PAGE
+    ================================================== -->
+
+    <main
+        id="homePage"
+        class="page active"
+    >
+
+
+        <!-- =================================================
+             HOME HERO
+        ================================================== -->
+
+        <section class="home-hero-banner">
+
+            <div class="home-hero-decoration left">
+                🏮
+            </div>
+
+
+            <div class="home-hero-content">
+
+                <div class="home-bismillah">
+                    بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
+                </div>
+
+
+                <div class="home-hero-title">
+                    আসুন কুরআনের পথে চলি
+                </div>
+
+
+                <div class="home-hero-divider">
+
+                    <span>◆</span>
+
+                    <span>📖</span>
+
+                    <span>◆</span>
+
+                </div>
+
+            </div>
+
+
+            <div class="home-hero-decoration right">
+                📖
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             LIVE CLOCK + DATE + LOCATION
+        ================================================== -->
+
+        <section class="home-time-card">
+
+            <div class="home-time-main">
+
+                <div
+                    class="live-time"
+                    id="liveTime"
+                >
+                    00:00:00
+                </div>
+
+
+                <div
+                    class="today-date"
+                    id="todayDate"
+                >
+                    লোড হচ্ছে...
+                </div>
+
+            </div>
+
+
+            <div class="location-text">
+
+                📍
+
+                <span id="currentLocation">
+                    লোকেশন নির্ধারণ করা হচ্ছে...
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             HOME PRAYER TIMES
+             এই কার্ডটি একবারই থাকবে
+        ================================================== -->
+
+        <section class="prayer-card">
+
+            <div class="section-title">
+                🕌 নামাজের সময়
+            </div>
+
+
+            <div class="prayer-list">
+
+
+                <div class="prayer-row">
+
+                    <span>
+                        🌙 ফজর
+                    </span>
+
+                    <strong id="fajrTime">
+                        --:--
+                    </strong>
+
+                </div>
+
+
+                <div class="prayer-row">
+
+                    <span>
+                        ☀️ সূর্যোদয়
+                    </span>
+
+                    <strong id="sunriseTime">
+                        --:--
+                    </strong>
+
+                </div>
+
+
+                <div class="prayer-row">
+
+                    <span>
+                        ☀️ যোহর
+                    </span>
+
+                    <strong id="dhuhrTime">
+                        --:--
+                    </strong>
+
+                </div>
+
+
+                <div class="prayer-row">
+
+                    <span>
+                        🌤️ আসর
+                    </span>
+
+                    <strong id="asrTime">
+                        --:--
+                    </strong>
+
+                </div>
+
+
+                <div class="prayer-row">
+
+                    <span>
+                        🌇 মাগরিব
+                    </span>
+
+                    <strong id="maghribTime">
+                        --:--
+                    </strong>
+
+                </div>
+
+
+                <div class="prayer-row">
+
+                    <span>
+                        🌙 এশা
+                    </span>
+
+                    <strong id="ishaTime">
+                        --:--
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             LAST READ
+        ================================================== -->
+
+        <section
+            class="last-read-card"
+            id="lastReadCard"
+        >
+
+            <div class="last-read-icon">
+                📖
+            </div>
+
+
+            <div class="last-read-content">
+
+                <div class="section-title">
+                    সর্বশেষ পড়া
+                </div>
+
+
+                <div class="last-read-info">
+
+                    <div id="lastReadSurah">
+                        কোনো পড়া সংরক্ষণ করা হয়নি
+                    </div>
+
+
+                    <div id="lastReadAyah"></div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                id="lastReadBtn"
+                type="button"
+            >
+                পড়তে থাকুন →
+            </button>
+
+        </section>
+
+
+
+        <!-- =================================================
+             QUICK ACCESS
+        ================================================== -->
+
+        <section class="home-quick-section">
+
+
+            <!-- QURAN -->
+
+            <button
+                class="home-feature-card home-feature-quran"
+                id="openQuranBtn"
+                type="button"
+            >
+
+                <div class="home-feature-icon">
+                    📖
+                </div>
+
+
+                <div class="home-feature-text">
+
+                    <strong>
+                        কুরআন
+                    </strong>
+
+                    <span>
+                        ১১৪ সূরা
+                    </span>
+
+                </div>
+
+
+                <div class="home-feature-arrow">
+                    ›
+                </div>
+
+            </button>
+
+
+
+            <!-- AUDIO -->
+
+            <button
+                class="home-feature-card home-feature-audio"
+                id="homeAudioBtn"
+                type="button"
+            >
+
+                <div class="home-feature-icon">
+                    🔊
+                </div>
+
+
+                <div class="home-feature-text">
+
+                    <strong>
+                        অডিও
+                    </strong>
+
+                    <span>
+                        তিলাওয়াত
+                    </span>
+
+                </div>
+
+
+                <div class="home-feature-arrow">
+                    ›
+                </div>
+
+            </button>
+
+
+
+            <!-- SEARCH -->
+
+            <button
+                class="home-feature-card home-feature-search"
+                id="homeSearchBtn"
+                type="button"
+                onclick="showPage('searchPage')"
+            >
+
+                <div class="home-feature-icon">
+                    🔍
+                </div>
+
+
+                <div class="home-feature-text">
+
+                    <strong>
+                        অনুসন্ধান
+                    </strong>
+
+                    <span>
+                        আয়াত খুঁজুন
+                    </span>
+
+                </div>
+
+
+                <div class="home-feature-arrow">
+                    ›
+                </div>
+
+            </button>
+
+
+
+            <!-- BOOKMARK -->
+
+            <button
+                class="home-feature-card home-feature-bookmark"
+                id="homeBookmarkBtn"
+                type="button"
+                onclick="showPage('bookmarkPage')"
+            >
+
+                <div class="home-feature-icon">
+                    🔖
+                </div>
+
+
+                <div class="home-feature-text">
+
+                    <strong>
+                        বুকমার্ক
+                    </strong>
+
+                    <span>
+                        সংরক্ষিত
+                    </span>
+
+                </div>
+
+
+                <div class="home-feature-arrow">
+                    ›
+                </div>
+
+            </button>
+
+
+
+            <!-- TAFSIR -->
+
+            <button
+                class="home-feature-card home-feature-tafsir"
+                id="homeTafsirBtn"
+                type="button"
+                onclick="showPage('tafsirPage')"
+            >
+
+                <div class="home-feature-icon">
+                    📚
+                </div>
+
+
+                <div class="home-feature-text">
+
+                    <strong>
+                        তাফসির
+                    </strong>
+
+                    <span>
+                        ৪টি তাফসির
+                    </span>
+
+                </div>
+
+
+                <div class="home-feature-arrow">
+                    ›
+                </div>
+
+            </button>
+
+
+
+            <!-- HADITH -->
+
+            <button
+                class="home-feature-card home-feature-hadith"
+                id="homeHadithBtn"
+                type="button"
+            >
+
+                <div class="home-feature-icon">
+                    📕
+                </div>
+
+
+                <div class="home-feature-text">
+
+                    <strong>
+                        হাদিস
+                    </strong>
+
+                    <span>
+                        পরবর্তী হাদিস
+                    </span>
+
+                </div>
+
+
+                <div class="home-feature-arrow">
+                    ›
+                </div>
+
+            </button>
+
+
+
+            <!-- DUA -->
+
+            <button
+                class="home-feature-card home-feature-dua"
+                id="homeDuaBtn"
+                type="button"
+            >
+
+                <div class="home-feature-icon">
+                    🤲
+                </div>
+
+
+                <div class="home-feature-text">
+
+                    <strong>
+                        দোয়া
+                    </strong>
+
+                    <span>
+                        দৈনন্দিন দোয়া সমূহ
+                    </span>
+
+                </div>
+
+
+                <div class="home-feature-arrow">
+                    ›
+                </div>
+
+            </button>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             DAILY CONTENT
+        ================================================== -->
+
+        <section
+            class="daily-content-card"
+            id="dailyContentCard"
+        >
+
+
+            <!-- TODAY'S AYAH -->
+
+            <div class="daily-item daily-ayah">
+
+                <div class="daily-item-heading">
+
+                    <span>
+                        📖
+                    </span>
+
+                    <strong>
+                        আজকের আয়াত
+                    </strong>
+
+                </div>
+
+
+                <div
+                    class="daily-ayah-arabic"
+                    id="dailyAyahArabic"
+                    dir="rtl"
+                >
+                    লোড হচ্ছে...
+                </div>
+
+
+                <div
+                    class="daily-ayah-bengali"
+                    id="dailyAyahBengali"
+                >
+                    আজকের আয়াত লোড হচ্ছে...
+                </div>
+
+
+                <div
+                    class="daily-ayah-reference"
+                    id="dailyAyahReference"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+
+            <!-- TODAY'S HADITH -->
+
+            <div class="daily-item daily-hadith">
+
+                <div class="daily-item-heading">
+
+                    <span>
+                        📜
+                    </span>
+
+                    <strong>
+                        আজকের হাদিস
+                    </strong>
+
+                </div>
+
+
+                <div
+                    class="daily-hadith-arabic"
+                    id="dailyHadithArabic"
+                    dir="rtl"
+                >
+                    লোড হচ্ছে...
+                </div>
+
+
+                <div
+                    class="daily-hadith-bengali"
+                    id="dailyHadithBengali"
+                >
+                    আজকের হাদিস লোড হচ্ছে...
+                </div>
+
+
+                <div
+                    class="daily-hadith-reference"
+                    id="dailyHadithReference"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+
+            <!-- TODAY'S DUA -->
+
+            <div class="daily-item daily-dua">
+
+                <div class="daily-item-heading">
+
+                    <span>
+                        🤲
+                    </span>
+
+                    <strong>
+                        আজকের দোয়া
+                    </strong>
+
+                </div>
+
+
+                <div
+                    class="daily-dua-arabic"
+                    id="dailyDuaArabic"
+                    dir="rtl"
+                >
+                    লোড হচ্ছে...
+                </div>
+
+
+                <div
+                    class="daily-dua-bengali"
+                    id="dailyDuaBengali"
+                >
+                    আজকের দোয়া লোড হচ্ছে...
+                </div>
+
+
+                <div
+                    class="daily-dua-reference"
+                    id="dailyDuaReference"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             SURAH LIST BUTTON
+        ================================================== -->
+
+        <button
+            class="surah-list-home-btn"
+            id="surahListHomeBtn"
+            type="button"
+        >
+
+            <span class="surah-list-icon">
+                🕌
+            </span>
+
+
+            <span class="surah-list-text">
+
+                <strong>
+                    সূরা তালিকা দেখুন
+                </strong>
+
+                <small>
+                    সম্পূর্ণ ১১৪ সূরা
+                </small>
+
+            </span>
+
+
+            <span class="surah-list-arrow">
+                →
+            </span>
+
+        </button>
+
+
+
+        <div class="home-bottom-space"></div>
+
+
+    </main>
+
+
+
+    <!-- =================================================
+         QURAN PAGE
+    ================================================== -->
+
+    <main
+        id="quranPage"
+        class="page"
+    >
+
+
+        <section class="quran-selector">
+
+            <select id="surahSelect">
+
+                <option value="">
+                    সূরা নির্বাচন
+                </option>
+
+            </select>
+
+
+            <select
+                id="ayahSelect"
+                disabled
+            >
+
+                <option value="">
+                    আয়াত নির্বাচন
+                </option>
+
+            </select>
+
+
+            <button
+                id="goAyahBtn"
+                class="go-btn"
+                type="button"
+            >
+                GO
+            </button>
+
+        </section>
+
+
+
+        <section
+            id="quranReader"
+            class="quran-reader"
+        >
+
+            <div class="reader-empty">
+
+                <div class="reader-icon">
+                    📖
+                </div>
+
+
+                <h2>
+                    সূরা ও আয়াত নির্বাচন করুন
+                </h2>
+
+
+                <p>
+                    উপরের তালিকা থেকে সূরা ও আয়াত নির্বাচন করে
+                    GO চাপুন।
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =================================================
+         TAFSIR PAGE
+    ================================================== -->
+
+    <main
+        id="tafsirPage"
+        class="page"
+    >
+
+
+        <section class="tafsir-page-header">
+
+            <button
+                type="button"
+                id="tafsirBackBtn"
+                class="tafsir-nav-btn"
+            >
+                ←
+            </button>
+
+
+            <h1 id="tafsirSurahTitle">
+                আল-ফাতিহা
+            </h1>
+
+
+            <button
+                type="button"
+                id="tafsirNextBtn"
+                class="tafsir-nav-btn"
+            >
+                →
+            </button>
+
+        </section>
+
+
+
+        <div
+            class="tafsir-ayah-scroll"
+            id="tafsirAyahScroll"
+        ></div>
+
+
+
+        <div
+            class="tafsir-selector-scroll"
+            id="tafsirSelectorScroll"
+        >
+
+            <button
+                type="button"
+                class="tafsir-source-tab active"
+                data-tafsir="abu-bakr-zakaria"
+            >
+                তাফসীরুল কুরআন
+            </button>
+
+
+            <button
+                type="button"
+                class="tafsir-source-tab"
+                data-tafsir="ibn-kathir"
+            >
+                তাফসীরে ইবনে কাসীর
+            </button>
+
+
+            <button
+                type="button"
+                class="tafsir-source-tab"
+                data-tafsir="fathul_majid"
+            >
+                তাফসীর ফাতহুল মাজীদ
+            </button>
+
+
+            <button
+                type="button"
+                class="tafsir-source-tab"
+                data-tafsir="ahsanul_bayaan"
+            >
+                তাফসীর আহসানুল বয়ান
+            </button>
+
+        </div>
+
+
+
+        <section
+            class="tafsir-ayah-card"
+            id="tafsirAyahCard"
+        >
+
+            <div
+                class="tafsir-ayah-title"
+                id="tafsirAyahTitle"
+            >
+                আল-ফাতিহা ১:১
+            </div>
+
+
+            <div
+                class="tafsir-arabic"
+                id="tafsirArabic"
+                dir="rtl"
+            >
+                بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+            </div>
+
+
+            <div
+                class="tafsir-bengali"
+                id="tafsirBengali"
+            >
+                পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে।
+            </div>
+
+        </section>
+
+
+
+        <section class="tafsir-content-card">
+
+            <div class="tafsir-content-heading">
+
+                <span class="tafsir-content-icon">
+                    📖
+                </span>
+
+                <span>
+                    তাফসির:
+                </span>
+
+            </div>
+
+
+            <div
+                class="tafsir-selected-name"
+                id="tafsirSelectedName"
+            >
+                তাফসীরুল কুরআন
+            </div>
+
+
+            <div
+                class="tafsir-page-content"
+                id="tafsirPageContent"
+            >
+                তাফসির লোড হচ্ছে...
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =================================================
+         SEARCH PAGE
+    ================================================== -->
+
+    <main
+        id="searchPage"
+        class="page"
+    >
+
+        <section class="search-section">
+
+            <div class="search-title">
+                🔍 কুরআন সার্চ
+            </div>
+
+
+            <div class="search-box">
+
+                <input
+                    type="search"
+                    id="quranSearchInput"
+                    placeholder="কুরআনে কিছু খুঁজুন..."
+                    autocomplete="off"
+                >
+
+
+                <button
+                    id="quranSearchBtn"
+                    class="search-submit-btn"
+                    type="button"
+                >
+                    🔍
+                </button>
+
+            </div>
+
+
+            <div
+                id="searchResults"
+                class="search-results"
+            >
+
+                <div class="search-empty">
+                    🔎 কোনো শব্দ বা বাক্য লিখে সার্চ করুন
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =================================================
+         BOOKMARK PAGE
+    ================================================== -->
+
+    <main
+        id="bookmarkPage"
+        class="page"
+    >
+
+        <section class="search-section">
+
+            <div class="search-title">
+                🔖 বুকমার্ক
+            </div>
+
+
+            <div
+                id="bookmarkList"
+                class="bookmark-list"
+            >
+
+                <div class="bookmark-empty">
+
+                    <div class="bookmark-empty-icon">
+                        🔖
+                    </div>
+
+
+                    <div class="bookmark-empty-title">
+                        কোনো বুকমার্ক নেই
+                    </div>
+
+
+                    <div class="bookmark-empty-text">
+                        কুরআনের কোনো আয়াত বুকমার্ক করলে
+                        এখানে দেখা যাবে।
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =================================================
+         HADITH PAGE
+    ================================================== -->
+
+    <main
+        id="hadithPage"
+        class="page"
+    >
+
+        <section class="search-section">
+
+            <div class="search-title">
+                📚 হাদিস গ্রন্থসমূহ
+            </div>
+
+
+            <div class="hadith-section-label">
+                📥 অফলাইনে প্রস্তুত
+            </div>
+
+
+            <div id="hadithBookList">
+
+                <button
+                    type="button"
+                    class="hadith-book-card"
+                    data-book="bukhari"
+                >
+                    📕 সহীহ বুখারী
+                    <span>
+                        অধ্যায়সমূহ দেখুন ›
+                    </span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="hadith-book-card"
+                    data-book="muslim"
+                >
+                    📕 সহীহ মুসলিম
+                    <span>
+                        অধ্যায়সমূহ দেখুন ›
+                    </span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="hadith-book-card"
+                    data-book="tirmidhi"
+                >
+                    📕 জামে আত-তিরমিজি
+                    <span>
+                        অধ্যায়সমূহ দেখুন ›
+                    </span>
+                </button>
+
+            </div>
+
+
+
+            <div class="hadith-section-label">
+                🌐 অন্যান্য হাদিসের কিতাব
+            </div>
+
+
+            <div id="hadithDownloadBookList">
+
+
+                <!-- ABU DAUD -->
+
+                <div class="hadith-book-card hadith-download-card">
+
+                    📕 সুনান আবু দাউদ
+
+                    <span id="abudaudDownloadStatus">
+                        ডাউনলোড করে অফলাইনে পড়ুন
+                    </span>
+
+
+                    <progress
+                        id="abudaudDownloadProgress"
+                        value="0"
+                        max="43"
+                        hidden
+                    ></progress>
+
+
+                    <button
+                        type="button"
+                        data-download-book="abudaud"
+                        id="abudaudDownloadBtn"
+                    >
+                        ⬇️ ডাউনলোড করুন
+                    </button>
+
+                </div>
+
+
+
+                <!-- NASAI -->
+
+                <div
+                    class="hadith-book-card hadith-download-card"
+                    id="nasaiDownloadCard"
+                >
+
+                    <div class="hadith-book-info">
+
+                        📕 সুনান আন-নাসাঈ
+
+                        <span id="nasaiDownloadStatus">
+                            ডাউনলোড করে অফলাইনে পড়ুন
+                        </span>
+
+                    </div>
+
+
+                    <progress
+                        id="nasaiDownloadProgress"
+                        value="0"
+                        max="50"
+                        hidden
+                    ></progress>
+
+
+                    <button
+                        type="button"
+                        id="nasaiDownloadBtn"
+                        data-download-book="nasai"
+                    >
+                        ⬇️ ডাউনলোড করুন
+                    </button>
+
+                </div>
+
+
+
+                <!-- IBN MAJAH -->
+
+                <div class="hadith-book-card hadith-download-card">
+
+                    📗 সুনান ইবনে মাজাহ
+
+                    <span>
+                        ডাউনলোড সুবিধা শিগগিরই আসছে
+                    </span>
+
+                    <button
+                        type="button"
+                        disabled
+                    >
+                        ডাউনলোড করুন
+                    </button>
+
+                </div>
+
+
+
+                <!-- MUWATTA -->
+
+                <div class="hadith-book-card hadith-download-card">
+
+                    📗 মুওয়াত্তা ইমাম মালিক
+
+                    <span>
+                        ডাউনলোড সুবিধা শিগগিরই আসছে
+                    </span>
+
+                    <button
+                        type="button"
+                        disabled
+                    >
+                        ডাউনলোড করুন
+                    </button>
+
+                </div>
+
+
+
+                <!-- MUSNAD AHMAD -->
+
+                <div class="hadith-book-card hadith-download-card">
+
+                    📗 মুসনাদ আহমাদ
+
+                    <span>
+                        ডাউনলোড সুবিধা শিগগিরই আসছে
+                    </span>
+
+                    <button
+                        type="button"
+                        disabled
+                    >
+                        ডাউনলোড করুন
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =================================================
+         HADITH CHAPTER PAGE
+    ================================================== -->
+
+    <main
+        id="hadithChapterPage"
+        class="page"
+    >
+
+        <section class="search-section">
+
+            <button
+                type="button"
+                id="hadithBooksBack"
+            >
+                ←
+            </button>
+
+
+            <div
+                class="search-title"
+                id="hadithChapterTitle"
+            ></div>
+
+
+            <div id="hadithChapterList"></div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =================================================
+         HADITH READER PAGE
+    ================================================== -->
+
+    <main
+        id="hadithReaderPage"
+        class="page"
+    >
+
+        <section class="search-section">
+
+            <button
+                type="button"
+                id="hadithChaptersBack"
+            >
+                ←
+            </button>
+
+
+            <div
+                class="search-title"
+                id="hadithReaderTitle"
+            >
+                হাদিস
+            </div>
+
+
+            <div id="hadithReaderList"></div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =================================================
+         DUA PAGE
+    ================================================== -->
+
+    <main
+        id="duaPage"
+        class="page"
+    >
+
+        <div class="page-header">
+
+            <button
+                class="back-btn"
+                id="duaPageBack"
+                type="button"
+            >
+                ←
+            </button>
+
+
+            <div class="page-header-title">
+
+                <h2>
+                    দোয়া
+                </h2>
+
+                <span>
+                    দৈনন্দিন দোয়া সমূহ
+                </span>
+
+            </div>
+
+
+            <button
+                class="header-icon-btn"
+                id="duaSearchBtn"
+                type="button"
+            >
+                🔍
+            </button>
+
+        </div>
+
+
+
+        <div class="dua-container">
+
+
+            <div class="dua-intro-card">
+
+                <div class="dua-intro-icon">
+                    🤲
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        দৈনন্দিন দোয়া
+                    </h3>
+
+                    <p>
+                        কুরআন ও হাদিস থেকে সংগৃহীত বিভিন্ন দোয়া
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DUA OFFLINE DOWNLOAD -->
+
+            <div class="dua-offline-download-card">
+
+                <div class="dua-offline-download-icon">
+                    📥
+                </div>
+
+
+                <div class="dua-offline-download-info">
+
+                    <h3>
+                        সব দোয়া Offline-এ সংরক্ষণ
+                    </h3>
+
+                    <p id="duaDownloadStatus">
+                        Internet থাকলে সব দোয়া সংরক্ষণ করে রাখুন
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="duaDownloadAllBtn"
+                    class="dua-download-all-btn"
+                >
+                    সংরক্ষণ
+                </button>
+
+            </div>
+
+
+
+            <div
+                id="duaDownloadProgress"
+                class="dua-download-progress"
+                style="display:none;"
+            >
+
+                <div class="dua-download-progress-top">
+
+                    <span id="duaDownloadProgressText">
+                        প্রস্তুত হচ্ছে...
+                    </span>
+
+                    <span id="duaDownloadPercent">
+                        0%
+                    </span>
+
+                </div>
+
+
+                <div class="dua-download-progress-bar">
+
+                    <div
+                        id="duaDownloadProgressFill"
+                        class="dua-download-progress-fill"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="section-title-row">
+
+                <h3>
+                    দোয়ার বিষয়সমূহ
+                </h3>
+
+            </div>
+
+
+            <div
+                id="duaCategoryList"
+                class="dua-category-list"
+            >
+
+                <div class="dua-loading">
+
+                    <div class="dua-spinner"></div>
+
+                    <p>
+                        দোয়ার ক্যাটাগরি লোড হচ্ছে...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =================================================
+         DUA LIST PAGE
+    ================================================== -->
+
+    <main
+        id="duaListPage"
+        class="page"
+    >
+
+        <div class="page-header">
+
+            <button
+                class="back-btn"
+                id="duaListBack"
+                type="button"
+            >
+                ←
+            </button>
+
+
+            <div class="page-header-title">
+
+                <h2 id="duaListTitle">
+                    দোয়া
+                </h2>
+
+                <span id="duaListSubtitle">
+                    দোয়ার তালিকা
+                </span>
+
+            </div>
+
+
+            <button
+                class="header-icon-btn"
+                id="duaListSearchBtn"
+                type="button"
+            >
+                🔍
+            </button>
+
+        </div>
+
+
+        <div class="dua-container">
+
+            <div id="duaList">
+
+                <div class="dua-loading">
+
+                    <div class="dua-spinner"></div>
+
+                    <p>
+                        দোয়া লোড হচ্ছে...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =================================================
+         DUA READER PAGE
+    ================================================== -->
+
+    <main
+        id="duaReaderPage"
+        class="page"
+    >
+
+        <div class="page-header">
+
+            <button
+                class="back-btn"
+                id="duaReaderBack"
+                type="button"
+            >
+                ←
+            </button>
+
+
+            <div class="page-header-title">
+
+                <h2 id="duaReaderTitle">
+                    দোয়া
+                </h2>
+
+                <span id="duaReaderSubtitle"></span>
+
+            </div>
+
+
+            <button
+                class="header-icon-btn"
+                id="duaBookmarkBtn"
+                type="button"
+            >
+                🔖
+            </button>
+
+        </div>
+
+
+        <div class="dua-reader-container">
+
+            <div id="duaReaderContent">
+
+                <div class="dua-loading">
+
+                    <div class="dua-spinner"></div>
+
+                    <p>
+                        দোয়া লোড হচ্ছে...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =================================================
+         PRAYER PAGE
+    ================================================== -->
+
+    <main
+        id="prayerPage"
+        class="page"
+    >
+
+        <section class="prayer-page-container">
+
+
+            <!-- HEADER -->
+
+            <div class="feature-page-header">
+
+                <button
+                    type="button"
+                    class="feature-back-btn"
+                    onclick="showPage('homePage')"
+                >
+                    ←
+                </button>
+
+
+                <div class="feature-page-title">
+
+                    <div class="feature-page-icon">
+                        🕌
+                    </div>
+
+
+                    <div>
+
+                        <h2>
+                            নামাজের সময়
+                        </h2>
+
+                        <span id="prayerLocationText">
+                            লোকেশন নির্ধারণ করা হয়নি
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="feature-header-btn"
+                    onclick="showPage('locationPage')"
+                >
+                    📍
+                </button>
+
+            </div>
+
+
+
+            <!-- DATE -->
+
+            <div class="prayer-date-card">
+
+                <div id="prayerTodayDate">
+                    আজকের তারিখ
+                </div>
+
+                <div id="prayerHijriDate">
+                    হিজরি তারিখ
+                </div>
+
+            </div>
+
+
+
+            <!-- NEXT PRAYER -->
+
+            <div class="next-prayer-card">
+
+                <div class="next-prayer-label">
+                    পরবর্তী নামাজ
+                </div>
+
+
+                <div
+                    class="next-prayer-name"
+                    id="nextPrayerName"
+                >
+                    —
+                </div>
+
+
+                <div
+                    class="next-prayer-countdown"
+                    id="nextPrayerCountdown"
+                >
+                    --:--:--
+                </div>
+
+
+                <div class="next-prayer-label">
+                    সময় বাকি
+                </div>
+
+            </div>
+
+
+
+            <!-- PRAYER LIST -->
+
+            <div class="prayer-full-list">
+
+
+                <div
+                    class="prayer-full-row"
+                    id="prayerRowFajr"
+                >
+
+                    <div class="prayer-full-name">
+
+                        🌙
+
+                        <span>
+                            ফজর
+                        </span>
+
+                    </div>
+
+
+                    <strong id="pageFajrTime">
+                        --:--
+                    </strong>
+
+                </div>
+
+
+
+                <div
+                    class="prayer-full-row"
+                    id="prayerRowSunrise"
+                >
+
+                    <div class="prayer-full-name">
+
+                        🌅
+
+                        <span>
+                            সূর্যোদয়
+                        </span>
+
+                    </div>
+
+
+                    <strong id="pageSunriseTime">
+                        --:--
+                    </strong>
+
+                </div>
+
+
+
+                <div
+                    class="prayer-full-row"
+                    id="prayerRowDhuhr"
+                >
+
+                    <div class="prayer-full-name">
+
+                        ☀️
+
+                        <span>
+                            যোহর
+                        </span>
+
+                    </div>
+
+
+                    <strong id="pageDhuhrTime">
+                        --:--
+                    </strong>
+
+                </div>
+
+
+
+                <div
+                    class="prayer-full-row"
+                    id="prayerRowAsr"
+                >
+
+                    <div class="prayer-full-name">
+
+                        🌤️
+
+                        <span>
+                            আসর
+                        </span>
+
+                    </div>
+
+
+                    <strong id="pageAsrTime">
+                        --:--
+                    </strong>
+
+                </div>
+
+
+
+                <div
+                    class="prayer-full-row"
+                    id="prayerRowMaghrib"
+                >
+
+                    <div class="prayer-full-name">
+
+                        🌇
+
+                        <span>
+                            মাগরিব
+                        </span>
+
+                    </div>
+
+
+                    <strong id="pageMaghribTime">
+                        --:--
+                    </strong>
+
+                </div>
+
+
+
+                <div
+                    class="prayer-full-row"
+                    id="prayerRowIsha"
+                >
+
+                    <div class="prayer-full-name">
+
+                        🌙
+
+                        <span>
+                            এশা
+                        </span>
+
+                    </div>
+
+
+                    <strong id="pageIshaTime">
+                        --:--
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- LOCATION -->
+
+            <button
+                type="button"
+                class="prayer-location-btn"
+                onclick="showPage('locationPage')"
+            >
+
+                📍 লোকেশন পরিবর্তন করুন
+
+                <span>
+                    ›
+                </span>
+
+            </button>
+
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =================================================
+         QIBLA PAGE
+    ================================================== -->
+
+    <main
+        id="qiblaPage"
+        class="page"
+    >
+
+        <section class="qibla-page-container">
+
+
+            <!-- HEADER -->
+
+            <div class="feature-page-header">
+
+                <button
+                    type="button"
+                    class="feature-back-btn"
+                    onclick="showPage('homePage')"
+                >
+                    ←
+                </button>
+
+
+                <div class="feature-page-title">
+
+                    <div class="feature-page-icon">
+                        🧭
+                    </div>
+
+
+                    <div>
+
+                        <h2>
+                            কিবলা নির্দেশনা
+                        </h2>
+
+                        <span id="qiblaLocationText">
+                            লোকেশন প্রয়োজন
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- COMPASS -->
+
+            <div class="qibla-compass-card">
+
+                <div class="qibla-compass-title">
+                    কিবলার দিক
+                </div>
+
+
+                <div class="qibla-compass">
+
+                    <div class="qibla-direction north">
+                        N
+                    </div>
+
+
+                    <div class="qibla-direction east">
+                        E
+                    </div>
+
+
+                    <div class="qibla-direction south">
+                        S
+                    </div>
+
+
+                    <div class="qibla-direction west">
+                        W
+                    </div>
+
+
+                    <div
+                        class="qibla-arrow"
+                        id="qiblaArrow"
+                    >
+                        🕋
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="qibla-degree"
+                    id="qiblaDegree"
+                >
+                    --°
+                </div>
+
+
+                <div
+                    class="qibla-status"
+                    id="qiblaStatus"
+                >
+                    কিবলার দিক নির্ধারণ করা হচ্ছে...
+                </div>
+
+            </div>
+
+
+
+            <!-- START -->
+
+            <button
+                type="button"
+                class="qibla-start-btn"
+                id="startQiblaBtn"
+            >
+                🧭 কিবলা কম্পাস চালু করুন
+            </button>
+
+
+
+            <div class="qibla-info-card">
+
+                <div class="qibla-info-icon">
+                    ℹ️
+                </div>
+
+
+                <p>
+                    ফোনটি সমতলভাবে ধরে ধীরে ধীরে ঘোরান।
+                    কিবলার দিক সঠিকভাবে পেতে ফোনের
+                    Compass/Sensor চালু থাকতে হবে।
+                </p>
+
+            </div>
+
+
+
+            <!-- LOCATION -->
+
+            <button
+                type="button"
+                class="qibla-location-btn"
+                onclick="showPage('locationPage')"
+            >
+
+                📍 লোকেশন নির্বাচন করুন
+
+                <span>
+                    ›
+                </span>
+
+            </button>
+
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =================================================
+         LOCATION PAGE
+    ================================================== -->
+
+    <main
+        id="locationPage"
+        class="page"
+    >
+
+        <section class="location-page-container">
+
+
+            <!-- HEADER -->
+
+            <div class="feature-page-header">
+
+                <button
+                    type="button"
+                    class="feature-back-btn"
+                    onclick="showPage('homePage')"
+                >
+                    ←
+                </button>
+
+
+                <div class="feature-page-title">
+
+                    <div class="feature-page-icon">
+                        📍
+                    </div>
+
+
+                    <div>
+
+                        <h2>
+                            লোকেশন নির্বাচন
+                        </h2>
+
+                        <span>
+                            নামাজের সময় ও কিবলার জন্য
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CURRENT LOCATION -->
+
+            <div class="location-current-card">
+
+                <div class="location-current-icon">
+                    📍
+                </div>
+
+
+                <div class="location-current-info">
+
+                    <strong>
+                        বর্তমান লোকেশন
+                    </strong>
+
+
+                    <span id="selectedLocationName">
+                        কোনো লোকেশন নির্বাচন করা হয়নি
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- GPS -->
+
+            <button
+                type="button"
+                class="location-gps-btn"
+                id="useCurrentLocationBtn"
+            >
+                📍 বর্তমান লোকেশন ব্যবহার করুন
+            </button>
+
+
+
+            <div class="location-section-title">
+                অথবা ম্যানুয়ালি নির্বাচন করুন
+            </div>
+
+
+
+            <!-- MANUAL LOCATION -->
+
+            <div class="location-form-card">
+
+                <label>
+                    দেশ
+                </label>
+
+
+                <select id="locationCountry">
+
+                    <option value="">
+                        দেশ নির্বাচন করুন
+                    </option>
+
+                </select>
+
+
+                <label>
+                    শহর
+                </label>
+
+
+                <select
+                    id="locationCity"
+                    disabled
+                >
+
+                    <option value="">
+                        শহর নির্বাচন করুন
+                    </option>
+
+                </select>
+
+
+                <button
+                    type="button"
+                    class="location-save-btn"
+                    id="saveLocationBtn"
+                >
+                    ✓ লোকেশন সংরক্ষণ করুন
+                </button>
+
+            </div>
+
+
+
+            <!-- INFO -->
+
+            <div class="location-info-card">
+
+                <div>
+                    ℹ️
+                </div>
+
+
+                <p>
+                    আপনার নির্বাচিত লোকেশন অনুযায়ী
+                    নামাজের সময় এবং কিবলার দিক নির্ধারণ
+                    করা হবে।
+                </p>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =================================================
+         ABOUT PAGE
+    ================================================== -->
+
+    <main
+        id="aboutPage"
+        class="page"
+    >
+
+        <section class="about-page-container">
+
+
+            <!-- HEADER -->
+
+            <div class="feature-page-header">
+
+                <button
+                    type="button"
+                    class="feature-back-btn"
+                    onclick="showPage('homePage')"
+                >
+                    ←
+                </button>
+
+
+                <div class="feature-page-title">
+
+                    <div class="feature-page-icon">
+                        ℹ️
+                    </div>
+
+
+                    <div>
+
+                        <h2>
+                            অ্যাপ সম্পর্কে
+                        </h2>
+
+                        <span>
+                            কুরআন শরীফ
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- APP INFO -->
+
+            <div class="about-app-card">
+
+                <div class="about-app-logo">
+                    🕌
+                </div>
+
+
+                <h2>
+                    কুরআন শরীফ
+                </h2>
+
+
+                <p>
+                    আলোর পথে, শান্তির পথে
+                </p>
+
+
+                <div class="about-version">
+                    Version 1.0.0
+                </div>
+
+            </div>
+
+
+
+            <!-- ABOUT -->
+
+            <div class="about-info-card">
+
+                <div class="about-info-title">
+                    📖 অ্যাপ সম্পর্কে
+                </div>
+
+
+                <p>
+                    কুরআন শরীফ একটি ইসলামিক অ্যাপ,
+                    যেখানে কুরআন, তাফসির, হাদিস,
+                    দোয়া এবং অন্যান্য প্রয়োজনীয়
+                    ইসলামিক সুবিধা একসাথে পাওয়া যাবে।
+                </p>
+
+            </div>
+
+
+
+            <!-- FEATURES -->
+
+            <div class="about-info-card">
+
+                <div class="about-info-title">
+                    ✨ অ্যাপের সুবিধা
+                </div>
+
+
+                <div class="about-feature-row">
+                    📖 <span>পবিত্র কুরআন</span>
+                </div>
+
+
+                <div class="about-feature-row">
+                    📚 <span>তাফসির</span>
+                </div>
+
+
+                <div class="about-feature-row">
+                    📕 <span>হাদিস</span>
+                </div>
+
+
+                <div class="about-feature-row">
+                    🤲 <span>দোয়া</span>
+                </div>
+
+
+                <div class="about-feature-row">
+                    🕌 <span>নামাজের সময়</span>
+                </div>
+
+
+                <div class="about-feature-row">
+                    🧭 <span>কিবলা নির্দেশনা</span>
+                </div>
+
+
+                <div class="about-feature-row">
+                    📥 <span>অফলাইন সুবিধা</span>
+                </div>
+
+            </div>
+
+
+
+            <!-- FOOTER -->
+
+            <div class="about-footer">
+
+                <p>
+                    কুরআন হলো হিদায়াতের আলো।
+                </p>
+
+
+                <span>
+                    © কুরআন শরীফ
+                </span>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =================================================
+         SETTINGS PAGE
+         FIXED
+    ================================================== -->
+
+    <main
+        id="settingsPage"
+        class="page"
+    >
+
+
+        <!-- SETTINGS TITLE -->
+
+        <section class="settings-section">
+
+            <div class="settings-title">
+                ⚙️ সেটিংস
+            </div>
+
+
+            <div class="settings-card">
+
+                <div class="settings-card-title">
+                    অ্যাপের পছন্দ অনুযায়ী সেটিংস পরিবর্তন করুন
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- APPEARANCE -->
+
+        <section class="settings-section">
+
+            <div class="settings-title">
+                🎨 চেহারা ও থিম
+            </div>
+
+
+            <div class="settings-card">
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>
+                            থিম
+                        </strong>
+
+                        <span>
+                            অ্যাপের আলো বা অন্ধকার থিম নির্বাচন করুন
+                        </span>
+
+                    </div>
+
+
+                    <select id="themeSetting">
+
+                        <option value="light">
+                            লাইট
+                        </option>
+
+                        <option value="dark">
+                            ডার্ক
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- QURAN READING SETTINGS -->
+
+        <section class="settings-section">
+
+            <div class="settings-title">
+                📖 কুরআন পড়ার সেটিংস
+            </div>
+
+
+            <div class="settings-card">
+
+
+                <!-- ARABIC FONT -->
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>
+                            আরবি ফন্টের আকার
+                        </strong>
+
+                        <span>
+                            কুরআনের আরবি লেখার আকার
+                        </span>
+
+                    </div>
+
+
+                    <div class="font-size-control">
+
+                        <button
+                            type="button"
+                            id="arabicFontMinus"
+                        >
+                            −
+                        </button>
+
+
+                        <span id="arabicFontValue">
+                            28
+                        </span>
+
+
+                        <button
+                            type="button"
+                            id="arabicFontPlus"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- BANGLA FONT -->
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>
+                            বাংলা ফন্টের আকার
+                        </strong>
+
+                        <span>
+                            বাংলা অনুবাদের লেখার আকার
+                        </span>
+
+                    </div>
+
+
+                    <div class="font-size-control">
+
+                        <button
+                            type="button"
+                            id="banglaFontMinus"
+                        >
+                            −
+                        </button>
+
+
+                        <span id="banglaFontValue">
+                            16
+                        </span>
+
+
+                        <button
+                            type="button"
+                            id="banglaFontPlus"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- AUDIO SETTINGS -->
+
+        <section class="settings-section">
+
+            <div class="settings-title">
+                🔊 অডিও সেটিংস
+            </div>
+
+
+            <div class="settings-card">
+
+
+                <!-- VOLUME -->
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>
+                            অডিও ভলিউম
+                        </strong>
+
+                        <span>
+                            তিলাওয়াতের শব্দের মাত্রা
+                        </span>
+
+                    </div>
+
+
+                    <div class="font-size-control">
+
+                        <input
+                            type="range"
+                            id="audioVolume"
+                            min="0"
+                            max="100"
+                            value="100"
+                            step="1"
+                        >
+
+
+                        <span id="audioVolumeValue">
+                            100%
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- AUTO PLAY -->
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>
+                            অটো প্লে
+                        </strong>
+
+                        <span>
+                            আয়াত চালু হলে স্বয়ংক্রিয়ভাবে অডিও চালু হবে
+                        </span>
+
+                    </div>
+
+
+                    <label class="settings-switch">
+
+                        <input
+                            type="checkbox"
+                            id="audioAutoPlay"
+                        >
+
+                        <span></span>
+
+                    </label>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- READING OPTIONS -->
+
+        <section class="settings-section">
+
+            <div class="settings-title">
+                📚 পড়ার সুবিধা
+            </div>
+
+
+            <div class="settings-card">
+
+
+                <!-- TRANSLATION -->
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>
+                            বাংলা অনুবাদ দেখান
+                        </strong>
+
+                        <span>
+                            কুরআনের আয়াতের বাংলা অনুবাদ প্রদর্শন করুন
+                        </span>
+
+                    </div>
+
+
+                    <label class="settings-switch">
+
+                        <input
+                            type="checkbox"
+                            id="showTranslation"
+                            checked
+                        >
+
+                        <span></span>
+
+                    </label>
+
+                </div>
+
+
+
+                <!-- KEEP SCREEN ON -->
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>
+                            স্ক্রিন চালু রাখুন
+                        </strong>
+
+                        <span>
+                            কুরআন পড়ার সময় স্ক্রিন বন্ধ হওয়া বন্ধ রাখুন
+                        </span>
+
+                    </div>
+
+
+                    <label class="settings-switch">
+
+                        <input
+                            type="checkbox"
+                            id="keepScreenOn"
+                        >
+
+                        <span></span>
+
+                    </label>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- RESET -->
+
+        <section class="settings-section">
+
+            <div class="settings-card">
+
+                <button
+                    type="button"
+                    id="resetSettingsBtn"
+                    class="settings-reset-btn"
+                >
+
+                    🔄
+
+                    <span>
+                        সেটিংস রিসেট করুন
+                    </span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =================================================
+         DRAWER OVERLAY
+    ================================================== -->
+
+    <div
+        id="drawerOverlay"
+        class="drawer-overlay"
+    ></div>
+
+
+
+    <!-- =================================================
+         DRAWER
+    ================================================== -->
+
+    <aside
+        id="drawer"
+        class="drawer"
+    >
+
+
+        <!-- DRAWER HEADER -->
+
+        <div class="drawer-header">
+
+            <div class="drawer-logo">
+                🕌
+            </div>
+
+
+            <div>
+
+                <strong>
+                    কুরআন শরীফ
+                </strong>
+
+
+                <small>
+                    আলোর পথে, শান্তির পথে
+                </small>
+
+            </div>
+
+
+            <button
+                id="closeDrawerBtn"
+                class="drawer-close"
+                type="button"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+
+        <!-- DRAWER MENU -->
+
+        <nav class="drawer-menu">
+
+
+            <button
+                type="button"
+                data-page="homePage"
+            >
+
+                🏠
+
+                <span>
+                    হোম
+                </span>
+
+                <b>
+                    ›
+                </b>
+
+            </button>
+
+
+
+            <button
+                type="button"
+                data-page="quranPage"
+            >
+
+                📖
+
+                <span>
+                    কুরআন
+                </span>
+
+                <b>
+                    ›
+                </b>
+
+            </button>
+
+
+
+            <button
+                type="button"
+                data-page="bookmarkPage"
+            >
+
+                🔖
+
+                <span>
+                    বুকমার্ক
+                </span>
+
+                <b>
+                    ›
+                </b>
+
+            </button>
+
+
+<button
+  
+    data-page="prayerPage"
+    type="button"
+>
+    🕌
+    <span>নামাজ</span> 
+    <b>
+       ›
+    </b>
+</button>
+
+
+            <button
+                type="button"
+                data-page="qiblaPage"
+            >
+
+                🧭
+
+                <span>
+                    কিবলা নির্দেশনা
+                </span>
+
+                <b>
+                    ›
+                </b>
+
+            </button>
+
+
+
+            <button
+                type="button"
+                data-page="settingsPage"
+            >
+
+                ⚙️
+
+                <span>
+                    সেটিংস
+                </span>
+
+                <b>
+                    ›
+                </b>
+
+            </button>
+
+
+
+            <button
+                type="button"
+                data-page="locationPage"
+            >
+
+                📍
+
+                <span>
+                    লোকেশন নির্বাচন
+                </span>
+
+                <b>
+                    ›
+                </b>
+
+            </button>
+
+
+
+            <button
+                type="button"
+                data-page="aboutPage"
+            >
+
+                ℹ️
+
+                <span>
+                    অ্যাপ সম্পর্কে
+                </span>
+
+                <b>
+                    ›
+                </b>
+
+            </button>
+
+
+        </nav>
+
+
+
+        <!-- DRAWER FOOTER -->
+
+        <div class="drawer-footer">
+
+            <div>
+
+                কুরআন হলো
+                <br>
+                হিদায়াতের আলো।
+
+            </div>
+
+
+            <span>
+                📖
+            </span>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =================================================
+         BOTTOM NAVIGATION
+    ================================================== -->
+
+    <nav class="bottom-nav">
+
+
+        <!-- HOME -->
+
+        <button
+            class="bottom-nav-btn active"
+            data-page="homePage"
+            type="button"
+        >
+
+            <span>
+                🏠
+            </span>
+
+
+            <small>
+                হোম
+            </small>
+
+        </button>
+
+
+
+        <!-- QURAN -->
+
+        <button
+            class="bottom-nav-btn"
+            data-page="quranPage"
+            type="button"
+        >
+
+            <span>
+                📖
+            </span>
+
+
+            <small>
+                কুরআন
+            </small>
+
+        </button>
+
+
+
+        <!-- PRAYER -->
+
+        <button
+            class="bottom-nav-btn"
+            data-page="prayerPage"
+            type="button"
+        >
+
+            <span>
+                🕌
+            </span>
+
+
+            <small>
+                নামাজ
+            </small>
+
+        </button>
+
+
+
+        <!-- MORE -->
+
+        <button
+            class="bottom-nav-btn"
+            id="moreBtn"
+            type="button"
+        >
+
+            <span>
+                •••
+            </span>
+
+
+            <small>
+                আরও
+            </small>
+
+        </button>
+
+
+    </nav>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT FILES
+===================================================== -->
+
+<script src="js/app.js"></script>
+
+<script src="js/quran.js"></script>
+
+<script src="js/words.js"></script>
+
+<script src="js/tafsir.js"></script>
+
+<script src="js/settings.js"></script>
+
+<script src="js/hadith.js"></script>
+
+<script src="js/dua.js"></script>
+
+<script src="js/daily.js"></script>
+
+<script src="js/prayer-location-qibla.js"></script>
+
+
+
+<!-- =====================================================
+     BOOKMARK JAVASCRIPT
+===================================================== -->
+
+<script>
+
+function getSavedBookmarks() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                "quranBookmarks"
+            );
+
+
+        if (!saved) {
+            return [];
+        }
+
+
+        const data =
+            JSON.parse(saved);
+
+
+        if (Array.isArray(data)) {
+            return data;
+        }
+
+
+        return [];
+
+    } catch (error) {
+
+        console.error(
+            "Bookmark পড়া যায়নি:",
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+
+function renderBookmarkPage() {
+
+    const bookmarkList =
+        document.getElementById(
+            "bookmarkList"
+        );
+
+
+    if (!bookmarkList) {
+        return;
+    }
+
+
+    const bookmarks =
+        getSavedBookmarks();
+
+
+    if (bookmarks.length === 0) {
+
+        bookmarkList.innerHTML = `
+
+            <div class="bookmark-empty">
+
+                <div class="bookmark-empty-icon">
+                    🔖
+                </div>
+
+
+                <div class="bookmark-empty-title">
+                    কোনো বুকমার্ক নেই
+                </div>
+
+
+                <div class="bookmark-empty-text">
+                    কুরআনের কোনো আয়াত বুকমার্ক করলে
+                    এখানে দেখা যাবে।
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    bookmarkList.innerHTML = "";
+
+
+    bookmarks.forEach(
+        function(bookmark, index) {
+
+            const surahNumber =
+                Number(
+                    bookmark.surah
+                );
+
+
+            const ayahNumber =
+                Number(
+                    bookmark.ayah
+                );
+
+
+            if (
+                !surahNumber ||
+                !ayahNumber
+            ) {
+                return;
+            }
+
+
+            let surahName =
+                "সূরা " +
+                surahNumber;
+
+
+            try {
+
+                if (
+                    typeof bengaliSurahNames !==
+                    "undefined" &&
+                    bengaliSurahNames[surahNumber]
+                ) {
+
+                    surahName =
+                        bengaliSurahNames[
+                            surahNumber
+                        ];
+
+                }
+
+            } catch (error) {
+
+                console.log(
+                    "সূরার নাম পাওয়া যায়নি"
+                );
+
+            }
+
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "bookmark-item";
+
+
+            item.innerHTML = `
+
+                <button
+                    type="button"
+                    class="bookmark-open-btn"
+                    data-surah="${surahNumber}"
+                    data-ayah="${ayahNumber}"
+                >
+
+                    <div class="bookmark-item-icon">
+                        🔖
+                    </div>
+
+
+                    <div class="bookmark-item-info">
+
+                        <div class="bookmark-item-surah">
+                            ${surahName}
+                        </div>
+
+
+                        <div class="bookmark-item-ayah">
+                            আয়াত ${ayahNumber}
+                        </div>
+
+                    </div>
+
+
+                    <div class="bookmark-item-arrow">
+                        ›
+                    </div>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="bookmark-delete-btn"
+                    data-index="${index}"
+                    aria-label="বুকমার্ক মুছুন"
+                >
+                    ×
+                </button>
+
+            `;
+
+
+            bookmarkList.appendChild(
+                item
+            );
+
+        }
+    );
+
+
+
+    bookmarkList
+        .querySelectorAll(
+            ".bookmark-open-btn"
+        )
+        .forEach(
+            function(button) {
+
+                button.addEventListener(
+                    "click",
+                    function() {
+
+                        const surahNumber =
+                            Number(
+                                this.dataset.surah
+                            );
+
+
+                        const ayahNumber =
+                            Number(
+                                this.dataset.ayah
+                            );
+
+
+                        if (
+                            !surahNumber ||
+                            !ayahNumber
+                        ) {
+                            return;
+                        }
+
+
+                        showPage(
+                            "quranPage"
+                        );
+
+
+                        const surahSelect =
+                            document.getElementById(
+                                "surahSelect"
+                            );
+
+
+                        if (surahSelect) {
+
+                            surahSelect.value =
+                                String(
+                                    surahNumber
+                                );
+
+
+                            surahSelect.dispatchEvent(
+                                new Event(
+                                    "change"
+                                )
+                            );
+
+                        }
+
+
+                        setTimeout(
+                            function() {
+
+                                const ayahSelect =
+                                    document.getElementById(
+                                        "ayahSelect"
+                                    );
+
+
+                                if (ayahSelect) {
+
+                                    ayahSelect.value =
+                                        String(
+                                            ayahNumber
+                                        );
+
+                                }
+
+
+                                if (
+                                    typeof loadSurah ===
+                                    "function"
+                                ) {
+
+                                    loadSurah(
+                                        surahNumber,
+                                        ayahNumber
+                                    );
+
+                                }
+
+                            },
+                            150
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+
+    bookmarkList
+        .querySelectorAll(
+            ".bookmark-delete-btn"
+        )
+        .forEach(
+            function(button) {
+
+                button.addEventListener(
+                    "click",
+                    function() {
+
+                        const index =
+                            Number(
+                                this.dataset.index
+                            );
+
+
+                        const bookmarks =
+                            getSavedBookmarks();
+
+
+                        if (
+                            index < 0 ||
+                            index >=
+                            bookmarks.length
+                        ) {
+                            return;
+                        }
+
+
+                        bookmarks.splice(
+                            index,
+                            1
+                        );
+
+
+                        localStorage.setItem(
+                            "quranBookmarks",
+                            JSON.stringify(
+                                bookmarks
+                            )
+                        );
+
+
+                        renderBookmarkPage();
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        renderBookmarkPage();
+
+
+        document
+            .querySelectorAll(
+                '[data-page="bookmarkPage"]'
+            )
+            .forEach(
+                function(button) {
+
+                    button.addEventListener(
+                        "click",
+                        function() {
+
+                            setTimeout(
+                                function() {
+
+                                    renderBookmarkPage();
+
+                                },
+                                50
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+    }
+);
+
+
+
+window.addEventListener(
+    "storage",
+    function(event) {
+
+        if (
+            event.key ===
+            "quranBookmarks"
+        ) {
+
+            renderBookmarkPage();
+
+        }
+
+    }
+);
+
+</script>
+
+
+
+<!-- =====================================================
+     HOME BUTTON EVENTS
+===================================================== -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+
+        /* HOME QURAN */
+
+        const openQuranBtn =
+            document.getElementById(
+                "openQuranBtn"
+            );
+
+
+        if (openQuranBtn) {
+
+            openQuranBtn.addEventListener(
+                "click",
+                function() {
+
+                    showPage(
+                        "quranPage"
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* HOME SEARCH */
+
+        const homeSearchBtn =
+            document.getElementById(
+                "homeSearchBtn"
+            );
+
+
+        if (homeSearchBtn) {
+
+            homeSearchBtn.addEventListener(
+                "click",
+                function() {
+
+                    showPage(
+                        "searchPage"
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* HOME BOOKMARK */
+
+        const homeBookmarkBtn =
+            document.getElementById(
+                "homeBookmarkBtn"
+            );
+
+
+        if (homeBookmarkBtn) {
+
+            homeBookmarkBtn.addEventListener(
+                "click",
+                function() {
+
+                    showPage(
+                        "bookmarkPage"
+                    );
+
+
+                    if (
+                        typeof renderBookmarkPage ===
+                        "function"
+                    ) {
+
+                        setTimeout(
+                            function() {
+
+                                renderBookmarkPage();
+
+                            },
+                            50
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+
+        /* HOME TAFSIR */
+
+        const homeTafsirBtn =
+            document.getElementById(
+                "homeTafsirBtn"
+            );
+
+
+        if (homeTafsirBtn) {
+
+            homeTafsirBtn.addEventListener(
+                "click",
+                function() {
+
+                    showPage(
+                        "tafsirPage"
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* HOME HADITH */
+
+        const homeHadithBtn =
+            document.getElementById(
+                "homeHadithBtn"
+            );
+
+
+        if (homeHadithBtn) {
+
+            homeHadithBtn.addEventListener(
+                "click",
+                function() {
+
+                    showPage(
+                        "hadithPage"
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* SURAH LIST */
+
+        const surahListHomeBtn =
+            document.getElementById(
+                "surahListHomeBtn"
+            );
+
+
+        if (surahListHomeBtn) {
+
+            surahListHomeBtn.addEventListener(
+                "click",
+                function() {
+
+                    showPage(
+                        "quranPage"
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* HOME AUDIO */
+
+        const homeAudioBtn =
+            document.getElementById(
+                "homeAudioBtn"
+            );
+
+
+        if (homeAudioBtn) {
+
+            homeAudioBtn.addEventListener(
+                "click",
+                function() {
+
+                    showPage(
+                        "quranPage"
+                    );
+
+                }
+            );
+
+        }
+
+
+    }
+);
+
+</script>
+
+
+
+<!-- =====================================================
+     SERVICE WORKER
+===================================================== -->
+
+<script>
+
+if (
+    "serviceWorker" in
+    navigator
+) {
+
+    window.addEventListener(
+        "load",
+        function() {
+
+            navigator.serviceWorker
+                .register("./sw.js")
+
+                .then(
+                    function() {
+
+                        console.log(
+                            "Offline mode চালু হয়েছে"
+                        );
+
+                    }
+                )
+
+                .catch(
+                    function(error) {
+
+                        console.error(
+                            "Offline mode চালু করা যায়নি:",
+                            error
+                        );
+
+                    }
+                );
+
+        }
+    );
+
+}
+
+</script>
+
+
+</body>
+
+</html>

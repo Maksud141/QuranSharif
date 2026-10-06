@@ -1,0 +1,1559 @@
+/* =========================================================
+   QURAN SHARIF
+   PRAYER + QIBLA + LOCATION + ABOUT
+   ---------------------------------------------------------
+   Used by:
+   prayerPage
+   qiblaPage
+   locationPage
+   aboutPage
+
+   File:
+   css/prayer-location-qibla.css
+========================================================= */
+
+
+/* =========================================================
+   COMMON FEATURE PAGE
+========================================================= */
+
+.prayer-page-container,
+.qibla-page-container,
+.location-page-container,
+.about-page-container {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   FEATURE PAGE HEADER
+========================================================= */
+
+.feature-page-header {
+    width: 100%;
+    min-height: 64px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 16px;
+    padding: 10px 12px;
+
+    box-sizing: border-box;
+
+    background: var(--card-bg, #ffffff);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.feature-back-btn {
+    width: 42px;
+    height: 42px;
+
+    flex: 0 0 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 12px;
+
+    background: transparent;
+
+    font-size: 25px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.feature-back-btn:active {
+    transform: scale(0.94);
+}
+
+.feature-back-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+
+/* =========================================================
+   FEATURE PAGE TITLE
+========================================================= */
+
+.feature-page-title {
+    min-width: 0;
+
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+}
+
+
+.feature-page-icon {
+    width: 44px;
+    height: 44px;
+
+    flex: 0 0 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: rgba(0, 128, 96, 0.10);
+
+    font-size: 24px;
+}
+
+
+.feature-page-title h2 {
+    margin: 0;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    line-height: 1.4;
+}
+
+
+.feature-page-title span {
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 12px;
+
+    opacity: 0.68;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   HEADER ACTION BUTTON
+========================================================= */
+
+.feature-header-btn {
+    width: 42px;
+    height: 42px;
+
+    flex: 0 0 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 12px;
+
+    background: rgba(0, 128, 96, 0.10);
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.feature-header-btn:active {
+    transform: scale(0.94);
+}
+
+
+/* =========================================================
+   PRAYER DATE CARD
+========================================================= */
+
+.prayer-date-card {
+    width: 100%;
+
+    padding: 16px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+
+    background: var(--card-bg, #ffffff);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.05);
+
+    margin-bottom: 14px;
+}
+
+
+#prayerTodayDate {
+    font-size: 15px;
+    font-weight: 700;
+
+    line-height: 1.6;
+}
+
+
+#prayerHijriDate {
+    margin-top: 5px;
+
+    font-size: 13px;
+
+    opacity: 0.70;
+}
+
+
+/* =========================================================
+   NEXT PRAYER CARD
+========================================================= */
+
+.next-prayer-card {
+    width: 100%;
+
+    padding: 22px 16px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 128, 96, 0.96),
+            rgba(0, 102, 77, 0.96)
+        );
+
+    color: #ffffff;
+
+    box-shadow:
+        0 8px 22px rgba(0, 100, 80, 0.18);
+
+    margin-bottom: 16px;
+}
+
+
+.next-prayer-label {
+    font-size: 12px;
+
+    opacity: 0.82;
+
+    line-height: 1.5;
+}
+
+
+.next-prayer-name {
+    margin: 7px 0;
+
+    font-size: 25px;
+    font-weight: 800;
+
+    line-height: 1.4;
+}
+
+
+.next-prayer-countdown {
+    margin: 4px 0 8px;
+
+    font-size: 31px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* =========================================================
+   PRAYER FULL LIST
+========================================================= */
+
+.prayer-full-list {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 9px;
+
+    margin-bottom: 16px;
+}
+
+
+/* =========================================================
+   PRAYER ROW
+========================================================= */
+
+.prayer-full-row {
+    width: 100%;
+
+    min-height: 62px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 11px 15px;
+
+    box-sizing: border-box;
+
+    background: var(--card-bg, #ffffff);
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.045);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.prayer-full-row:active {
+    transform: scale(0.985);
+}
+
+
+/* =========================================================
+   PRAYER NAME
+========================================================= */
+
+.prayer-full-name {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+.prayer-full-name span {
+    display: inline-block;
+}
+
+
+/* =========================================================
+   PRAYER TIME
+========================================================= */
+
+.prayer-full-row strong {
+    font-size: 17px;
+    font-weight: 800;
+
+    white-space: nowrap;
+
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* =========================================================
+   ACTIVE PRAYER ROW
+========================================================= */
+
+.prayer-full-row.active,
+.prayer-full-row.current {
+    background:
+        rgba(0, 128, 96, 0.09);
+
+    box-shadow:
+        inset 4px 0 0 rgba(0, 128, 96, 0.85),
+        0 4px 14px rgba(0, 128, 96, 0.08);
+}
+
+
+/* =========================================================
+   HOME / PRAYER LOCATION BUTTON
+========================================================= */
+
+.prayer-location-btn,
+.qibla-location-btn {
+    width: 100%;
+
+    min-height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 12px 15px;
+
+    box-sizing: border-box;
+
+    border: none;
+    border-radius: 15px;
+
+    background: var(--card-bg, #ffffff);
+
+    color: inherit;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.05);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.prayer-location-btn span,
+.qibla-location-btn span {
+    font-size: 22px;
+    opacity: 0.65;
+}
+
+
+.prayer-location-btn:active,
+.qibla-location-btn:active {
+    transform: scale(0.985);
+}
+
+
+/* =========================================================
+   QIBLA PAGE
+========================================================= */
+
+.qibla-page-container {
+    padding-bottom: 30px;
+}
+
+
+/* =========================================================
+   QIBLA COMPASS CARD
+========================================================= */
+
+.qibla-compass-card {
+    width: 100%;
+
+    padding: 20px 16px 22px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+
+    background: var(--card-bg, #ffffff);
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.06);
+
+    margin-bottom: 15px;
+}
+
+
+.qibla-compass-title {
+    margin-bottom: 16px;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   COMPASS
+========================================================= */
+
+.qibla-compass {
+    position: relative;
+
+    width: min(78vw, 290px);
+    height: min(78vw, 290px);
+
+    max-width: 290px;
+    max-height: 290px;
+
+    margin: 0 auto 18px;
+
+    border-radius: 50%;
+
+    border:
+        8px solid rgba(0, 128, 96, 0.10);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0, 128, 96, 0.04) 0%,
+            rgba(0, 128, 96, 0.015) 55%,
+            transparent 56%
+        );
+
+    box-shadow:
+        inset 0 0 0 1px rgba(0, 0, 0, 0.05),
+        0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================================
+   COMPASS CROSS LINES
+========================================================= */
+
+.qibla-compass::before,
+.qibla-compass::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background: rgba(0, 0, 0, 0.07);
+}
+
+
+.qibla-compass::before {
+    width: 1px;
+    height: 82%;
+}
+
+
+.qibla-compass::after {
+    width: 82%;
+    height: 1px;
+}
+
+
+/* =========================================================
+   COMPASS DIRECTIONS
+========================================================= */
+
+.qibla-direction {
+    position: absolute;
+
+    z-index: 3;
+
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+.qibla-direction.north {
+    top: 8px;
+    left: 50%;
+
+    transform: translateX(-50%);
+}
+
+
+.qibla-direction.east {
+    right: 8px;
+    top: 50%;
+
+    transform: translateY(-50%);
+}
+
+
+.qibla-direction.south {
+    bottom: 8px;
+    left: 50%;
+
+    transform: translateX(-50%);
+}
+
+
+.qibla-direction.west {
+    left: 8px;
+    top: 50%;
+
+    transform: translateY(-50%);
+}
+
+
+/* =========================================================
+   QIBLA ARROW
+========================================================= */
+
+.qibla-arrow {
+    position: absolute;
+
+    z-index: 5;
+
+    left: 50%;
+    top: 50%;
+
+    width: 76px;
+    height: 76px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transform:
+        translate(-50%, -50%)
+        rotate(0deg);
+
+    border-radius: 50%;
+
+    background:
+        rgba(0, 128, 96, 0.10);
+
+    border:
+        2px solid rgba(0, 128, 96, 0.18);
+
+    font-size: 34px;
+
+    transition:
+        transform 0.25s ease;
+}
+
+
+/* =========================================================
+   QIBLA DEGREE
+========================================================= */
+
+.qibla-degree {
+    margin-top: 4px;
+
+    font-size: 28px;
+    font-weight: 800;
+
+    font-variant-numeric: tabular-nums;
+}
+
+
+.qibla-status {
+    margin-top: 6px;
+
+    padding: 0 10px;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    opacity: 0.72;
+}
+
+
+/* =========================================================
+   QIBLA START BUTTON
+========================================================= */
+
+.qibla-start-btn {
+    width: 100%;
+
+    min-height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 13px 16px;
+
+    border: none;
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #008060,
+            #00664d
+        );
+
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    box-shadow:
+        0 6px 18px rgba(0, 100, 80, 0.18);
+
+    cursor: pointer;
+
+    margin-bottom: 14px;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+.qibla-start-btn:active {
+    transform: scale(0.985);
+}
+
+
+.qibla-start-btn:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   QIBLA INFO CARD
+========================================================= */
+
+.qibla-info-card {
+    width: 100%;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 10px;
+
+    padding: 14px;
+
+    box-sizing: border-box;
+
+    background:
+        rgba(0, 128, 96, 0.07);
+
+    border-radius: 15px;
+
+    margin-bottom: 14px;
+}
+
+
+.qibla-info-icon {
+    flex: 0 0 auto;
+
+    font-size: 18px;
+}
+
+
+.qibla-info-card p {
+    margin: 0;
+
+    font-size: 12px;
+
+    line-height: 1.7;
+
+    opacity: 0.78;
+}
+
+
+/* =========================================================
+   LOCATION PAGE
+========================================================= */
+
+.location-page-container {
+    padding-bottom: 30px;
+}
+
+
+/* =========================================================
+   CURRENT LOCATION CARD
+========================================================= */
+
+.location-current-card {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 16px;
+
+    box-sizing: border-box;
+
+    background: var(--card-bg, #ffffff);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.05);
+
+    margin-bottom: 14px;
+}
+
+
+.location-current-icon {
+    width: 48px;
+    height: 48px;
+
+    flex: 0 0 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background:
+        rgba(0, 128, 96, 0.10);
+
+    font-size: 23px;
+}
+
+
+.location-current-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.location-current-info strong {
+    font-size: 15px;
+}
+
+
+.location-current-info span {
+    font-size: 13px;
+
+    opacity: 0.70;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   GPS BUTTON
+========================================================= */
+
+.location-gps-btn {
+    width: 100%;
+
+    min-height: 54px;
+
+    border: none;
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #008060,
+            #00664d
+        );
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 18px rgba(0, 100, 80, 0.17);
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+.location-gps-btn:active {
+    transform: scale(0.985);
+}
+
+
+.location-gps-btn:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   LOCATION SECTION TITLE
+========================================================= */
+
+.location-section-title {
+    margin: 20px 3px 10px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    opacity: 0.70;
+}
+
+
+/* =========================================================
+   LOCATION FORM CARD
+========================================================= */
+
+.location-form-card {
+    width: 100%;
+
+    padding: 17px;
+
+    box-sizing: border-box;
+
+    background: var(--card-bg, #ffffff);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+
+.location-form-card label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+.location-form-card select {
+    width: 100%;
+
+    height: 48px;
+
+    padding: 0 12px;
+
+    margin-bottom: 14px;
+
+    box-sizing: border-box;
+
+    border:
+        1px solid rgba(0, 0, 0, 0.10);
+
+    border-radius: 12px;
+
+    background: var(--input-bg, #ffffff);
+
+    color: inherit;
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+
+.location-form-card select:focus {
+    border-color:
+        rgba(0, 128, 96, 0.55);
+
+    box-shadow:
+        0 0 0 3px rgba(0, 128, 96, 0.08);
+}
+
+
+.location-form-card select:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   SAVE LOCATION BUTTON
+========================================================= */
+
+.location-save-btn {
+    width: 100%;
+
+    min-height: 52px;
+
+    border: none;
+    border-radius: 14px;
+
+    background:
+        rgba(0, 128, 96, 0.10);
+
+    color: inherit;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.location-save-btn:active {
+    transform: scale(0.985);
+}
+
+
+/* =========================================================
+   LOCATION INFO
+========================================================= */
+
+.location-info-card {
+    width: 100%;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 10px;
+
+    margin-top: 14px;
+
+    padding: 14px;
+
+    box-sizing: border-box;
+
+    border-radius: 15px;
+
+    background:
+        rgba(0, 128, 96, 0.07);
+}
+
+
+.location-info-card > div {
+    flex: 0 0 auto;
+
+    font-size: 18px;
+}
+
+
+.location-info-card p {
+    margin: 0;
+
+    font-size: 12px;
+
+    line-height: 1.7;
+
+    opacity: 0.78;
+}
+
+
+/* =========================================================
+   ABOUT PAGE
+========================================================= */
+
+.about-page-container {
+    padding-bottom: 35px;
+}
+
+
+/* =========================================================
+   ABOUT APP CARD
+========================================================= */
+
+.about-app-card {
+    width: 100%;
+
+    padding: 25px 18px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+
+    background: var(--card-bg, #ffffff);
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.06);
+
+    margin-bottom: 14px;
+}
+
+
+.about-app-logo {
+    width: 72px;
+    height: 72px;
+
+    margin: 0 auto 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 22px;
+
+    background:
+        rgba(0, 128, 96, 0.10);
+
+    font-size: 38px;
+}
+
+
+.about-app-card h2 {
+    margin: 0;
+
+    font-size: 22px;
+}
+
+
+.about-app-card p {
+    margin: 7px 0;
+
+    font-size: 13px;
+
+    opacity: 0.70;
+}
+
+
+.about-version {
+    display: inline-block;
+
+    margin-top: 5px;
+
+    padding: 5px 11px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(0, 128, 96, 0.08);
+
+    font-size: 11px;
+
+    opacity: 0.75;
+}
+
+
+/* =========================================================
+   ABOUT INFO CARD
+========================================================= */
+
+.about-info-card {
+    width: 100%;
+
+    padding: 17px;
+
+    box-sizing: border-box;
+
+    background: var(--card-bg, #ffffff);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.05);
+
+    margin-bottom: 14px;
+}
+
+
+.about-info-title {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 11px;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+
+.about-info-card p {
+    margin: 0;
+
+    font-size: 13px;
+
+    line-height: 1.85;
+
+    opacity: 0.78;
+}
+
+
+/* =========================================================
+   ABOUT FEATURE ROW
+========================================================= */
+
+.about-feature-row {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    min-height: 42px;
+
+    padding: 8px 2px;
+
+    box-sizing: border-box;
+
+    border-bottom:
+        1px solid rgba(0, 0, 0, 0.06);
+
+    font-size: 14px;
+}
+
+
+.about-feature-row:last-child {
+    border-bottom: none;
+}
+
+
+.about-feature-row span {
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   ABOUT FOOTER
+========================================================= */
+
+.about-footer {
+    padding: 12px 10px;
+
+    text-align: center;
+
+    opacity: 0.65;
+}
+
+
+.about-footer p {
+    margin: 0 0 5px;
+
+    font-size: 13px;
+}
+
+
+.about-footer span {
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   DARK MODE SUPPORT
+   Works with common body dark/theme classes
+========================================================= */
+
+body.dark .feature-page-header,
+body.dark .prayer-date-card,
+body.dark .next-prayer-card,
+body.dark .prayer-full-row,
+body.dark .qibla-compass-card,
+body.dark .location-current-card,
+body.dark .location-form-card,
+body.dark .about-app-card,
+body.dark .about-info-card,
+body.dark .prayer-location-btn,
+body.dark .qibla-location-btn {
+
+    background:
+        var(--card-bg, #1d1d1d);
+
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.22);
+}
+
+
+body.dark .location-form-card select {
+    background:
+        var(--input-bg, #252525);
+
+    color:
+        inherit;
+
+    border-color:
+        rgba(255, 255, 255, 0.10);
+}
+
+
+body.dark .about-feature-row {
+    border-bottom-color:
+        rgba(255, 255, 255, 0.08);
+}
+
+
+body.dark .feature-back-btn:hover {
+    background:
+        rgba(255, 255, 255, 0.07);
+}
+
+
+/* =========================================================
+   THEME CLASS SUPPORT
+========================================================= */
+
+.dark-mode .feature-page-header,
+.dark-mode .prayer-date-card,
+.dark-mode .prayer-full-row,
+.dark-mode .qibla-compass-card,
+.dark-mode .location-current-card,
+.dark-mode .location-form-card,
+.dark-mode .about-app-card,
+.dark-mode .about-info-card,
+.dark-mode .prayer-location-btn,
+.dark-mode .qibla-location-btn {
+
+    background:
+        var(--card-bg, #1d1d1d);
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .prayer-page-container,
+    .qibla-page-container,
+    .location-page-container,
+    .about-page-container {
+        padding: 12px;
+    }
+
+
+    .feature-page-header {
+        min-height: 58px;
+
+        padding: 8px 9px;
+
+        border-radius: 16px;
+    }
+
+
+    .feature-back-btn,
+    .feature-header-btn {
+        width: 39px;
+        height: 39px;
+
+        flex-basis: 39px;
+    }
+
+
+    .feature-page-icon {
+        width: 40px;
+        height: 40px;
+
+        flex-basis: 40px;
+
+        font-size: 21px;
+
+        border-radius: 12px;
+    }
+
+
+    .feature-page-title {
+        gap: 8px;
+    }
+
+
+    .feature-page-title h2 {
+        font-size: 16px;
+    }
+
+
+    .feature-page-title span {
+        font-size: 11px;
+    }
+
+
+    .prayer-date-card {
+        padding: 14px;
+    }
+
+
+    #prayerTodayDate {
+        font-size: 14px;
+    }
+
+
+    #prayerHijriDate {
+        font-size: 12px;
+    }
+
+
+    .next-prayer-card {
+        padding: 19px 13px;
+
+        border-radius: 19px;
+    }
+
+
+    .next-prayer-name {
+        font-size: 22px;
+    }
+
+
+    .next-prayer-countdown {
+        font-size: 27px;
+    }
+
+
+    .prayer-full-row {
+        min-height: 57px;
+
+        padding: 10px 13px;
+
+        border-radius: 14px;
+    }
+
+
+    .prayer-full-name {
+        font-size: 14px;
+    }
+
+
+    .prayer-full-row strong {
+        font-size: 16px;
+    }
+
+
+    .qibla-compass {
+        width: min(76vw, 270px);
+        height: min(76vw, 270px);
+    }
+
+
+    .qibla-arrow {
+        width: 68px;
+        height: 68px;
+
+        font-size: 30px;
+    }
+
+
+    .qibla-degree {
+        font-size: 26px;
+    }
+
+
+    .location-current-card {
+        padding: 14px;
+    }
+
+
+    .location-current-icon {
+        width: 44px;
+        height: 44px;
+
+        flex-basis: 44px;
+    }
+
+
+    .about-app-card {
+        padding: 21px 15px;
+    }
+
+
+    .about-app-logo {
+        width: 65px;
+        height: 65px;
+
+        font-size: 34px;
+    }
+
+
+    .about-app-card h2 {
+        font-size: 20px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .prayer-page-container,
+    .qibla-page-container,
+    .location-page-container,
+    .about-page-container {
+        padding: 9px;
+    }
+
+
+    .feature-page-title h2 {
+        font-size: 15px;
+    }
+
+
+    .feature-page-icon {
+        width: 37px;
+        height: 37px;
+
+        flex-basis: 37px;
+
+        font-size: 19px;
+    }
+
+
+    .next-prayer-countdown {
+        font-size: 24px;
+    }
+
+
+    .qibla-compass {
+        width: 245px;
+        height: 245px;
+    }
+
+
+    .qibla-arrow {
+        width: 62px;
+        height: 62px;
+
+        font-size: 27px;
+    }
+
+
+    .prayer-full-name {
+        font-size: 13px;
+    }
+
+
+    .prayer-full-row strong {
+        font-size: 15px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCE MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .feature-back-btn,
+    .feature-header-btn,
+    .prayer-full-row,
+    .prayer-location-btn,
+    .qibla-location-btn,
+    .qibla-start-btn,
+    .location-gps-btn,
+    .location-save-btn,
+    .qibla-arrow {
+        transition: none;
+    }
+
+}
