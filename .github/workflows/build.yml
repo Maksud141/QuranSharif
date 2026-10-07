@@ -1,23 +1,34 @@
-name: Build Quran Sharif APK
+name: QuranSharif Android Build
 
 on:
   workflow_dispatch:
+
   push:
     branches:
       - main
 
 jobs:
   build:
+    name: Build Signed APK and AAB
     runs-on: ubuntu-latest
+
+    env:
+      KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+      KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
 
     steps:
 
-      # 1. Checkout source
-      - name: Checkout source
+      # =====================================================
+      # 1. Checkout source code
+      # =====================================================
+      - name: Checkout repository
         uses: actions/checkout@v4
 
 
-      # 2. Java 17
+      # =====================================================
+      # 2. Setup Java 17
+      # =====================================================
       - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
@@ -25,55 +36,88 @@ jobs:
           java-version: '17'
 
 
-      # 3. Setup Android SDK
-      - name: Setup Android SDK
-        run: |
-          echo "ANDROID_HOME=$ANDROID_HOME"
-          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"
-
-          echo "Searching for sdkmanager..."
-
-          SDKMANAGER=$(find "$ANDROID_HOME" -type f -name sdkmanager | head -n 1)
-
-          if [ -z "$SDKMANAGER" ]; then
-            echo "ERROR: sdkmanager not found"
-            exit 1
-          fi
-
-          echo "Found sdkmanager:"
-          echo "$SDKMANAGER"
-
-          SDKMANAGER_DIR=$(dirname "$SDKMANAGER")
-
-          echo "$SDKMANAGER_DIR" >> "$GITHUB_PATH"
-
-          yes | "$SDKMANAGER" --licenses || true
-
-
-      # 4. Install Android SDK packages
-      - name: Install Android SDK packages
-        run: |
-          sdkmanager "platform-tools"
-          sdkmanager "platforms;android-35"
-          sdkmanager "build-tools;35.0.0"
-
-
-      # 5. Setup Gradle
+      # =====================================================
+      # 3. Setup Gradle
+      # =====================================================
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.7'
 
 
-      # 6. Build Release APK
+      # =====================================================
+      # 4. Restore signing keystore
+      # =====================================================
+      - name: Decode signing keystore
+        shell: bash
+        run: |
+          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > app/quransharif-upload.jks
+
+
+      # =====================================================
+      # 5. Verify keystore exists
+      # =====================================================
+      - name: Verify signing keystore
+        shell: bash
+        run: |
+          test -s app/quransharif-upload.jks
+          echo "Signing keystore restored successfully."
+
+
+      # =====================================================
+      # 6. Build signed Release APK
+      # =====================================================
       - name: Build Release APK
         run: |
           gradle assembleRelease --no-daemon
 
 
-      # 7. Upload APK
-      - name: Upload Release APK
-        uses: actions/upload-artifact@v4
+      # =====================================================
+      # 7. Build signed Release AAB
+      # =====================================================
+      - name: Build Release AAB
+        run: |
+          gradle bundleRelease --no-daemon
+
+
+      # =====================================================
+      # 8. Verify output files
+      # =====================================================
+      - name: Verify APK and AAB
+        shell: bash
+        run: |
+          test -s app/build/outputs/apk/release/app-release.apk
+          test -s app/build/outputs/bundle/release/app-release.aab
+
+          echo "======================================"
+          echo "SIGNED APK:"
+          ls -lh app/build/outputs/apk/release/app-release.apk
+
+          echo "======================================"
+          echo "SIGNED AAB:"
+          ls -lh app/build/outputs/bundle/release/app-release.aab
+          echo "======================================"
+
+
+      # =====================================================
+      # 9. Upload APK + AAB
+      # =====================================================
+      - name: Upload APK and AAB
+        uses: actions/upload-artifact@v7
         with:
-          name: QuranSharif-release-apk
-          path: app/build/outputs/apk/release/*.apk
+          name: QuranSharif-Release
+          path: |
+            app/build/outputs/apk/release/app-release.apk
+            app/build/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
+          retention-days: 7
+
+
+      # =====================================================
+      # 10. Remove signing keystore from runner
+      # =====================================================
+      - name: Remove signing keystore
+        if: always()
+        shell: bash
+        run: |
+          rm -f app/quransharif-upload.jks
