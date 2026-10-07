@@ -9,26 +9,24 @@ on:
 
 jobs:
   build:
-    name: Build Signed APK and AAB
+    name: Diagnose Signing Keystore
     runs-on: ubuntu-latest
 
     env:
-      KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-      KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
       KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
 
     steps:
 
-      # =====================================================
-      # 1. Checkout source code
-      # =====================================================
+      # ======================================
+      # 1. Checkout repository
+      # ======================================
       - name: Checkout repository
         uses: actions/checkout@v4
 
 
-      # =====================================================
+      # ======================================
       # 2. Setup Java 17
-      # =====================================================
+      # ======================================
       - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
@@ -36,103 +34,201 @@ jobs:
           java-version: '17'
 
 
-      # =====================================================
+      # ======================================
       # 3. Setup Gradle
-      # =====================================================
+      # ======================================
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.7'
 
 
-      # =====================================================
-      # 4. Restore signing keystore
-      # =====================================================
-      - name: Decode signing keystore
+      # ======================================
+      # 4. Diagnose KEYSTORE_BASE64
+      # ======================================
+      - name: Diagnose KEYSTORE_BASE64
         shell: bash
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         run: |
-          printf '%s' "$KEYSTORE_BASE64" \
-            | base64 --ignore-garbage --decode \
-            > app/quransharif-upload.jks
-
-
-      # =====================================================
-      # 5. Verify signing keystore
-      # =====================================================
-      - name: Verify signing keystore
-        shell: bash
-        run: |
-          test -s app/quransharif-upload.jks
-
-          keytool -list \
-            -keystore app/quransharif-upload.jks \
-            -alias "$KEYSTORE_ALIAS" \
-            -storepass "$KEYSTORE_PASSWORD" \
-            -v > /tmp/keystore-check.txt
-
-          grep -q "PrivateKeyEntry" /tmp/keystore-check.txt
 
           echo "======================================"
-          echo "Signing keystore verified successfully."
-          echo "Alias: $KEYSTORE_ALIAS"
+          echo "KEYSTORE_BASE64 DIAGNOSTIC"
           echo "======================================"
 
+          python3 - <<'PY'
+          import os
+          import re
+          import base64
+          import hashlib
 
-      # =====================================================
-      # 6. Build signed Release APK
-      # =====================================================
-      - name: Build Release APK
-        run: |
-          gradle assembleRelease --no-daemon
+          s = os.environ.get("KEYSTORE_BASE64", "")
 
+          print("1. Secret exists:", bool(s))
 
-      # =====================================================
-      # 7. Build signed Release AAB
-      # =====================================================
-      - name: Build Release AAB
-        run: |
-          gradle bundleRelease --no-daemon
+          print("2. Character count:", len(s))
 
+          print("3. Length mod 4:", len(s) % 4)
 
-      # =====================================================
-      # 8. Verify output files
-      # =====================================================
-      - name: Verify APK and AAB
-        shell: bash
-        run: |
-          test -s app/build/outputs/apk/release/app-release.apk
-          test -s app/build/outputs/bundle/release/app-release.aab
+          invalid = re.findall(
+              r'[^A-Za-z0-9+/=\r\n]',
+              s
+          )
 
-          echo "======================================"
-          echo "SIGNED APK:"
-          ls -lh app/build/outputs/apk/release/app-release.apk
+          print(
+              "4. Invalid Base64 characters:",
+              len(invalid)
+          )
 
-          echo "======================================"
-          echo "SIGNED AAB:"
-          ls -lh app/build/outputs/bundle/release/app-release.aab
+          padding = len(s) - len(s.rstrip("="))
 
-          echo "======================================"
+          print(
+              "5. Padding characters:",
+              padding
+          )
 
-
-      # =====================================================
-      # 9. Upload APK + AAB
-      # =====================================================
-      - name: Upload APK and AAB
-        uses: actions/upload-artifact@v7
-        with:
-          name: QuranSharif-Release
-          path: |
-            app/build/outputs/apk/release/app-release.apk
-            app/build/outputs/bundle/release/app-release.aab
-          if-no-files-found: error
-          retention-days: 7
+          print(
+              "6. Expected local Base64 length: 3736"
+          )
 
 
-      # =====================================================
-      # 10. Remove signing keystore from runner
-      # =====================================================
-      - name: Remove signing keystore
-        if: always()
-        shell: bash
-        run: |
-          rm -f app/quransharif-upload.jks
+          # ==================================
+          # Length check
+          # ==================================
+
+          if len(s) == 3736:
+
+              print(
+                  "7. Length check: PASS"
+              )
+
+          else:
+
+              print(
+                  "7. Length check: FAIL"
+              )
+
+
+          # ==================================
+          # Character check
+          # ==================================
+
+          if len(invalid) == 0:
+
+              print(
+                  "8. Character check: PASS"
+              )
+
+          else:
+
+              print(
+                  "8. Character check: FAIL"
+              )
+
+
+          # ==================================
+          # Clean Base64
+          # ==================================
+
+          clean = re.sub(
+              r'[^A-Za-z0-9+/=]',
+              '',
+              s
+          )
+
+
+          # ==================================
+          # Repair missing Base64 padding
+          # ==================================
+
+          clean += "=" * (-len(clean) % 4)
+
+
+          # ==================================
+          # Decode
+          # ==================================
+
+          try:
+
+              decoded = base64.b64decode(
+                  clean,
+                  validate=False
+              )
+
+              print(
+                  "9. Base64 decode: PASS"
+              )
+
+              print(
+                  "10. Decoded JKS size:",
+                  len(decoded),
+                  "bytes"
+              )
+
+
+              # ==============================
+              # SHA-256 of decoded JKS
+              # ==============================
+
+              decoded_hash = hashlib.sha256(
+                  decoded
+              ).hexdigest()
+
+              print(
+                  "11. Decoded JKS SHA-256:",
+                  decoded_hash
+              )
+
+
+              # ==============================
+              # Expected local JKS SHA-256
+              # ==============================
+
+              expected = (
+                  "2598cc5c5782c512ff4fa9bc6ee140415b6b1ae151442e37ee4dd235321b9dd4"
+              )
+
+
+              if decoded_hash == expected:
+
+                  print(
+                      "12. JKS hash check: PASS"
+                  )
+
+              else:
+
+                  print(
+                      "12. JKS hash check: FAIL"
+                  )
+
+
+          except Exception as e:
+
+              print(
+                  "9. Base64 decode: FAIL"
+              )
+
+              print(
+                  "Error type:",
+                  type(e).__name__
+              )
+
+              print(
+                  "Error:",
+                  str(e)
+              )
+
+
+          print(
+              "======================================"
+          )
+
+          print(
+              "DIAGNOSTIC COMPLETE"
+          )
+
+          print(
+              "======================================"
+
+          )
+          PY
