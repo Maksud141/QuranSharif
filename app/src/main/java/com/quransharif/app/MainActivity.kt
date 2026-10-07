@@ -10,18 +10,23 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.ComponentActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.webkit.WebViewAssetLoader
 
 class MainActivity : ComponentActivity() {
 
     private lateinit var webView: WebView
 
     companion object {
+
         private const val NOTIFICATION_PERMISSION_REQUEST = 1001
+
         private const val NOTIFICATION_CHANNEL_ID =
             "quran_daily_notification"
     }
@@ -29,40 +34,140 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Notification channel
+        // =====================================================
+        // Notification Channel
+        // =====================================================
+
         createNotificationChannel()
 
-        // Android 13+ notification permission
+
+        // =====================================================
+        // Android 13+ Notification Permission
+        // =====================================================
+
         requestNotificationPermission()
 
-        // Android 12+ exact alarm permission
+
+        // =====================================================
+        // Android 12+ Exact Alarm Permission
+        // =====================================================
+
         requestExactAlarmPermission()
 
-        // প্রতিদিন রাত ৯টার notification schedule
+
+        // =====================================================
+        // Daily 9:00 PM Notification Schedule
+        // =====================================================
+
         DailyNotificationScheduler.schedule(this)
 
+
+        // =====================================================
         // WebView
+        // =====================================================
+
         webView = WebView(this)
 
         webView.settings.apply {
+
+            // JavaScript
             javaScriptEnabled = true
+
+            // LocalStorage
             domStorageEnabled = true
+
+            // Local file/content access
             allowFileAccess = true
             allowContentAccess = true
 
+            // Zoom বন্ধ
             builtInZoomControls = false
             displayZoomControls = false
             setSupportZoom(false)
+
+            // Text/HTML rendering
+            loadsImagesAutomatically = true
+
+            // Database support
+            databaseEnabled = true
+
+            // Prevent automatic media zoom
+            useWideViewPort = false
+            loadWithOverviewMode = false
         }
 
-        webView.webViewClient = WebViewClient()
+
+        // =====================================================
+        // WebView Asset Loader
+        //
+        // file:///android_asset/
+        // এর পরিবর্তে
+        //
+        // https://appassets.androidplatform.net/assets/
+        //
+        // ব্যবহার করা হচ্ছে।
+        // =====================================================
+
+        val assetLoader = WebViewAssetLoader.Builder()
+            .addPathHandler(
+                "/assets/",
+                WebViewAssetLoader.AssetsPathHandler(this)
+            )
+            .build()
+
+
+        // =====================================================
+        // WebView Client
+        // =====================================================
+
+        webView.webViewClient = object : WebViewClient() {
+
+            override fun shouldInterceptRequest(
+                view: WebView,
+                request: WebResourceRequest
+            ): WebResourceResponse? {
+
+                return assetLoader.shouldInterceptRequest(
+                    request.url
+                )
+            }
+
+            @Suppress("DEPRECATION")
+            override fun shouldInterceptRequest(
+                view: WebView,
+                url: String
+            ): WebResourceResponse? {
+
+                return assetLoader.shouldInterceptRequest(
+                    Uri.parse(url)
+                )
+            }
+        }
+
+
+        // =====================================================
+        // Load App
+        //
+        // IMPORTANT:
+        // আর file:///android_asset/index.html নয়
+        // =====================================================
 
         webView.loadUrl(
-            "file:///android_asset/index.html"
+            "https://appassets.androidplatform.net/assets/index.html"
         )
+
+
+        // =====================================================
+        // Show WebView
+        // =====================================================
 
         setContentView(webView)
     }
+
+
+    // =========================================================
+    // Notification Channel
+    // =========================================================
 
     private fun createNotificationChannel() {
 
@@ -87,6 +192,11 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+
+    // =========================================================
+    // Android 13+ Notification Permission
+    // =========================================================
+
     private fun requestNotificationPermission() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -108,6 +218,11 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+
+    // =========================================================
+    // Android 12+ Exact Alarm Permission
+    // =========================================================
 
     private fun requestExactAlarmPermission() {
 
@@ -134,12 +249,18 @@ class MainActivity : ComponentActivity() {
                 } catch (e: Exception) {
 
                     // Permission screen unavailable হলে
-                    // app স্বাভাবিকভাবেই চলবে।
+                    // app স্বাভাবিকভাবে চলবে।
                 }
             }
         }
     }
 
+
+    // =========================================================
+    // Android Back Button
+    // =========================================================
+
+    @Suppress("DEPRECATION")
     override fun onBackPressed() {
 
         if (webView.canGoBack()) {
@@ -151,6 +272,11 @@ class MainActivity : ComponentActivity() {
             super.onBackPressed()
         }
     }
+
+
+    // =========================================================
+    // Destroy WebView
+    // =========================================================
 
     override fun onDestroy() {
 
