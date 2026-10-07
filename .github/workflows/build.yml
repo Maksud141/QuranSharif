@@ -51,17 +51,31 @@ jobs:
       - name: Decode signing keystore
         shell: bash
         run: |
-          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > app/quransharif-upload.jks
+          printf '%s' "$KEYSTORE_BASE64" \
+            | base64 --ignore-garbage --decode \
+            > app/quransharif-upload.jks
 
 
       # =====================================================
-      # 5. Verify keystore exists
+      # 5. Verify signing keystore
       # =====================================================
       - name: Verify signing keystore
         shell: bash
         run: |
           test -s app/quransharif-upload.jks
-          echo "Signing keystore restored successfully."
+
+          keytool -list \
+            -keystore app/quransharif-upload.jks \
+            -alias "$KEYSTORE_ALIAS" \
+            -storepass "$KEYSTORE_PASSWORD" \
+            -v > /tmp/keystore-check.txt
+
+          grep -q "PrivateKeyEntry" /tmp/keystore-check.txt
+
+          echo "======================================"
+          echo "Signing keystore verified successfully."
+          echo "Alias: $KEYSTORE_ALIAS"
+          echo "======================================"
 
 
       # =====================================================
@@ -96,6 +110,7 @@ jobs:
           echo "======================================"
           echo "SIGNED AAB:"
           ls -lh app/build/outputs/bundle/release/app-release.aab
+
           echo "======================================"
 
 
