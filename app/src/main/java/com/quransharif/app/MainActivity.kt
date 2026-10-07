@@ -17,7 +17,7 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.ComponentActivity
-import androidx.core.app.ActivityCompat
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -39,15 +39,89 @@ class MainActivity : ComponentActivity() {
 
     companion object {
 
-        private const val NOTIFICATION_PERMISSION_REQUEST = 1001
-
-        private const val LOCATION_PERMISSION_REQUEST = 1002
-
         private const val NOTIFICATION_CHANNEL_ID =
             "quran_daily_notification"
 
     }
 
+
+    /*
+     * =====================================================
+     * LOCATION PERMISSION RESULT
+     * AndroidX Activity Result API
+     * =====================================================
+     */
+
+    private val locationPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+
+            val fineGranted =
+                permissions[
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ] == true
+
+            val coarseGranted =
+                permissions[
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ] == true
+
+
+            val granted =
+                fineGranted || coarseGranted
+
+
+            val origin =
+                pendingGeoOrigin
+
+
+            val callback =
+                pendingGeoCallback
+
+
+            if (
+                origin != null &&
+                callback != null
+            ) {
+
+                callback.invoke(
+                    origin,
+                    granted,
+                    false
+                )
+
+            }
+
+
+            pendingGeoOrigin = null
+
+            pendingGeoCallback = null
+
+        }
+
+
+    /*
+     * =====================================================
+     * NOTIFICATION PERMISSION
+     * Android 13+
+     * =====================================================
+     */
+
+    private val notificationPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) {
+            // Notification permission result.
+            // আলাদা কোনো কাজ প্রয়োজন নেই।
+        }
+
+
+    /*
+     * =====================================================
+     * ON CREATE
+     * =====================================================
+     */
 
     override fun onCreate(
         savedInstanceState: Bundle?
@@ -104,6 +178,7 @@ class MainActivity : ComponentActivity() {
             useWideViewPort = false
 
             loadWithOverviewMode = false
+
 
             /*
              * GPS / Geolocation
@@ -162,7 +237,7 @@ class MainActivity : ComponentActivity() {
 
         /* =================================================
            WEB CHROME CLIENT
-           GPS permission এখানেই handle হবে
+           GPS permission
         ================================================= */
 
         webView.webChromeClient =
@@ -174,7 +249,8 @@ class MainActivity : ComponentActivity() {
                 ) {
 
                     /*
-                     * Android location permission already granted?
+                     * Android location permission
+                     * already granted?
                      */
 
                     val fineGranted =
@@ -191,15 +267,14 @@ class MainActivity : ComponentActivity() {
                         ) == PackageManager.PERMISSION_GRANTED
 
 
+                    /*
+                     * Permission already আছে।
+                     */
+
                     if (
                         fineGranted ||
                         coarseGranted
                     ) {
-
-                        /*
-                         * Android permission already আছে।
-                         * WebView-কে location ব্যবহার করতে দাও।
-                         */
 
                         callback.invoke(
                             origin,
@@ -213,7 +288,7 @@ class MainActivity : ComponentActivity() {
 
 
                     /*
-                     * Android permission এখন চাইতে হবে।
+                     * Permission এখন চাইতে হবে।
                      */
 
                     pendingGeoOrigin =
@@ -223,13 +298,11 @@ class MainActivity : ComponentActivity() {
                         callback
 
 
-                    ActivityCompat.requestPermissions(
-                        this@MainActivity,
+                    locationPermissionLauncher.launch(
                         arrayOf(
                             Manifest.permission.ACCESS_FINE_LOCATION,
                             Manifest.permission.ACCESS_COARSE_LOCATION
-                        ),
-                        LOCATION_PERMISSION_REQUEST
+                        )
                     )
 
                 }
@@ -239,12 +312,8 @@ class MainActivity : ComponentActivity() {
 
         /* =================================================
            EDGE-TO-EDGE / SYSTEM BAR INSETS
-           
-           Android 15 + targetSdk 35-এ
-           WebView system navigation/status bar-এর
-           নিচে/উপরে ঢুকে যেতে পারে।
 
-           এই padding সেটি ঠিক করবে।
+           Android 15 + targetSdk 35
         ================================================= */
 
         ViewCompat.setOnApplyWindowInsetsListener(
@@ -328,6 +397,7 @@ class MainActivity : ComponentActivity() {
 
     /* =====================================================
        NOTIFICATION PERMISSION
+       Android 13+
     ===================================================== */
 
     private fun requestNotificationPermission() {
@@ -337,19 +407,17 @@ class MainActivity : ComponentActivity() {
             Build.VERSION_CODES.TIRAMISU
         ) {
 
-            if (
+            val granted =
                 ContextCompat.checkSelfPermission(
                     this,
                     Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
+                ) == PackageManager.PERMISSION_GRANTED
 
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(
-                        Manifest.permission.POST_NOTIFICATIONS
-                    ),
-                    NOTIFICATION_PERMISSION_REQUEST
+
+            if (!granted) {
+
+                notificationPermissionLauncher.launch(
+                    Manifest.permission.POST_NOTIFICATIONS
                 )
 
             }
@@ -361,6 +429,7 @@ class MainActivity : ComponentActivity() {
 
     /* =====================================================
        EXACT ALARM PERMISSION
+       Android 12+
     ===================================================== */
 
     private fun requestExactAlarmPermission() {
@@ -412,72 +481,6 @@ class MainActivity : ComponentActivity() {
 
 
     /* =====================================================
-       RUNTIME PERMISSION RESULT
-    ===================================================== */
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-
-        super.onRequestPermissionsResult(
-            requestCode,
-            permissions,
-            grantResults
-        )
-
-
-        /* =================================================
-           LOCATION RESULT
-        ================================================= */
-
-        if (
-            requestCode ==
-            LOCATION_PERMISSION_REQUEST
-        ) {
-
-            val granted =
-                grantResults.any {
-                    it ==
-                        PackageManager.PERMISSION_GRANTED
-                }
-
-
-            val origin =
-                pendingGeoOrigin
-
-
-            val callback =
-                pendingGeoCallback
-
-
-            if (
-                origin != null &&
-                callback != null
-            ) {
-
-                callback.invoke(
-                    origin,
-                    granted,
-                    false
-                )
-
-            }
-
-
-            pendingGeoOrigin =
-                null
-
-            pendingGeoCallback =
-                null
-
-        }
-
-    }
-
-
-    /* =====================================================
        ANDROID BACK BUTTON
     ===================================================== */
 
@@ -505,11 +508,9 @@ class MainActivity : ComponentActivity() {
 
     override fun onDestroy() {
 
-        pendingGeoOrigin =
-            null
+        pendingGeoOrigin = null
 
-        pendingGeoCallback =
-            null
+        pendingGeoCallback = null
 
 
         webView.destroy()
