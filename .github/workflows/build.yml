@@ -7,14 +7,12 @@ on:
       - main
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
 
-      # 1. Checkout repository
+      # 1. Checkout
       - name: Checkout source
         uses: actions/checkout@v4
 
@@ -28,33 +26,27 @@ jobs:
 
 
       # 3. Android SDK
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-
-      # 4. Install Android SDK packages
-      - name: Install Android SDK packages
+      - name: Install Android SDK
         run: |
-          yes | sdkmanager --licenses
           sdkmanager "platform-tools"
           sdkmanager "platforms;android-35"
           sdkmanager "build-tools;35.0.0"
 
 
-      # 5. Setup Gradle
+      # 4. Setup Gradle
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.7'
 
 
-      # 6. Build Release APK
+      # 5. Build Release APK
       - name: Build Release APK
         run: |
           gradle assembleRelease --no-daemon
 
 
-      # 7. Upload APK
+      # 6. Upload APK
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
