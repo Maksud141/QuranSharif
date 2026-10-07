@@ -25,7 +25,7 @@ jobs:
           java-version: '17'
 
 
-      # 3. Find Android SDK
+      # 3. Setup Android SDK
       - name: Setup Android SDK
         run: |
           echo "ANDROID_HOME=$ANDROID_HOME"
@@ -37,7 +37,6 @@ jobs:
 
           if [ -z "$SDKMANAGER" ]; then
             echo "ERROR: sdkmanager not found"
-            find "$ANDROID_HOME" -maxdepth 4 -type f | grep sdkmanager || true
             exit 1
           fi
 
@@ -47,8 +46,6 @@ jobs:
           SDKMANAGER_DIR=$(dirname "$SDKMANAGER")
 
           echo "$SDKMANAGER_DIR" >> "$GITHUB_PATH"
-
-          chmod +x "$SDKMANAGER"
 
           yes | "$SDKMANAGER" --licenses || true
 
