@@ -6,6 +6,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -16,10 +17,12 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.FrameLayout
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.webkit.WebViewAssetLoader
 
@@ -29,8 +32,11 @@ class MainActivity : ComponentActivity() {
     private lateinit var webView: WebView
 
     /*
-     * WebView GPS permission callback
+     * =====================================================
+     * WEBVIEW GPS PERMISSION CALLBACK
+     * =====================================================
      */
+
     private var pendingGeoOrigin: String? = null
 
     private var pendingGeoCallback:
@@ -48,7 +54,6 @@ class MainActivity : ComponentActivity() {
     /*
      * =====================================================
      * LOCATION PERMISSION RESULT
-     * AndroidX Activity Result API
      * =====================================================
      */
 
@@ -74,7 +79,6 @@ class MainActivity : ComponentActivity() {
 
             val origin =
                 pendingGeoOrigin
-
 
             val callback =
                 pendingGeoCallback
@@ -103,8 +107,7 @@ class MainActivity : ComponentActivity() {
 
     /*
      * =====================================================
-     * NOTIFICATION PERMISSION
-     * Android 13+
+     * NOTIFICATION PERMISSION RESULT
      * =====================================================
      */
 
@@ -112,8 +115,10 @@ class MainActivity : ComponentActivity() {
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) {
+
             // Notification permission result.
             // আলাদা কোনো কাজ প্রয়োজন নেই।
+
         }
 
 
@@ -130,9 +135,27 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
 
-        /* =================================================
-           NOTIFICATION
-        ================================================= */
+        /*
+         * =================================================
+         * ANDROID 15 EDGE-TO-EDGE
+         *
+         * Root পুরো screen নেবে।
+         * WebView-কে আমরা system bars বাদ দিয়ে
+         * আলাদা area-তে রাখব।
+         * =================================================
+         */
+
+        WindowCompat.setDecorFitsSystemWindows(
+            window,
+            false
+        )
+
+
+        /*
+         * =================================================
+         * NOTIFICATION
+         * =================================================
+         */
 
         createNotificationChannel()
 
@@ -141,19 +164,46 @@ class MainActivity : ComponentActivity() {
         requestExactAlarmPermission()
 
 
-        /* =================================================
-           DAILY NOTIFICATION
-        ================================================= */
+        /*
+         * =================================================
+         * DAILY NOTIFICATION
+         * =================================================
+         */
 
         DailyNotificationScheduler.schedule(this)
 
 
-        /* =================================================
-           WEBVIEW
-        ================================================= */
+        /*
+         * =================================================
+         * ROOT CONTAINER
+         * =================================================
+         */
 
-        webView = WebView(this)
+        val rootLayout =
+            FrameLayout(this).apply {
 
+                setBackgroundColor(
+                    Color.WHITE
+                )
+
+            }
+
+
+        /*
+         * =================================================
+         * WEBVIEW
+         * =================================================
+         */
+
+        webView =
+            WebView(this)
+
+
+        /*
+         * =================================================
+         * WEBVIEW SETTINGS
+         * =================================================
+         */
 
         webView.settings.apply {
 
@@ -183,14 +233,17 @@ class MainActivity : ComponentActivity() {
             /*
              * GPS / Geolocation
              */
+
             setGeolocationEnabled(true)
 
         }
 
 
-        /* =================================================
-           WEBVIEW ASSET LOADER
-        ================================================= */
+        /*
+         * =================================================
+         * WEBVIEW ASSET LOADER
+         * =================================================
+         */
 
         val assetLoader =
             WebViewAssetLoader.Builder()
@@ -201,9 +254,11 @@ class MainActivity : ComponentActivity() {
                 .build()
 
 
-        /* =================================================
-           WEBVIEW CLIENT
-        ================================================= */
+        /*
+         * =================================================
+         * WEBVIEW CLIENT
+         * =================================================
+         */
 
         webView.webViewClient =
             object : WebViewClient() {
@@ -235,10 +290,13 @@ class MainActivity : ComponentActivity() {
             }
 
 
-        /* =================================================
-           WEB CHROME CLIENT
-           GPS permission
-        ================================================= */
+        /*
+         * =================================================
+         * WEB CHROME CLIENT
+         *
+         * GPS permission এখানেই handle হবে
+         * =================================================
+         */
 
         webView.webChromeClient =
             object : WebChromeClient() {
@@ -310,15 +368,47 @@ class MainActivity : ComponentActivity() {
             }
 
 
-        /* =================================================
-           EDGE-TO-EDGE / SYSTEM BAR INSETS
+        /*
+         * =================================================
+         * WEBVIEW INITIAL LAYOUT
+         *
+         * প্রথমে পুরো জায়গা নেবে।
+         * Insets পাওয়ার পর system bar বাদ দেওয়া হবে।
+         * =================================================
+         */
 
-           Android 15 + targetSdk 35
-        ================================================= */
+        val webViewParams =
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+            )
+
+
+        rootLayout.addView(
+            webView,
+            webViewParams
+        )
+
+
+        /*
+         * =================================================
+         * SYSTEM BAR INSETS
+         *
+         * এখানে padding ব্যবহার করছি না।
+         *
+         * WebView-এর height/position কমিয়ে দেওয়া হবে।
+         * ফলে CSS-এর:
+         *
+         * position: fixed;
+         * bottom: 0;
+         *
+         * Android navigation bar-এর নিচে যাবে না।
+         * =================================================
+         */
 
         ViewCompat.setOnApplyWindowInsetsListener(
-            webView
-        ) { view, insets ->
+            rootLayout
+        ) { _, insets ->
 
             val systemBars =
                 insets.getInsets(
@@ -326,12 +416,41 @@ class MainActivity : ComponentActivity() {
                 )
 
 
-            view.setPadding(
-                0,
-                systemBars.top,
-                0,
+            val layoutParams =
+                webView.layoutParams
+                    as FrameLayout.LayoutParams
+
+
+            /*
+             * উপরের Status Bar বাদ
+             */
+
+            layoutParams.topMargin =
+                systemBars.top
+
+
+            /*
+             * নিচের Navigation Bar বাদ
+             */
+
+            layoutParams.bottomMargin =
                 systemBars.bottom
-            )
+
+
+            /*
+             * দুই পাশের inset থাকলে
+             * সেগুলোকেও বাদ দেওয়া হচ্ছে।
+             */
+
+            layoutParams.leftMargin =
+                systemBars.left
+
+            layoutParams.rightMargin =
+                systemBars.right
+
+
+            webView.layoutParams =
+                layoutParams
 
 
             insets
@@ -339,27 +458,42 @@ class MainActivity : ComponentActivity() {
         }
 
 
-        /* =================================================
-           LOAD APP
-        ================================================= */
+        /*
+         * =================================================
+         * LOAD APP
+         * =================================================
+         */
 
         webView.loadUrl(
             "https://appassets.androidplatform.net/assets/index.html"
         )
 
 
-        /* =================================================
-           SHOW WEBVIEW
-        ================================================= */
+        /*
+         * =================================================
+         * SHOW ROOT LAYOUT
+         * =================================================
+         */
 
-        setContentView(webView)
+        setContentView(rootLayout)
+
+
+        /*
+         * Insets প্রথমবার apply করানো
+         */
+
+        ViewCompat.requestApplyInsets(
+            rootLayout
+        )
 
     }
 
 
-    /* =====================================================
-       NOTIFICATION CHANNEL
-    ===================================================== */
+    /*
+     * =====================================================
+     * NOTIFICATION CHANNEL
+     * =====================================================
+     */
 
     private fun createNotificationChannel() {
 
@@ -395,10 +529,12 @@ class MainActivity : ComponentActivity() {
     }
 
 
-    /* =====================================================
-       NOTIFICATION PERMISSION
-       Android 13+
-    ===================================================== */
+    /*
+     * =====================================================
+     * NOTIFICATION PERMISSION
+     * Android 13+
+     * =====================================================
+     */
 
     private fun requestNotificationPermission() {
 
@@ -427,10 +563,12 @@ class MainActivity : ComponentActivity() {
     }
 
 
-    /* =====================================================
-       EXACT ALARM PERMISSION
-       Android 12+
-    ===================================================== */
+    /*
+     * =====================================================
+     * EXACT ALARM PERMISSION
+     * Android 12+
+     * =====================================================
+     */
 
     private fun requestExactAlarmPermission() {
 
@@ -480,9 +618,11 @@ class MainActivity : ComponentActivity() {
     }
 
 
-    /* =====================================================
-       ANDROID BACK BUTTON
-    ===================================================== */
+    /*
+     * =====================================================
+     * ANDROID BACK BUTTON
+     * =====================================================
+     */
 
     @Suppress("DEPRECATION")
     override fun onBackPressed() {
@@ -502,9 +642,11 @@ class MainActivity : ComponentActivity() {
     }
 
 
-    /* =====================================================
-       DESTROY
-    ===================================================== */
+    /*
+     * =====================================================
+     * DESTROY
+     * =====================================================
+     */
 
     override fun onDestroy() {
 
