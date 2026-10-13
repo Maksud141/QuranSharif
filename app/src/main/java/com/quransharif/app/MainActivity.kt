@@ -240,6 +240,17 @@ class MainActivity : ComponentActivity() {
 
 
         /*
+ * =================================================
+ * ANDROID DAILY CONTENT BRIDGE
+ * =================================================
+ */
+
+webView.addJavascriptInterface(
+    DailyContentBridge(this),
+    "AndroidDailyContent"
+)
+
+        /*
          * =================================================
          * WEBVIEW ASSET LOADER
          * =================================================
