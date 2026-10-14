@@ -134,7 +134,6 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
 
-
         /*
          * =================================================
          * ANDROID 15 EDGE-TO-EDGE
