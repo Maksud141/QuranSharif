@@ -170,6 +170,7 @@ class MainActivity : ComponentActivity() {
          */
 
         DailyNotificationScheduler.schedule(this)
+        PrayerNotificationScheduler.schedule(this)
 
 
         /*
