@@ -110,19 +110,27 @@ object PrayerNotificationScheduler {
                         displayName = prayer.displayName
                     )
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        alarmManager.setAndAllowWhileIdle(
-                            AlarmManager.RTC_WAKEUP,
-                            triggerAt,
-                            pendingIntent
-                        )
-                    } else {
-                        alarmManager.set(
-                            AlarmManager.RTC_WAKEUP,
-                            triggerAt,
-                            pendingIntent
-                        )
-                    }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
+    alarmManager.canScheduleExactAlarms()
+) {
+    alarmManager.setExactAndAllowWhileIdle(
+        AlarmManager.RTC_WAKEUP,
+        triggerAt,
+        pendingIntent
+    )
+} else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    alarmManager.setAndAllowWhileIdle(
+        AlarmManager.RTC_WAKEUP,
+        triggerAt,
+        pendingIntent
+    )
+} else {
+    alarmManager.set(
+        AlarmManager.RTC_WAKEUP,
+        triggerAt,
+        pendingIntent
+    )
+}
                 }
             }
 
