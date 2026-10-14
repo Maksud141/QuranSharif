@@ -5,7 +5,9 @@ import android.content.Context
 import android.webkit.JavascriptInterface
 import org.json.JSONObject
 
-class PrayerNotificationBridge(context: Context) {
+class PrayerNotificationBridge(
+    private val context: Context
+) {
 
     private val prefs = context.getSharedPreferences(
         "prayer_notification_prefs",
@@ -25,6 +27,7 @@ class PrayerNotificationBridge(context: Context) {
                 .apply()
 
             PrayerNotificationScheduler.schedule(context)
+
         } catch (e: Exception) {
             android.util.Log.e(
                 "PrayerNotificationBridge",
