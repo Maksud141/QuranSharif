@@ -20,7 +20,6 @@ class DailyContentBridge(context: Context) {
 
             if (dateKey.isBlank()) return
 
-            // Save the complete daily content for the native notification.
             prefs.edit()
                 .putString("data_json", data.toString())
                 .apply()
