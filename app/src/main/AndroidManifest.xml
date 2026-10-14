@@ -39,13 +39,14 @@
         <!-- Daily 9:00 PM Notification Receiver -->
         <receiver
             android:name=".DailyNotificationReceiver"
+            android:enabled="true"
             android:exported="false" />
 
         <!-- Re-schedule notification after reboot/time change -->
         <receiver
             android:name=".BootReceiver"
             android:enabled="true"
-            android:exported="false">
+            android:exported="true">
 
             <intent-filter>
 
