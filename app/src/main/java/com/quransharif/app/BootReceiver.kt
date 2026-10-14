@@ -1,3 +1,4 @@
+
 package com.quransharif.app
 
 import android.content.BroadcastReceiver
@@ -10,16 +11,11 @@ class BootReceiver : BroadcastReceiver() {
         context: Context,
         intent: Intent?
     ) {
-
         when (intent?.action) {
-
             Intent.ACTION_BOOT_COMPLETED,
             Intent.ACTION_TIMEZONE_CHANGED,
             Intent.ACTION_TIME_CHANGED -> {
-
-                DailyNotificationScheduler.schedule(
-                    context
-                )
+                DailyNotificationScheduler.schedule(context)
             }
         }
     }
