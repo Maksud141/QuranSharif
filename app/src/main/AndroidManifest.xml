@@ -1,19 +1,22 @@
+
 <?xml version="1.0" encoding="utf-8"?>
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Internet access -->
+    <!-- Internet -->
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- Android 13+ notification permission -->
+    <!-- Notifications -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!-- Location -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- Allow exact alarm scheduling on Android 12+ -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Alarm scheduling -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
-    <!-- Receive notification scheduling event after device reboot -->
+    <!-- Re-schedule after reboot -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
@@ -36,26 +39,28 @@
 
         </activity>
 
-        <!-- Daily 9:00 PM Notification Receiver -->
+        <!-- Daily 9 PM Notification -->
         <receiver
             android:name=".DailyNotificationReceiver"
             android:enabled="true"
             android:exported="false" />
 
-        <!-- Re-schedule notification after reboot/time change -->
+        <!-- Prayer Time Notifications -->
+        <receiver
+            android:name=".PrayerNotificationReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
+        <!-- Re-schedule after reboot or time change -->
         <receiver
             android:name=".BootReceiver"
             android:enabled="true"
             android:exported="true">
 
             <intent-filter>
-
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-
                 <action android:name="android.intent.action.TIME_SET" />
-
             </intent-filter>
 
         </receiver>
