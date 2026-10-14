@@ -2,38 +2,58 @@
 package com.quransharif.app
 
 import android.content.Context
+import android.util.Log
 import android.webkit.JavascriptInterface
 import org.json.JSONObject
 
 class PrayerNotificationBridge(
     private val context: Context
 ) {
-
-    private val prefs = context.getSharedPreferences(
-        "prayer_notification_prefs",
-        Context.MODE_PRIVATE
-    )
+    companion object {
+        private const val PREFS_NAME = "prayer_notification_prefs"
+        private const val CONTENT_KEY = "prayer_timings_json"
+        private const val TAG = "PrayerNotificationBridge"
+    }
 
     @JavascriptInterface
     fun savePrayerTimings(json: String) {
         try {
             val data = JSONObject(json)
-            val dateKey = data.optString("dateKey", "")
+            val days = data.optJSONArray("days")
 
-            if (dateKey.isBlank()) return
+            if (days == null || days.length() == 0) {
+                Log.w(TAG, "No prayer calendar days received")
+                return
+            }
+
+            val prefs = context.getSharedPreferences(
+                PREFS_NAME,
+                Context.MODE_PRIVATE
+            )
+
+            val oldJson = prefs.getString(CONTENT_KEY, null)
+
+            // Cancel alarms from the previous calendar before replacing it.
+            if (!oldJson.isNullOrBlank()) {
+                try {
+                    PrayerNotificationScheduler.cancelScheduled(
+                        context,
+                        JSONObject(oldJson)
+                    )
+                } catch (e: Exception) {
+                    Log.e(TAG, "Could not cancel old prayer alarms", e)
+                }
+            }
 
             prefs.edit()
-                .putString("prayer_timings_json", data.toString())
+                .putString(CONTENT_KEY, data.toString())
                 .apply()
 
             PrayerNotificationScheduler.schedule(context)
 
+            Log.d(TAG, "Prayer calendar saved: ${days.length()} days")
         } catch (e: Exception) {
-            android.util.Log.e(
-                "PrayerNotificationBridge",
-                "Could not save prayer timings",
-                e
-            )
+            Log.e(TAG, "Could not save prayer calendar", e)
         }
     }
 }
