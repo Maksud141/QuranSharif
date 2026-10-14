@@ -15,7 +15,12 @@ class BootReceiver : BroadcastReceiver() {
             Intent.ACTION_BOOT_COMPLETED,
             Intent.ACTION_TIMEZONE_CHANGED,
             Intent.ACTION_TIME_CHANGED -> {
+
+                // Keep the existing daily notification.
                 DailyNotificationScheduler.schedule(context)
+
+                // Reschedule the five daily prayer notifications.
+                PrayerNotificationScheduler.schedule(context)
             }
         }
     }
