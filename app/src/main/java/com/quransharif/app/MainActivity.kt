@@ -249,6 +249,10 @@ webView.addJavascriptInterface(
     "AndroidDailyContent"
 )
 
+webView.addJavascriptInterface(
+    PrayerNotificationBridge(this),
+    "AndroidPrayerNotifications"
+)
         /*
          * =================================================
          * WEBVIEW ASSET LOADER
