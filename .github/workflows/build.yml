@@ -86,7 +86,7 @@ jobs:
       - name: Build signed Release APK
         shell: bash
         run: |
-          gradle assembleRelease --no-daemon
+          gradle assembleRelease --no-daemon --stacktrace
 
 
       # ======================================
