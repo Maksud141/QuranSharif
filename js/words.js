@@ -47,8 +47,7 @@ function ensureWordPanel() {
                 </button>
 
             </div>
-
-            <div class="word-arabic"></div>
+<div class="word-arabic quran-text" dir="rtl" lang="ar"></div>
 
             <div class="word-list">
                 <div class="word-loading">
@@ -205,9 +204,11 @@ async function openWordByWord(
                             ${wordNumber}
                         </div>
 
-                        <div class="word-arabic-small">
-                            ${escapeWordHtml(arabicWord)}
-                        </div>
+                     <div class="word-arabic-small quran-text"
+     dir="rtl"
+     lang="ar">
+    ${escapeWordHtml(arabicWord)}
+</div>
 
                         <div class="word-bangla">
                             ${escapeWordHtml(meaning)}
