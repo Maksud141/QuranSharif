@@ -41,8 +41,23 @@ const NASAI_META_URL =
 
 const NASAI_CHAPTER_URL =
   "https://raw.githubusercontent.com/Maksud141/quran-sharif-data/main/hadith/nasai/Chapter/";
+  /* =====================================================
+সুনান ইবনে মাজাহ — ONLINE DATA
+ফাইল: 0.json – 37.json
+অ্যাপের অধ্যায়: 1 – 38
+===================================================== */
 
+// যাচাইকৃত বিকল্প ডেটা উৎস: kafelanetwork/hadith-api
+// এই উৎসে মেটাডেটা key 0-তে ভূমিকা আছে; অধ্যায়ের JSON ফাইল 1–37।
+const IBNEMAJAH_META_URLS = [
+  "https://cdn.jsdelivr.net/gh/kafelanetwork/hadith-api@main/Ibne-Mazah/Meta/ibnemajah.json",
+  "https://raw.githubusercontent.com/kafelanetwork/hadith-api/main/Ibne-Mazah/Meta/ibnemajah.json"
+];
 
+const IBNEMAJAH_CHAPTER_URLS = [
+  "https://cdn.jsdelivr.net/gh/kafelanetwork/hadith-api@main/Ibne-Mazah/Chapter/",
+  "https://raw.githubusercontent.com/kafelanetwork/hadith-api/main/Ibne-Mazah/Chapter/"
+];
 /* =====================================================
 ৩. অধ্যায়ের তালিকা
 ===================================================== */
@@ -402,6 +417,10 @@ function initHadithBooks() {
           await openAbuDaudChapters();
 
         }
+        else if (book === "ibnemajah") {
+  selectedHadithBook = "ibnemajah";
+  await openIbnemajahChapters();
+}
 
       }
 
@@ -888,6 +907,9 @@ function initHadithChapterClick() {
           chapterNumber
         );
       }
+      else if (book === "ibnemajah") {
+  openIbnemajahHadith(chapterNumber);
+}
 
     }
   );
@@ -923,21 +945,13 @@ function normalizeHadithList(data) {
   }
 
 
-  if (
-    data &&
-    Array.isArray(data.data)
-  ) {
+  if (data && Array.isArray(data.data)) return data.data;
+  if (data && Array.isArray(data.results)) return data.results;
+  if (data && Array.isArray(data.hadith)) return data.hadith;
+  if (data && Array.isArray(data.items)) return data.items;
 
-    return data.data;
-  }
-
-
-  return (
-    data &&
-    typeof data === "object"
-      ? [data]
-      : []
-  );
+  // Unknown object shape should not be mistaken for one complete hadith.
+  return [];
 }
 
 
@@ -2767,6 +2781,312 @@ async function restoreDownloadedHadithBooks() {
   }
 }
 
+/* =====================================================
+ইবনে মাজাহ — URL fallback fetch helper
+===================================================== */
+
+async function fetchOptionalHadithJSON(urls) {
+  let lastError = null;
+
+  for (const url of urls) {
+    try {
+      const response = await fetch(url, { cache: "no-cache" });
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      lastError = error;
+      console.warn("হাদিস JSON URL ব্যর্থ:", url, error);
+    }
+  }
+
+  throw new Error(
+    `সার্ভার থেকে JSON পাওয়া যায়নি। ${lastError?.message || "নেটওয়ার্ক পরীক্ষা করুন"}`
+  );
+}
+
+/* =====================================================
+সুনান ইবনে মাজাহ — OFFLINE SUPPORT
+অ্যাপের অধ্যায়: 1–37
+JSON ফাইল: 1–37
+===================================================== */
+
+async function downloadIbnemajahBook() {
+  const button = document.getElementById("ibnemajahDownloadBtn");
+  const status = document.getElementById("ibnemajahDownloadStatus");
+  const progress = document.getElementById("ibnemajahDownloadProgress");
+
+  if (!button || !status || !progress) {
+    console.error("ইবনে মাজাহর download HTML element পাওয়া যায়নি।");
+    return;
+  }
+
+  button.disabled = true;
+  progress.hidden = false;
+  progress.max = 38;
+  progress.value = 0;
+
+  try {
+    status.textContent = "অধ্যায়ের তালিকা ডাউনলোড হচ্ছে...";
+
+    const meta = await fetchOptionalHadithJSON(IBNEMAJAH_META_URLS);
+    const rawChapters = normalizeHadithChapters(meta);
+    if (rawChapters.length !== 38) {
+      throw new Error(`সার্ভারের metadata-তে ৩৮টি এন্ট্রি প্রয়োজন; পাওয়া গেছে ${rawChapters.length}টি।`);
+    }
+    // অ্যাপ অধ্যায় 1 → Chapter/0.json; অধ্যায় 38 → Chapter/37.json।
+    const chapters = rawChapters.map((chapter, index) => ({
+      ...chapter,
+      chapter_number: index + 1,
+      file_number: index
+    }));
+    await saveOptionalHadith("ibnemajah:meta", chapters);
+
+    let completed = 0;
+    progress.max = chapters.length;
+
+    for (const chapter of chapters) {
+      const appNumber = chapter.chapter_number;
+      const fileNumber = chapter.file_number;
+
+      status.textContent =
+        `অধ্যায় ${appNumber}/38 ডাউনলোড হচ্ছে...`;
+
+      const chapterURLs = IBNEMAJAH_CHAPTER_URLS.map(
+        base => `${base}${fileNumber}.json`
+      );
+      let data;
+      try {
+        data = await fetchOptionalHadithJSON(chapterURLs);
+      } catch (fetchError) {
+        throw new Error(
+          `অধ্যায় ${appNumber} ডাউনলোড হয়নি: ${fetchError.message}`
+        );
+      }
+      const hadiths = normalizeHadithList(data);
+
+      if (!hadiths.length) {
+        throw new Error(`অধ্যায় ${appNumber}-এ কোনো হাদিস পাওয়া যায়নি।`);
+      }
+
+      await saveOptionalHadith(
+        `ibnemajah:chapter:${appNumber}`,
+        hadiths
+      );
+
+      completed++;
+      progress.value = completed;
+    }
+
+    await saveOptionalHadith("ibnemajah:downloaded", true);
+
+    status.textContent =
+      "ডাউনলোড সম্পূর্ণ ✓ এখন অফলাইনে পড়তে পারবেন";
+
+    moveIbnemajahToOfflineSection();
+
+  } catch (error) {
+    console.error("ইবনে মাজাহ ডাউনলোড সমস্যা:", error);
+
+    status.textContent =
+      `ডাউনলোড সম্পূর্ণ হয়নি: ${error.message} আবার চেষ্টা করুন।`;
+
+    button.textContent = "আবার ডাউনলোড করুন";
+
+  } finally {
+    button.disabled = false;
+  }
+}
+
+
+/* =====================================================
+ইবনে মাজাহ — DOWNLOAD BUTTON
+===================================================== */
+
+function initIbnemajahDownloadButton() {
+  const button = document.getElementById("ibnemajahDownloadBtn");
+
+  if (!button || button.dataset.listenerAdded === "true") {
+    return;
+  }
+
+  button.dataset.listenerAdded = "true";
+
+  button.addEventListener("click", async () => {
+    const downloaded = await getOptionalHadith(
+      "ibnemajah:downloaded"
+    ).catch(() => false);
+
+    if (downloaded === true) {
+      await openIbnemajahChapters();
+    } else {
+      await downloadIbnemajahBook();
+    }
+  });
+}
+
+
+/* =====================================================
+ইবনে মাজাহ — CHAPTER LIST
+===================================================== */
+
+async function openIbnemajahChapters() {
+  if (!hadithChapterTitle || !hadithChapterList) {
+    return;
+  }
+
+  selectedHadithBook = "ibnemajah";
+  openHadithPage("hadithChapterPage");
+
+  hadithChapterTitle.textContent =
+    "📗 সুনান ইবনে মাজাহ — অধ্যায়সমূহ";
+
+  hadithChapterList.innerHTML =
+    "<p>সংরক্ষিত অধ্যায় লোড হচ্ছে...</p>";
+
+  try {
+    const downloaded = await getOptionalHadith(
+      "ibnemajah:downloaded"
+    );
+
+    let chapters = await getOptionalHadith(
+      "ibnemajah:meta"
+    );
+
+    // পুরোনো metadata-তে ভুল file mapping থাকলে ঠিক করুন।
+    if (!Array.isArray(chapters) || chapters.length !== 38 ||
+        chapters.some((chapter, index) => Number(chapter.chapter_number) !== index + 1 || Number(chapter.file_number) !== index)) {
+      const meta = await fetchOptionalHadithJSON(IBNEMAJAH_META_URLS);
+      const rawChapters = normalizeHadithChapters(meta);
+      if (rawChapters.length !== 38) {
+        throw new Error(`সার্ভারের metadata-তে ৩৮টি এন্ট্রি নেই; পাওয়া গেছে ${rawChapters.length}টি।`);
+      }
+      chapters = rawChapters.map((chapter, index) => ({
+        ...chapter,
+        chapter_number: index + 1,
+        file_number: index
+      }));
+      await saveOptionalHadith("ibnemajah:meta", chapters);
+    }
+
+    if (downloaded !== true) {
+      throw new Error("হাদিসের ডাউনলোড সম্পূর্ণ নয়। ডাউনলোড বোতাম থেকে আবার চেষ্টা করুন।");
+    }
+
+    renderHadithChapters(chapters, "সুনান ইবনে মাজাহ");
+
+  } catch (error) {
+    console.error("ইবনে মাজাহর অধ্যায় লোড সমস্যা:", error);
+    hadithChapterList.textContent =
+      `${error.message} নেটওয়ার্ক চালু রেখে আবার চেষ্টা করুন।`;
+  }
+}
+
+
+/* =====================================================
+ইবনে মাজাহ — OFFLINE HADITH READER
+অ্যাপের অধ্যায় 1 → Chapter/0.json
+অ্যাপের অধ্যায় 38 → Chapter/37.json
+===================================================== */
+
+async function openIbnemajahHadith(chapterNumber) {
+  if (!hadithReaderTitle || !hadithReaderList) {
+    return;
+  }
+
+  if (
+    !Number.isInteger(chapterNumber) ||
+    chapterNumber < 1 ||
+    chapterNumber > 38
+  ) {
+    return;
+  }
+
+  selectedHadithBook = "ibnemajah";
+  openHadithPage("hadithReaderPage");
+
+  hadithReaderTitle.textContent =
+    `📗 সুনান ইবনে মাজাহ — অধ্যায় ${chapterNumber}`;
+
+  hadithReaderList.innerHTML =
+    "<p>সংরক্ষিত হাদিস লোড হচ্ছে...</p>";
+
+  try {
+    const hadiths = await getOptionalHadith(
+      `ibnemajah:chapter:${chapterNumber}`
+    );
+
+    if (!Array.isArray(hadiths)) {
+      throw new Error("এই অধ্যায়ের হাদিস সংরক্ষিত নেই। ডাউনলোড বোতাম থেকে ইবনে মাজাহ আবার সম্পূর্ণ ডাউনলোড করুন।");
+    }
+
+    renderHadithList(hadiths);
+
+  } catch (error) {
+    console.error("ইবনে মাজাহর হাদিস লোড সমস্যা:", error);
+    hadithReaderList.textContent = error.message;
+  }
+}
+
+
+/* =====================================================
+ইবনে মাজাহ — DOWNLOAD CARD → OFFLINE BOOK LIST
+===================================================== */
+
+function moveIbnemajahToOfflineSection() {
+  const offlineList = document.getElementById("hadithBookList");
+  const downloadButton = document.getElementById("ibnemajahDownloadBtn");
+
+  if (!offlineList || !downloadButton) {
+    return;
+  }
+
+  const existingCard = offlineList.querySelector('[data-book="ibnemajah"]');
+  if (existingCard) return;
+
+  const card = downloadButton.closest(".hadith-download-card");
+
+  if (!card) {
+    return;
+  }
+
+  const status = card.querySelector("#ibnemajahDownloadStatus");
+  const progress = card.querySelector("#ibnemajahDownloadProgress");
+
+  if (status) status.remove();
+  if (progress) progress.remove();
+
+  card.classList.remove("hadith-download-card");
+  card.classList.add("hadith-book-card");
+  card.dataset.book = "ibnemajah";
+
+  const label = document.createElement("span");
+  label.textContent = "অধ্যায়সমূহ দেখুন ›";
+
+  downloadButton.replaceWith(label);
+  offlineList.appendChild(card);
+}
+
+
+/* =====================================================
+ইবনে মাজাহ — RESTORE DOWNLOADED BOOK
+===================================================== */
+
+async function restoreIbnemajahBook() {
+  try {
+    const downloaded = await getOptionalHadith(
+      "ibnemajah:downloaded"
+    );
+
+    if (downloaded === true) {
+      moveIbnemajahToOfflineSection();
+    }
+  } catch (error) {
+    console.error("ইবনে মাজাহ restore সমস্যা:", error);
+  }
+}
+
 
 /* =====================================================
 ৩৯. HADITH SYSTEM START
@@ -2800,6 +3120,12 @@ function initHadithSystem() {
 
   /* Previously downloaded books */
   restoreDownloadedHadithBooks();
+  
+  /* Ibn Majah download */
+initIbnemajahDownloadButton();
+
+/* Restore downloaded Ibn Majah */
+restoreIbnemajahBook();
 }
 
 
