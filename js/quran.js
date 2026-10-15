@@ -256,10 +256,9 @@ async function loadAllQuranData() {
         );
 
 
-        alert(
-            "কুরআনের ডাটা লোড করা যায়নি।\n\n" +
-            "data/quran/001.json থেকে 114.json পর্যন্ত ফাইলগুলো পরীক্ষা করুন।"
-        );
+        showQuranToast(
+    "কুরআনের ডাটা লোড করা যায়নি। 001.json থেকে 114.json ফাইলগুলো পরীক্ষা করুন।"
+);
 
 
         throw error;
@@ -575,7 +574,7 @@ function loadSurahs() {
                             );
 
 
-                            alert(
+                            showQuranToast(
                                 "এই সূরাটি এখন খোলা যাচ্ছে না। আবার চেষ্টা করুন।"
                             );
 
@@ -653,9 +652,7 @@ function setupQuranGoButton() {
 
             if (!surahNumber) {
 
-                alert(
-                    "আগে একটি সূরা নির্বাচন করুন।"
-                );
+                showQuranToast("আগে একটি সূরা নির্বাচন করুন।");
 
                 return;
 
@@ -664,9 +661,7 @@ function setupQuranGoButton() {
 
             if (!ayahNumber) {
 
-                alert(
-                    "আগে একটি আয়াত নির্বাচন করুন।"
-                );
+                showQuranToast("আগে একটি আয়াত নির্বাচন করুন।");
 
                 return;
 
@@ -946,12 +941,13 @@ function renderSurah(
                     </div>
 
 
-                    <div
-                        class="arabic"
-                        dir="rtl"
-                    >
-                        ${escapeHtml(arabicText)}
-                    </div>
+                 <div
+    class="arabic quran-text"
+    dir="rtl"
+    lang="ar"
+>
+    ${escapeHtml(arabicText)}
+</div>
 
 
                     <div class="translation">
@@ -1291,9 +1287,7 @@ function setupAyahEvents() {
                                 "❌ openTafsir পাওয়া যায়নি"
                             );
 
-                            alert(
-                                "তাফসির ফাংশন পাওয়া যায়নি।"
-                            );
+                            showQuranToast("তাফসির ফাংশন পাওয়া যায়নি।");
 
                         }
 
@@ -1334,9 +1328,7 @@ function openWordMeaning(
         );
 
 
-        alert(
-            "Word-by-Word ফাংশন পাওয়া যায়নি।"
-        );
+        showQuranToast("Word-by-Word ফাংশন পাওয়া যায়নি।");
 
     }
 
@@ -1533,7 +1525,7 @@ function playAyah(
                 }
 
 
-                alert(
+                showQuranToast(
                     "অডিও চালু করা যাচ্ছে না।\nইন্টারনেট সংযোগ পরীক্ষা করুন।"
                 );
 
@@ -1781,6 +1773,27 @@ function updateBookmarkButton(
 
 }
 
+function showQuranToast(message) {
+    let toast = document.getElementById("quranToast");
+
+    if (!toast) {
+        toast = document.createElement("div");
+        toast.id = "quranToast";
+        toast.className = "quran-toast";
+        toast.setAttribute("role", "status");
+        document.body.appendChild(toast);
+    }
+
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    clearTimeout(window.quranToastTimer);
+
+    window.quranToastTimer = setTimeout(function () {
+        toast.classList.remove("show");
+    }, 2200);
+}
+
 
 /* =========================================================
    Bookmark
@@ -1840,9 +1853,7 @@ function bookmarkAyah(
         );
 
 
-        alert(
-            "বুকমার্ক থেকে সরানো হয়েছে।"
-        );
+        showQuranToast("বুকমার্ক থেকে সরানো হয়েছে।");
 
     } else {
 
@@ -1876,9 +1887,7 @@ function bookmarkAyah(
         );
 
 
-        alert(
-            "আয়াতটি বুকমার্ক করা হয়েছে।"
-        );
+        showQuranToast("আয়াতটি বুকমার্ক করা হয়েছে।");
 
     }
 
