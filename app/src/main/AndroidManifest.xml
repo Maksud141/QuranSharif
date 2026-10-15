@@ -1,70 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"><!-- Internet Access -->
+<uses-permission android:name="android.permission.INTERNET" />
 
-<?xml version="1.0" encoding="utf-8"?>
+<!-- Notification Permission: Android 13+ -->
+<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<!-- Location Permissions -->
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <!-- Internet -->
-    <uses-permission android:name="android.permission.INTERNET" />
+<!-- Exact Alarm Permission -->
+<uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
-    <!-- Notifications -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+<!-- Receive Device Boot Event -->
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <!-- Location -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<application
+    android:allowBackup="true"
+    android:icon="@mipmap/ic_launcher"
+    android:label="কুরআন শরীফ"
+    android:roundIcon="@mipmap/ic_launcher_round"
+    android:supportsRtl="true"
+    android:theme="@style/Theme.QuranSharif">
 
-    <!-- Alarm scheduling -->
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <!-- Main Activity -->
+    <activity
+        android:name=".MainActivity"
+        android:exported="true">
 
-    <!-- Re-schedule after reboot -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="কুরআন শরীফ"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.QuranSharif">
+    </activity>
 
-        <!-- Main App -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+    <!-- Daily Notification Receiver -->
+    <receiver
+        android:name=".DailyNotificationReceiver"
+        android:enabled="true"
+        android:exported="false" />
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+    <!-- Prayer Notification Receiver -->
+    <receiver
+        android:name=".PrayerNotificationReceiver"
+        android:enabled="true"
+        android:exported="false" />
 
-        </activity>
+    <!-- Boot and Time Change Receiver -->
+    <receiver
+        android:name=".BootReceiver"
+        android:enabled="true"
+        android:exported="false">
 
-        <!-- Daily 9 PM Notification -->
-        <receiver
-            android:name=".DailyNotificationReceiver"
-            android:enabled="true"
-            android:exported="false" />
+        <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED" />
+            <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            <action android:name="android.intent.action.TIME_SET" />
+        </intent-filter>
 
-        <!-- Prayer Time Notifications -->
-        <receiver
-            android:name=".PrayerNotificationReceiver"
-            android:enabled="true"
-            android:exported="false" />
+    </receiver>
 
-        <!-- Re-schedule after reboot or time change -->
-        <receiver
-            android:name=".BootReceiver"
-            android:enabled="true"
-            android:exported="true">
-
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-                <action android:name="android.intent.action.TIME_SET" />
-            </intent-filter>
-
-        </receiver>
-
-    </application>
+</application>
 
 </manifest>
