@@ -182,6 +182,19 @@ if (!window.history.state || !window.history.state.page) {
 ========================================================= */
 
 window.addEventListener("popstate", function (event) {
+    
+   // শব্দে শব্দে অর্থের প্যানেল খোলা থাকলে
+    // Back চাপলে আগে প্যানেল বন্ধ হবে।
+    const wordPanel = document.getElementById("word-panel");
+
+    if (wordPanel && wordPanel.classList.contains("show")) {
+        if (typeof window.closeWordByWord === "function") {
+            window.closeWordByWord();
+        } else {
+            wordPanel.classList.remove("show");
+        }
+        return;
+    }
     // Drawer খোলা থাকলে Back চাপলে আগে Drawer বন্ধ হবে।
     if (drawer && drawer.classList.contains("open")) {
         closeDrawer(false);
