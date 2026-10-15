@@ -6597,3 +6597,440 @@ body.dark .daily-dua-reference {
     overflow-wrap: anywhere;
     word-break: break-word;
 }
+/* =====================================================
+   QURAN SHARIF — DUA BOOKMARK DESIGN
+   Matches the existing dua.js HTML classes
+===================================================== */
+
+/* Main Dua Bookmark Section */
+#duaBookmarkSection {
+    display: block;
+    width: 100%;
+    margin: 30px 0 24px;
+    padding: 0 2px 20px;
+    box-sizing: border-box;
+    font-family: inherit;
+    color: #173d35;
+}
+
+/* Section heading */
+#duaBookmarkSection .dua-bookmark-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 14px;
+}
+
+#duaBookmarkSection .dua-bookmark-heading h3 {
+    margin: 0;
+    padding: 0;
+    color: #173d35;
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+#duaBookmarkSection .dua-bookmark-heading>span {
+    display: inline-block;
+    color: #64746e;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* List of bookmark cards */
+#duaBookmarkSection .dua-bookmark-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+/* One bookmark row */
+#duaBookmarkSection .dua-bookmark-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+    padding: 10px;
+    margin: 0;
+    background: #ffffff;
+    border: 1px solid #e0e8e5;
+    border-radius: 19px;
+    box-shadow: 0 4px 14px rgba(20, 60, 48, 0.06);
+    box-sizing: border-box;
+}
+
+/* Open button: number + title + subtitle + arrow */
+#duaBookmarkSection .dua-bookmark-open {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    min-height: 70px;
+    margin: 0;
+    padding: 8px 4px;
+    border: none;
+    border-radius: 12px;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* Number badge */
+#duaBookmarkSection .dua-bookmark-number {
+    display: flex;
+    flex: 0 0 42px;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 46px;
+    border-radius: 13px;
+    background: #eaf5f0;
+    color: #08745e;
+    font-size: 19px;
+    font-weight: 600;
+}
+
+/* Title and subtitle container */
+#duaBookmarkSection .dua-bookmark-info {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    min-width: 0;
+}
+
+/* Dua title */
+#duaBookmarkSection .dua-bookmark-info strong {
+    display: block;
+    margin: 0;
+    padding: 0;
+    color: #086b57;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+/* Dua subtitle */
+#duaBookmarkSection .dua-bookmark-info small {
+    display: block;
+    margin: 0;
+    padding: 0;
+    color: #697772;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+}
+
+/* Right arrow */
+#duaBookmarkSection .dua-bookmark-arrow {
+    display: flex;
+    flex: 0 0 22px;
+    align-items: center;
+    justify-content: center;
+    color: #08745e;
+    font-size: 28px;
+    font-weight: 400;
+}
+
+/* Delete button */
+#duaBookmarkSection .dua-bookmark-remove {
+    display: flex;
+    flex: 0 0 38px;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: #f2f4f3;
+    color: #737b78;
+    font-size: 19px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+/* Empty bookmark state */
+#duaBookmarkSection .dua-bookmark-empty {
+    padding: 26px 16px;
+    border: 1px dashed #cbdcd5;
+    border-radius: 18px;
+    background: #ffffff;
+    color: #64746e;
+    text-align: center;
+}
+
+#duaBookmarkSection .bookmark-empty-icon {
+    margin-bottom: 8px;
+    font-size: 32px;
+}
+
+#duaBookmarkSection .bookmark-empty-title {
+    margin-bottom: 6px;
+    color: #086b57;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+#duaBookmarkSection .bookmark-empty-text {
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Button feedback */
+#duaBookmarkSection button:active {
+    opacity: 0.75;
+}
+
+/* Small mobile screens */
+@media (max-width: 380px) {
+    #duaBookmarkSection {
+        margin-top: 24px;
+    }
+    
+    #duaBookmarkSection .dua-bookmark-heading h3 {
+        font-size: 21px;
+    }
+    
+    #duaBookmarkSection .dua-bookmark-item {
+        gap: 5px;
+        padding: 7px;
+        border-radius: 16px;
+    }
+    
+    #duaBookmarkSection .dua-bookmark-open {
+        gap: 8px;
+        min-height: 64px;
+    }
+    
+    #duaBookmarkSection .dua-bookmark-number {
+        flex-basis: 34px;
+        width: 34px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    #duaBookmarkSection .dua-bookmark-info strong {
+        font-size: 15px;
+    }
+    
+    #duaBookmarkSection .dua-bookmark-info small {
+        font-size: 13px;
+    }
+    
+    #duaBookmarkSection .dua-bookmark-arrow {
+        flex-basis: 16px;
+        font-size: 24px;
+    }
+    
+    #duaBookmarkSection .dua-bookmark-remove {
+        flex-basis: 32px;
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
+    }
+}
+/* =========================================
+   DUA BOOKMARK CONFIRMATION DIALOG
+========================================= */
+
+.dua-confirm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22px;
+    background: rgba(10, 25, 21, 0.58);
+    box-sizing: border-box;
+}
+
+.dua-confirm-box {
+    width: 100%;
+    max-width: 340px;
+    padding: 26px 22px 20px;
+    border: 1px solid #e0eae5;
+    border-radius: 24px;
+    background: #ffffff;
+    color: #183d35;
+    text-align: center;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    animation: duaConfirmAppear 0.18s ease-out;
+}
+
+.dua-confirm-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 62px;
+    height: 62px;
+    margin: 0 auto 14px;
+    border-radius: 20px;
+    background: #eaf5f0;
+    font-size: 32px;
+}
+
+.dua-confirm-box h3 {
+    margin: 0 0 10px;
+    color: #086b57;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.dua-confirm-box p {
+    margin: 0 0 24px;
+    color: #65736d;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.dua-confirm-actions {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.dua-confirm-actions button {
+    flex: 1;
+    min-height: 46px;
+    padding: 10px 8px;
+    border-radius: 13px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.dua-confirm-cancel {
+    border: 1px solid #d9e4df;
+    background: #f3f7f5;
+    color: #34564b;
+}
+
+.dua-confirm-remove {
+    border: 1px solid #08745e;
+    background: #08745e;
+    color: #ffffff;
+}
+
+.dua-confirm-actions button:active {
+    transform: scale(0.97);
+}
+
+@keyframes duaConfirmAppear {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+/* /* Quran Custom Toast */
+.quran-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 85px;
+    transform: translate(-50%, 20px);
+    width: max-content;
+    max-width: calc(100% - 32px);
+    padding: 12px 18px;
+    background: #183f32;
+    color: #ffffff;
+    border-radius: 10px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.6;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 99999;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.quran-toast.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+}
+/* =========================================
+   QURAN SHARIF — DIGITAL KHATT INDOPAK FONT
+========================================= */
+
+@font-face {
+    font-family: "digitalkhatt-indopak";
+    src: url("../fonts/DigitalKhattIndoPak.otf")
+         format("opentype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* আরবি আয়াত */
+.quran-reader .arabic,
+#quranReader .arabic,
+.quran-text {
+    font-family: "digitalkhatt-indopak", serif;
+    direction: rtl;
+    text-align: right;
+    line-height: 2.2;
+    font-weight: normal;
+    font-variant-ligatures: normal;
+}
+
+/* সূরার শুরুতে বিসমিল্লাহ */
+#quranReader .bismillah {
+    font-family: "digitalkhatt-indopak", serif;
+    direction: rtl;
+    text-align: center;
+    line-height: 2.2;
+    font-weight: normal;
+}
+/* =========================================
+   WBW — DigitalKhatt IndoPak Arabic Font
+========================================= */
+
+#word-panel .word-arabic,
+#word-panel .word-arabic-small {
+    font-family: "digitalkhatt-indopak", serif;
+    direction: rtl;
+    unicode-bidi: isolate;
+    font-weight: normal;
+    font-variant-ligatures: normal;
+}
+
+#word-panel .word-arabic {
+    text-align: center;
+    font-size: 30px;
+    line-height: 2.2;
+}
+
+#word-panel .word-arabic-small {
+    text-align: center;
+    font-size: 25px;
+    line-height: 2;
+}
+
+#word-panel .word-bangla {
+    font-family: inherit;
+    direction: ltr;
+    text-align: center;
+}
