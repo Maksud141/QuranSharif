@@ -3,6 +3,14 @@ QURAN SHARIF — PREMIUM HADITH UI
 Theme: Emerald Green + Royal Gold
 Pages: Books / Chapters / Reader
 ========================================================= */
+@font-face {
+    font-family: "digitalkhatt-indopak";
+    src: url("../fonts/DigitalKhattIndoPak.otf")
+         format("opentype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
 
 :root {
 --hadith-green: #126442;
@@ -412,6 +420,7 @@ font-weight: 800;
 #hadithReaderList [dir="rtl"] {
 margin: 12px 0 18px;
 color: #174e37;
+font-family: "digitalkhatt-indopak", serif;
 font-size: 25px;
 font-weight: 500;
 line-height: 2.05;
