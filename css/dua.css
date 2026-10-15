@@ -3,7 +3,14 @@ QURAN SHARIF — DUA CSS
 Category / List / Reader / Search / Offline / Download
 Mobile-first responsive Islamic green theme
 ========================================================= */
-
+@font-face {
+    font-family: "digitalkhatt-indopak";
+    src: url("../fonts/DigitalKhattIndoPak.otf")
+         format("opentype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
 /* =========================================================
 
 1. ROOT VARIABLES
@@ -859,10 +866,7 @@ padding: 15px 4px;
 color: #153d2b;
 
 font-family:
-    "Noto Naskh Arabic",
-    "Amiri",
-    "Traditional Arabic",
-    serif;
+   "digitalkhatt-indopak", serif;
 
 font-size: 29px;
 font-weight: 500;
