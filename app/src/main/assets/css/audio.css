@@ -1,0 +1,477 @@
+/* =========================================================
+   QURAN SHARIF — SURAH AUDIO PAGE
+   Mobile-first responsive styling
+========================================================= */
+
+#audioPage {
+    padding: 16px;
+    padding-bottom: 100px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    color: var(--text-color, #183b2b);
+}
+
+/* Page header */
+
+#audioPage .audio-page-header {
+    padding: 22px 18px;
+    margin-bottom: 18px;
+    border-radius: 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #075b3b, #13865a);
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(0, 75, 45, 0.15);
+}
+
+#audioPage .audio-page-header h2 {
+    margin: 0 0 8px;
+    font-size: 23px;
+    line-height: 1.5;
+    font-weight: 700;
+    color: #fff;
+}
+
+#audioPage .audio-page-header p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.8;
+    color: #e4f8ed;
+}
+
+/* Common labels */
+
+#audioPage label {
+    display: block;
+    margin-bottom: 9px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* Reciter selection */
+
+#audioPage .audio-controls {
+    padding: 16px;
+    margin-bottom: 14px;
+    border-radius: 16px;
+    background: var(--card-bg, #fff);
+    border: 1px solid var(--border-color, #e2eae5);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+}
+
+#audioPage #audioReciterSelect {
+    width: 100%;
+    min-height: 48px;
+    padding: 11px 13px;
+    border: 1px solid #cbdcd1;
+    border-radius: 12px;
+    background: var(--input-bg, #fff);
+    color: var(--text-color, #183b2b);
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+#audioPage #audioReciterSelect:focus,
+#audioPage #audioSurahSearch:focus {
+    border-color: #13865a;
+    box-shadow: 0 0 0 3px rgba(19, 134, 90, 0.12);
+}
+
+/* Search */
+
+#audioPage .audio-search {
+    margin-bottom: 14px;
+}
+
+#audioPage #audioSurahSearch {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color, #dce6df);
+    border-radius: 14px;
+    box-sizing: border-box;
+    background: var(--card-bg, #fff);
+    color: var(--text-color, #183b2b);
+    font-size: 14px;
+    outline: none;
+}
+
+#audioPage #audioSurahSearch::placeholder {
+    color: #89968e;
+}
+
+/* Download all card */
+
+#audioPage .audio-download-all {
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 16px;
+    border: 1px solid #d7eadf;
+    background: linear-gradient(135deg, #f1faf4, #e7f5ec);
+}
+
+#audioPage #downloadAllSurahsBtn {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 12px;
+    background: #087747;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+#audioPage #downloadAllSurahsBtn:active {
+    transform: scale(0.98);
+    background: #065e39;
+}
+
+#audioPage #downloadAllSurahsBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#audioPage #audioDownloadSummary {
+    margin: 11px 0 0;
+    color: #456b55;
+    font-size: 12px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+/* Download progress */
+
+#audioPage .audio-download-progress {
+    margin-bottom: 16px;
+    padding: 15px;
+    border: 1px solid var(--border-color, #dce6df);
+    border-radius: 15px;
+    background: var(--card-bg, #fff);
+}
+
+#audioPage .audio-download-progress[hidden],
+#audioPage .surah-audio-player[hidden] {
+    display: none !important;
+}
+
+#audioPage #audioDownloadStatus {
+    margin: 0 0 12px;
+    font-size: 13px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+#audioPage #audioDownloadBar {
+    display: block;
+    width: 100%;
+    height: 10px;
+    margin-bottom: 12px;
+    accent-color: #087747;
+}
+
+#audioPage #cancelAudioDownloadBtn {
+    width: 100%;
+    min-height: 42px;
+    padding: 10px;
+    border: 1px solid #e2a6a6;
+    border-radius: 10px;
+    background: #fff4f4;
+    color: #a62929;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#audioPage #cancelAudioDownloadBtn:disabled {
+    opacity: 0.5;
+}
+
+/* Surah list */
+
+#audioPage .surah-audio-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#audioPage .surah-audio-list > p {
+    padding: 18px;
+    margin: 0;
+    text-align: center;
+    border-radius: 14px;
+    background: var(--card-bg, #fff);
+    color: var(--text-color, #456b55);
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+/* Individual surah card */
+
+#audioPage .surah-audio-item {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 15px;
+    border: 1px solid var(--border-color, #e1e9e3);
+    border-radius: 16px;
+    background: var(--card-bg, #fff);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.035);
+    box-sizing: border-box;
+    min-width: 0;
+    transition: border-color 0.2s ease;
+}
+
+#audioPage .surah-audio-item:focus-within {
+    border-color: #83c6a0;
+}
+
+#audioPage .surah-audio-info {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    column-gap: 12px;
+    row-gap: 8px;
+    min-width: 0;
+}
+
+#audioPage .surah-audio-info strong {
+    font-size: 15px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+#audioPage .surah-audio-info span {
+    font-family: "Noto Naskh Arabic", serif;
+    font-size: 20px;
+    line-height: 1.7;
+    color: #087747;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+#audioPage .surah-audio-info small {
+    grid-column: 1 / -1;
+    display: block;
+    font-size: 11px;
+    line-height: 1.7;
+    color: #65816e;
+    overflow-wrap: anywhere;
+}
+
+/* Play and download buttons */
+
+#audioPage .surah-audio-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+}
+
+#audioPage .surah-audio-actions button {
+    min-width: 0;
+    min-height: 43px;
+    padding: 10px 8px;
+    border-radius: 11px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    overflow-wrap: anywhere;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+#audioPage .surah-audio-actions button:active {
+    transform: scale(0.97);
+}
+
+#audioPage .surah-audio-actions button:first-child {
+    background: #087747;
+    border: 1px solid #087747;
+    color: #fff;
+}
+
+#audioPage .surah-audio-actions button:last-child {
+    background: #edf8f0;
+    border: 1px solid #c9e6d2;
+    color: #08683e;
+}
+
+#audioPage .surah-audio-actions button:disabled {
+    opacity: 0.65;
+    cursor: default;
+}
+
+/* Audio player */
+
+#audioPage .surah-audio-player {
+    position: sticky;
+    bottom: 8px;
+    z-index: 5;
+    margin-top: 18px;
+    padding: 15px;
+    border: 1px solid #d4e7da;
+    border-radius: 17px;
+    background: var(--card-bg, #fff);
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+}
+
+#audioPage #surahAudioNowPlaying {
+    margin: 0 0 12px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+#audioPage #surahAudioPlayer {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: 48px;
+}
+
+/* Tablet and desktop */
+
+@media (min-width: 600px) {
+    #audioPage {
+        max-width: 850px;
+        margin-inline: auto;
+        padding: 22px;
+    }
+
+    #audioPage .audio-page-header {
+        padding: 28px 22px;
+    }
+
+    #audioPage .audio-page-header h2 {
+        font-size: 27px;
+    }
+
+    #audioPage .surah-audio-item {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+    }
+
+    #audioPage .surah-audio-info {
+        flex: 1;
+    }
+
+    #audioPage .surah-audio-actions {
+        width: 230px;
+        flex-shrink: 0;
+    }
+}
+
+/* Small phones */
+
+@media (max-width: 360px) {
+    #audioPage {
+        padding: 10px;
+    }
+
+    #audioPage .audio-page-header h2 {
+        font-size: 20px;
+    }
+
+    #audioPage .surah-audio-item {
+        padding: 12px;
+    }
+
+    #audioPage .surah-audio-info strong {
+        font-size: 13px;
+    }
+
+    #audioPage .surah-audio-info span {
+        font-size: 18px;
+    }
+
+    #audioPage .surah-audio-actions button {
+        font-size: 11px;
+        padding-inline: 5px;
+    }
+}
+
+/* Dark mode support */
+
+@media (prefers-color-scheme: dark) {
+    #audioPage .audio-controls,
+    #audioPage #audioSurahSearch,
+    #audioPage .surah-audio-item,
+    #audioPage .audio-download-progress,
+    #audioPage .surah-audio-player {
+        background: var(--card-bg, #1c2922);
+        color: var(--text-color, #e7f2eb);
+        border-color: var(--border-color, #35483b);
+    }
+
+    #audioPage .audio-download-all {
+        background: #1d3327;
+        border-color: #315642;
+    }
+
+    #audioPage #audioDownloadSummary {
+        color: #c2dfcc;
+    }
+
+    #audioPage .surah-audio-info span {
+        color: #72d5a1;
+    }
+
+    #audioPage .surah-audio-info small {
+        color: #b1c9b9;
+    }
+
+    #audioPage .surah-audio-actions button:last-child {
+        background: #263f30;
+        border-color: #3e654a;
+        color: #b9edca;
+    }
+}
+#audioPage #stopSurahAudioBtn {
+    width: 100%;
+    min-height: 44px;
+    margin-top: 12px;
+    padding: 10px 14px;
+    border: 1px solid #e5bcbc;
+    border-radius: 11px;
+    background: #fff1f1;
+    color: #a32626;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#audioPage #stopSurahAudioBtn:active {
+    background: #ffe0e0;
+    transform: scale(0.98);
+}
+/* STOP AUDIO BUTTON */
+#audioPage #stopSurahAudioBtn {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    width: 100%;
+    min-height: 46px;
+    margin-top: 12px;
+    padding: 12px;
+    background: #c62828;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 10;
+}
+
+#audioPage #stopSurahAudioBtn:active {
+    background: #a51f1f;
+    transform: scale(0.98);
+}
