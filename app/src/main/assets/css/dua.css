@@ -1,0 +1,1359 @@
+/* =========================================================
+QURAN SHARIF — DUA CSS
+Category / List / Reader / Search / Offline / Download
+Mobile-first responsive Islamic green theme
+========================================================= */
+
+/* =========================================================
+
+1. ROOT VARIABLES
+   ========================================================= */
+
+:root {
+--dua-primary: #16784a;
+--dua-primary-dark: #105b38;
+--dua-primary-light: #e8f5ed;
+--dua-primary-soft: #f3faf5;
+
+--dua-gold: #d5a642;
+--dua-gold-light: #fff7e3;
+
+--dua-bg: #f5f8f6;
+--dua-card: #ffffff;
+
+--dua-text: #202b24;
+--dua-text-secondary: #68766d;
+--dua-border: #e2eae4;
+
+--dua-danger: #c0392b;
+--dua-danger-bg: #fff0ed;
+
+--dua-radius-sm: 10px;
+--dua-radius-md: 15px;
+--dua-radius-lg: 20px;
+
+--dua-shadow:
+    0 3px 14px rgba(24, 75, 46, 0.06);
+
+--dua-shadow-hover:
+    0 7px 22px rgba(24, 75, 46, 0.11);
+
+}
+
+/* =========================================================
+2. PAGE BASE
+========================================================= */
+
+#duaPage,
+#duaListPage,
+#duaReaderPage {
+background: var(--dua-bg);
+color: var(--dua-text);
+min-height: 100%;
+box-sizing: border-box;
+}
+
+#duaPage *,
+#duaListPage *,
+#duaReaderPage * {
+box-sizing: border-box;
+}
+
+#duaPage button,
+#duaListPage button,
+#duaReaderPage button {
+font: inherit;
+-webkit-tap-highlight-color: transparent;
+}
+
+#duaPage button:focus-visible,
+#duaListPage button:focus-visible,
+#duaReaderPage button:focus-visible {
+outline: 2px solid var(--dua-primary);
+outline-offset: 3px;
+}
+
+/* =========================================================
+3. PAGE HEADERS
+========================================================= */
+
+#duaPage .page-header,
+#duaListPage .page-header,
+#duaReaderPage .page-header {
+position: sticky;
+top: 0;
+z-index: 100;
+
+display: flex;
+align-items: center;
+gap: 10px;
+
+min-height: 58px;
+padding: 10px 14px;
+
+background: #ffffff;
+border-bottom: 1px solid var(--dua-border);
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.025);
+
+}
+
+#duaPage .page-header-title,
+#duaListPage .page-header-title,
+#duaReaderPage .page-header-title {
+flex: 1;
+min-width: 0;
+margin: 0;
+
+color: var(--dua-primary-dark);
+font-size: 18px;
+font-weight: 800;
+line-height: 1.4;
+
+overflow-wrap: anywhere;
+
+}
+
+#duaPage .back-btn,
+#duaListPage .back-btn,
+#duaReaderPage .back-btn {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+
+flex: 0 0 40px;
+width: 40px;
+min-width: 40px;
+height: 40px;
+
+padding: 0;
+border: 1px solid var(--dua-border);
+border-radius: 12px;
+
+background: var(--dua-primary-soft);
+color: var(--dua-primary-dark);
+
+font-size: 23px;
+cursor: pointer;
+transition: background 0.2s ease;
+
+}
+
+#duaPage .back-btn:active,
+#duaListPage .back-btn:active,
+#duaReaderPage .back-btn:active {
+background: var(--dua-primary-light);
+}
+
+#duaPage .header-icon-btn,
+#duaListPage .header-icon-btn,
+#duaReaderPage .header-icon-btn {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+
+flex: 0 0 auto;
+min-width: 40px;
+min-height: 40px;
+padding: 8px 10px;
+
+border: 1px solid var(--dua-border);
+border-radius: 12px;
+
+background: #ffffff;
+color: var(--dua-primary);
+
+font-size: 17px;
+cursor: pointer;
+
+}
+
+#duaPage .header-icon-btn:active,
+#duaListPage .header-icon-btn:active,
+#duaReaderPage .header-icon-btn:active {
+background: var(--dua-primary-light);
+}
+
+/* =========================================================
+4. MAIN CONTAINERS
+========================================================= */
+
+#duaPage .dua-container,
+#duaListPage .dua-container {
+width: 100%;
+max-width: 760px;
+margin: 0 auto;
+padding: 16px 14px 32px;
+}
+
+#duaReaderPage .dua-reader-container {
+width: 100%;
+max-width: 760px;
+margin: 0 auto;
+padding: 16px 14px 36px;
+}
+
+/* =========================================================
+5. INTRO CARD
+========================================================= */
+
+#duaPage .dua-intro-card {
+position: relative;
+display: flex;
+align-items: center;
+gap: 15px;
+
+overflow: hidden;
+margin-bottom: 18px;
+padding: 20px 17px;
+
+border: 1px solid #d6eadc;
+border-radius: var(--dua-radius-lg);
+
+background:
+    linear-gradient(135deg, #eff9f1 0%, #ffffff 100%);
+
+box-shadow: var(--dua-shadow);
+
+}
+
+#duaPage .dua-intro-card::after {
+content: "";
+position: absolute;
+top: -35px;
+right: -25px;
+
+width: 110px;
+height: 110px;
+
+border: 16px solid rgba(22, 120, 74, 0.045);
+border-radius: 50%;
+
+pointer-events: none;
+
+}
+
+#duaPage .dua-intro-icon {
+display: flex;
+align-items: center;
+justify-content: center;
+
+flex: 0 0 58px;
+width: 58px;
+height: 58px;
+
+border-radius: 18px;
+background: var(--dua-primary);
+color: #ffffff;
+
+font-size: 29px;
+box-shadow: 0 5px 14px rgba(22, 120, 74, 0.17);
+
+}
+
+#duaPage .dua-intro-card h2,
+#duaPage .dua-intro-card h3 {
+margin: 0 0 5px;
+color: var(--dua-primary-dark);
+font-size: 17px;
+font-weight: 800;
+line-height: 1.5;
+}
+
+#duaPage .dua-intro-card p {
+margin: 0;
+color: var(--dua-text-secondary);
+font-size: 13px;
+line-height: 1.8;
+}
+
+/* =========================================================
+6. OFFLINE DOWNLOAD CARD
+========================================================= */
+
+#duaPage .dua-offline-download-card {
+display: flex;
+align-items: center;
+gap: 12px;
+
+margin-bottom: 22px;
+padding: 15px;
+
+border: 1px solid #e8d9ad;
+border-radius: var(--dua-radius-md);
+
+background:
+    linear-gradient(135deg, #fffaf0 0%, #ffffff 100%);
+
+box-shadow: var(--dua-shadow);
+
+}
+
+#duaPage .dua-offline-download-icon {
+display: flex;
+align-items: center;
+justify-content: center;
+
+flex: 0 0 46px;
+width: 46px;
+height: 46px;
+
+border-radius: 14px;
+background: var(--dua-gold-light);
+color: #876315;
+
+font-size: 23px;
+
+}
+
+#duaPage .dua-offline-download-info {
+flex: 1;
+min-width: 0;
+}
+
+#duaPage .dua-offline-download-info h3,
+#duaPage .dua-offline-download-info h4 {
+margin: 0 0 4px;
+color: #654b13;
+font-size: 14px;
+font-weight: 800;
+line-height: 1.5;
+}
+
+#duaPage #duaDownloadStatus {
+margin: 0;
+color: #776d53;
+font-size: 12px;
+line-height: 1.7;
+overflow-wrap: anywhere;
+}
+
+#duaPage .dua-download-all-btn {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+
+flex: 0 0 auto;
+min-height: 39px;
+max-width: 100%;
+padding: 9px 12px;
+
+border: 0;
+border-radius: 11px;
+
+background: var(--dua-primary);
+color: #ffffff;
+
+font-size: 12px;
+font-weight: 800;
+line-height: 1.4;
+text-align: center;
+
+cursor: pointer;
+transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+
+}
+
+#duaPage .dua-download-all-btn:active {
+background: var(--dua-primary-dark);
+transform: scale(0.97);
+}
+
+#duaPage .dua-download-all-btn:disabled {
+opacity: 0.65;
+cursor: wait;
+transform: none;
+}
+
+/* =========================================================
+7. DOWNLOAD PROGRESS
+========================================================= */
+
+#duaPage .dua-download-progress {
+display: none;
+margin: -10px 0 22px;
+padding: 14px;
+
+border: 1px solid var(--dua-border);
+border-radius: var(--dua-radius-md);
+background: #ffffff;
+
+box-shadow: var(--dua-shadow);
+
+}
+
+#duaPage .dua-download-progress-top {
+display: flex;
+align-items: flex-start;
+justify-content: space-between;
+gap: 12px;
+
+margin-bottom: 10px;
+
+}
+
+#duaPage #duaDownloadProgressText {
+flex: 1;
+min-width: 0;
+color: var(--dua-text-secondary);
+font-size: 12px;
+line-height: 1.7;
+overflow-wrap: anywhere;
+}
+
+#duaPage #duaDownloadPercent {
+flex: 0 0 auto;
+color: var(--dua-primary);
+font-size: 14px;
+font-weight: 900;
+}
+
+#duaPage .dua-download-progress-bar {
+width: 100%;
+height: 8px;
+
+overflow: hidden;
+border-radius: 99px;
+background: #e8eee9;
+
+}
+
+#duaPage .dua-download-progress-fill {
+width: 0;
+height: 100%;
+
+border-radius: inherit;
+background:
+    linear-gradient(90deg, #16784a, #55b77b);
+
+transition: width 0.25s ease;
+
+}
+
+/* =========================================================
+8. SECTION TITLE
+========================================================= */
+
+#duaPage .section-title-row {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 10px;
+
+margin: 24px 2px 13px;
+
+}
+
+#duaPage .section-title-row h2,
+#duaPage .section-title-row h3,
+#duaPage .section-title-row .section-title {
+margin: 0;
+color: var(--dua-text);
+font-size: 17px;
+font-weight: 800;
+line-height: 1.5;
+}
+
+#duaPage .section-title-row::after {
+content: "";
+width: 36px;
+height: 3px;
+flex: 0 0 36px;
+
+border-radius: 99px;
+background: var(--dua-gold);
+
+}
+
+/* =========================================================
+9. CATEGORY LIST
+========================================================= */
+
+#duaPage .dua-category-list {
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+
+#duaPage .dua-category-card {
+display: flex;
+align-items: center;
+gap: 13px;
+
+width: 100%;
+min-height: 76px;
+padding: 13px 14px;
+
+border: 1px solid var(--dua-border);
+border-radius: var(--dua-radius-md);
+
+background: var(--dua-card);
+color: var(--dua-text);
+text-align: left;
+
+box-shadow: var(--dua-shadow);
+cursor: pointer;
+
+transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+}
+
+#duaPage .dua-category-card:active {
+transform: scale(0.99);
+background: var(--dua-primary-soft);
+border-color: #b9d9c4;
+}
+
+#duaPage .dua-category-number {
+display: flex;
+align-items: center;
+justify-content: center;
+
+flex: 0 0 43px;
+width: 43px;
+height: 43px;
+
+border: 1px solid #d8eadf;
+border-radius: 13px;
+
+background: var(--dua-primary-light);
+color: var(--dua-primary);
+
+font-size: 15px;
+font-weight: 900;
+
+}
+
+#duaPage .dua-category-info {
+flex: 1;
+min-width: 0;
+}
+
+#duaPage .dua-category-info h3 {
+margin: 0 0 5px;
+
+color: var(--dua-text);
+font-size: 15px;
+font-weight: 800;
+line-height: 1.6;
+
+overflow-wrap: anywhere;
+
+}
+
+#duaPage .dua-category-info p {
+margin: 0;
+color: var(--dua-text-secondary);
+font-size: 12px;
+line-height: 1.6;
+}
+
+#duaPage .dua-category-arrow {
+display: flex;
+align-items: center;
+justify-content: center;
+
+flex: 0 0 28px;
+width: 28px;
+height: 28px;
+
+border-radius: 9px;
+background: var(--dua-primary-soft);
+color: var(--dua-primary);
+
+font-size: 25px;
+line-height: 1;
+
+}
+
+/* =========================================================
+10. DUA LIST PAGE
+========================================================= */
+
+#duaListPage #duaListTitle {
+display: block;
+min-width: 0;
+
+color: var(--dua-primary-dark);
+font-size: 17px;
+font-weight: 800;
+line-height: 1.4;
+
+overflow-wrap: anywhere;
+
+}
+
+#duaListPage #duaListSubtitle {
+display: block;
+margin-top: 2px;
+
+color: var(--dua-text-secondary);
+font-size: 11px;
+font-weight: 500;
+line-height: 1.5;
+
+overflow-wrap: anywhere;
+
+}
+
+#duaListPage .page-header-title {
+display: flex;
+flex-direction: column;
+justify-content: center;
+}
+
+#duaListPage #duaList {
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+
+#duaListPage .dua-list-card {
+display: flex;
+align-items: center;
+gap: 13px;
+
+width: 100%;
+min-height: 76px;
+padding: 13px 14px;
+
+border: 1px solid var(--dua-border);
+border-radius: var(--dua-radius-md);
+
+background: #ffffff;
+color: var(--dua-text);
+text-align: left;
+
+box-shadow: var(--dua-shadow);
+cursor: pointer;
+
+transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+
+}
+
+#duaListPage .dua-list-card:active {
+transform: scale(0.99);
+border-color: #b9d9c4;
+background: var(--dua-primary-soft);
+}
+
+#duaListPage .dua-list-number {
+display: flex;
+align-items: center;
+justify-content: center;
+
+flex: 0 0 42px;
+width: 42px;
+height: 42px;
+
+border-radius: 13px;
+background: var(--dua-primary-light);
+color: var(--dua-primary);
+
+font-size: 14px;
+font-weight: 900;
+
+}
+
+#duaListPage .dua-list-info {
+flex: 1;
+min-width: 0;
+}
+
+#duaListPage .dua-list-info h3 {
+margin: 0;
+
+color: var(--dua-text);
+font-size: 14px;
+font-weight: 800;
+line-height: 1.8;
+
+overflow-wrap: anywhere;
+
+}
+
+#duaListPage .dua-list-info p {
+margin: 4px 0 0;
+
+color: var(--dua-text-secondary);
+font-size: 12px;
+line-height: 1.7;
+
+overflow-wrap: anywhere;
+
+}
+
+#duaListPage .dua-list-arrow {
+display: flex;
+align-items: center;
+justify-content: center;
+
+flex: 0 0 27px;
+width: 27px;
+height: 27px;
+
+border-radius: 9px;
+background: var(--dua-primary-soft);
+color: var(--dua-primary);
+
+font-size: 24px;
+line-height: 1;
+
+}
+
+/* =========================================================
+11. READER PAGE HEADER
+========================================================= */
+
+#duaReaderPage #duaReaderTitle {
+display: block;
+color: var(--dua-primary-dark);
+font-size: 17px;
+font-weight: 800;
+line-height: 1.4;
+overflow-wrap: anywhere;
+}
+
+#duaReaderPage #duaReaderSubtitle {
+display: block;
+margin-top: 3px;
+color: var(--dua-text-secondary);
+font-size: 11px;
+font-weight: 500;
+line-height: 1.5;
+overflow-wrap: anywhere;
+}
+
+#duaReaderPage .page-header-title {
+display: flex;
+flex-direction: column;
+justify-content: center;
+}
+
+/* =========================================================
+12. READER HEADING
+========================================================= */
+
+#duaReaderPage .dua-reader-heading {
+margin-bottom: 17px;
+padding: 18px 16px;
+
+border: 1px solid #d5e9dc;
+border-radius: var(--dua-radius-lg);
+
+background:
+    linear-gradient(135deg, #eaf6ed 0%, #ffffff 100%);
+
+text-align: center;
+box-shadow: var(--dua-shadow);
+
+}
+
+#duaReaderPage .dua-reader-heading h2 {
+margin: 0;
+
+color: var(--dua-primary-dark);
+font-size: 19px;
+font-weight: 900;
+line-height: 1.8;
+
+overflow-wrap: anywhere;
+
+}
+
+#duaReaderPage .dua-reader-heading p {
+margin: 7px 0 0;
+
+color: var(--dua-text-secondary);
+font-size: 13px;
+line-height: 1.8;
+
+}
+
+/* =========================================================
+13. INDIVIDUAL DUA SEGMENT CARD
+========================================================= */
+
+#duaReaderPage .dua-segment-card {
+position: relative;
+
+margin-bottom: 17px;
+padding: 21px 16px 18px;
+
+border: 1px solid var(--dua-border);
+border-radius: var(--dua-radius-lg);
+
+background: #ffffff;
+box-shadow: var(--dua-shadow);
+
+overflow-wrap: anywhere;
+
+}
+
+#duaReaderPage .dua-segment-number {
+display: flex;
+align-items: center;
+justify-content: center;
+
+width: 34px;
+height: 34px;
+margin-bottom: 15px;
+
+border: 1px solid #d5e9dc;
+border-radius: 11px;
+
+background: var(--dua-primary-light);
+color: var(--dua-primary);
+
+font-size: 13px;
+font-weight: 900;
+
+}
+
+/* =========================================================
+14. OPTIONAL TOP AND BOTTOM TEXT
+========================================================= */
+
+#duaReaderPage .dua-top-text,
+#duaReaderPage .dua-bottom-text {
+padding: 11px 13px;
+border-radius: 11px;
+
+background: #f8faf8;
+color: var(--dua-text-secondary);
+
+font-size: 13px;
+line-height: 2;
+white-space: pre-line;
+overflow-wrap: anywhere;
+
+}
+
+#duaReaderPage .dua-top-text {
+margin-bottom: 17px;
+border-left: 3px solid var(--dua-gold);
+}
+
+#duaReaderPage .dua-bottom-text {
+margin-top: 17px;
+border-left: 3px solid #8bb99b;
+}
+
+/* =========================================================
+15. ARABIC TEXT
+========================================================= */
+
+#duaReaderPage .dua-arabic {
+width: 100%;
+margin: 7px 0 23px;
+padding: 15px 4px;
+
+color: #153d2b;
+
+font-family:
+    "Noto Naskh Arabic",
+    "Amiri",
+    "Traditional Arabic",
+    serif;
+
+font-size: 29px;
+font-weight: 500;
+line-height: 2.15;
+
+text-align: right;
+direction: rtl;
+unicode-bidi: plaintext;
+
+overflow-wrap: anywhere;
+word-break: normal;
+
+}
+
+/* =========================================================
+16. TRANSLITERATION
+========================================================= */
+
+#duaReaderPage .dua-transliteration {
+margin: 0 0 17px;
+padding: 13px 14px;
+
+border-radius: 12px;
+background: #f5f8f6;
+
+color: var(--dua-text);
+
+}
+
+#duaReaderPage .dua-transliteration strong {
+display: block;
+margin-bottom: 7px;
+
+color: var(--dua-primary);
+font-size: 12px;
+font-weight: 900;
+
+}
+
+#duaReaderPage .dua-transliteration div {
+color: #4d5e53;
+font-size: 14px;
+line-height: 2;
+overflow-wrap: anywhere;
+}
+
+/* =========================================================
+17. BANGLA TRANSLATION
+========================================================= */
+
+#duaReaderPage .dua-translation {
+padding: 15px;
+
+border: 1px solid #dcece1;
+border-radius: 13px;
+
+background: var(--dua-primary-soft);
+
+}
+
+#duaReaderPage .dua-label {
+display: inline-flex;
+align-items: center;
+
+margin-bottom: 10px;
+padding: 5px 10px;
+
+border-radius: 8px;
+background: #dcefe2;
+color: var(--dua-primary-dark);
+
+font-size: 12px;
+font-weight: 900;
+
+}
+
+#duaReaderPage .dua-translation > div {
+color: #27382d;
+
+font-size: 15px;
+line-height: 2;
+
+white-space: pre-line;
+overflow-wrap: anywhere;
+
+}
+
+/* =========================================================
+18. WORD-BY-WORD TOGGLE BUTTON
+========================================================= */
+
+#duaReaderPage .dua-word-toggle {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+
+width: 100%;
+min-height: 45px;
+margin-top: 16px;
+padding: 11px 13px;
+
+border: 1px solid #b8d9c3;
+border-radius: 12px;
+
+background: #ffffff;
+color: var(--dua-primary-dark);
+
+font-size: 13px;
+font-weight: 800;
+line-height: 1.7;
+text-align: center;
+
+cursor: pointer;
+transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+
+}
+
+#duaReaderPage .dua-word-toggle:active {
+background: var(--dua-primary-light);
+border-color: var(--dua-primary);
+}
+
+/* =========================================================
+19. WORD-BY-WORD PANEL
+========================================================= */
+
+#duaReaderPage .dua-words-panel {
+display: none;
+
+margin-top: 12px;
+padding: 12px;
+
+border: 1px solid #dcece1;
+border-radius: 13px;
+
+background: #f7fbf8;
+animation: duaPanelIn 0.2s ease;
+
+}
+
+#duaReaderPage .dua-words-grid {
+display: grid;
+grid-template-columns: repeat(2, minmax(0, 1fr));
+gap: 9px;
+}
+
+#duaReaderPage .dua-word-item {
+display: flex;
+flex-direction: column;
+align-items: stretch;
+justify-content: center;
+gap: 9px;
+
+min-width: 0;
+min-height: 85px;
+padding: 11px 9px;
+
+border: 1px solid #e0eae3;
+border-radius: 11px;
+
+background: #ffffff;
+text-align: center;
+
+}
+
+#duaReaderPage .dua-word-arabic {
+display: block;
+
+color: var(--dua-primary-dark);
+
+font-family:
+    "Noto Naskh Arabic",
+    "Amiri",
+    "Traditional Arabic",
+    serif;
+
+font-size: 23px;
+line-height: 1.8;
+text-align: center;
+direction: rtl;
+
+overflow-wrap: anywhere;
+
+}
+
+#duaReaderPage .dua-word-bn {
+display: block;
+
+padding-top: 7px;
+border-top: 1px dashed #d9e5dc;
+
+color: #4d5e53;
+font-size: 12px;
+line-height: 1.7;
+text-align: center;
+
+overflow-wrap: anywhere;
+
+}
+
+/* =========================================================
+20. LOADING STATE
+========================================================= */
+
+#duaPage .dua-loading,
+#duaListPage .dua-loading,
+#duaReaderPage .dua-loading {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 12px;
+
+min-height: 150px;
+padding: 25px 15px;
+
+color: var(--dua-text-secondary);
+text-align: center;
+
+}
+
+#duaPage .dua-loading p,
+#duaListPage .dua-loading p,
+#duaReaderPage .dua-loading p {
+margin: 0;
+font-size: 13px;
+line-height: 1.8;
+}
+
+#duaPage .dua-spinner,
+#duaListPage .dua-spinner,
+#duaReaderPage .dua-spinner {
+width: 34px;
+height: 34px;
+
+border: 3px solid #dcebe1;
+border-top-color: var(--dua-primary);
+
+border-radius: 50%;
+animation: duaSpin 0.8s linear infinite;
+
+}
+
+@keyframes duaSpin {
+to {
+transform: rotate(360deg);
+}
+}
+
+@keyframes duaPanelIn {
+from {
+opacity: 0;
+transform: translateY(-4px);
+}
+
+to {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+}
+
+/* =========================================================
+21. ERROR STATE
+========================================================= */
+
+#duaPage .dua-error,
+#duaListPage .dua-error,
+#duaReaderPage .dua-error {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 12px;
+
+margin: 12px 0;
+padding: 24px 16px;
+
+border: 1px solid #f0d4ce;
+border-radius: var(--dua-radius-md);
+
+background: var(--dua-danger-bg);
+text-align: center;
+
+}
+
+#duaPage .dua-error-icon,
+#duaListPage .dua-error-icon,
+#duaReaderPage .dua-error-icon {
+font-size: 30px;
+line-height: 1.3;
+}
+
+#duaPage .dua-error p,
+#duaListPage .dua-error p,
+#duaReaderPage .dua-error p {
+margin: 0;
+
+color: #8e3328;
+font-size: 13px;
+line-height: 1.9;
+
+overflow-wrap: anywhere;
+
+}
+
+#duaPage .dua-retry-btn,
+#duaListPage .dua-retry-btn,
+#duaReaderPage .dua-retry-btn {
+min-height: 40px;
+padding: 9px 17px;
+
+border: 0;
+border-radius: 10px;
+
+background: var(--dua-danger);
+color: #ffffff;
+
+font-size: 13px;
+font-weight: 800;
+
+cursor: pointer;
+
+}
+
+/* =========================================================
+22. EMPTY STATE
+========================================================= */
+
+#duaPage .dua-empty,
+#duaListPage .dua-empty,
+#duaReaderPage .dua-empty {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 11px;
+
+padding: 35px 16px;
+
+border: 1px dashed #d4e3d8;
+border-radius: var(--dua-radius-md);
+
+background: #ffffff;
+text-align: center;
+
+}
+
+#duaPage .dua-empty-icon,
+#duaListPage .dua-empty-icon,
+#duaReaderPage .dua-empty-icon {
+display: flex;
+align-items: center;
+justify-content: center;
+
+width: 62px;
+height: 62px;
+
+border-radius: 20px;
+background: var(--dua-primary-light);
+
+font-size: 31px;
+
+}
+
+#duaPage .dua-empty p,
+#duaListPage .dua-empty p,
+#duaReaderPage .dua-empty p {
+margin: 0;
+
+color: var(--dua-text-secondary);
+font-size: 13px;
+line-height: 1.9;
+
+}
+
+/* =========================================================
+23. RESPONSIVE — SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+#duaPage .dua-container,
+#duaListPage .dua-container,
+#duaReaderPage .dua-reader-container {
+padding-right: 10px;
+padding-left: 10px;
+}
+
+#duaPage .page-header,
+#duaListPage .page-header,
+#duaReaderPage .page-header {
+    gap: 7px;
+    padding-right: 9px;
+    padding-left: 9px;
+}
+
+#duaPage .page-header-title,
+#duaListPage #duaListTitle,
+#duaReaderPage #duaReaderTitle {
+    font-size: 15px;
+}
+
+#duaPage .dua-intro-card {
+    gap: 11px;
+    padding: 15px 12px;
+}
+
+#duaPage .dua-intro-icon {
+    flex-basis: 48px;
+    width: 48px;
+    height: 48px;
+    font-size: 25px;
+}
+
+#duaPage .dua-offline-download-card {
+    flex-wrap: wrap;
+}
+
+#duaPage .dua-download-all-btn {
+    width: 100%;
+}
+
+#duaPage .dua-category-card,
+#duaListPage .dua-list-card {
+    gap: 10px;
+    padding: 11px;
+}
+
+#duaReaderPage .dua-segment-card {
+    padding: 17px 12px;
+}
+
+#duaReaderPage .dua-arabic {
+    font-size: 26px;
+    line-height: 2.1;
+}
+
+#duaReaderPage .dua-words-grid {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+#duaReaderPage .dua-word-item {
+    min-height: 76px;
+}
+
+}
+
+/* =========================================================
+24. TABLETS AND LARGER SCREENS
+========================================================= */
+
+@media (min-width: 600px) {
+#duaPage .dua-container,
+#duaListPage .dua-container,
+#duaReaderPage .dua-reader-container {
+padding: 22px 22px 40px;
+}
+
+#duaPage .dua-category-list,
+#duaListPage #duaList {
+    gap: 12px;
+}
+
+#duaReaderPage .dua-segment-card {
+    padding: 25px 24px;
+}
+
+#duaReaderPage .dua-arabic {
+    font-size: 33px;
+}
+
+#duaReaderPage .dua-words-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+}
+
+/* =========================================================
+25. ACCESSIBILITY / REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+#duaPage *,
+#duaListPage *,
+#duaReaderPage * {
+animation-duration: 0.01ms !important;
+animation-iteration-count: 1 !important;
+scroll-behavior: auto !important;
+transition-duration: 0.01ms !important;
+}
+}
