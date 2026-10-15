@@ -2,8 +2,15 @@
    QURAN SHARIF APP
    MAIN STYLE.CSS
 ========================================================= */
-
-* {
+@font-face {
+    font-family: "digitalkhatt-indopak";
+    src: url("../fonts/DigitalKhattIndoPak.otf")
+         format("opentype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+*{
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -2415,7 +2422,7 @@ body.dark-mode .quran-selector select {
     margin: 0;
     padding: 15px 8px;
     color: #111111;
-    font-family: "Amiri", "Noto Naskh Arabic", serif;
+    font-family: "digitalkhatt-indopak", serif;
     font-size: 29px;
     line-height: 2.15;
     text-align: right;
@@ -4357,13 +4364,10 @@ body.dark-mode .quran-selector select {
     padding: 12px 5px;
 
     font-family:
-        "Noto Naskh Arabic",
-        "Amiri",
-        "Traditional Arabic",
-        serif;
+       "digitalkhatt-indopak", serif;
 
     font-size: 30px;
-    line-height: 2.1;
+    line-height: 3.1;
 
     text-align: right;
 
@@ -4431,13 +4435,10 @@ body.dark-mode .quran-selector select {
     padding: 5px 0;
 
     font-family:
-        "Noto Naskh Arabic",
-        "Amiri",
-        "Traditional Arabic",
-        serif;
+       "digitalkhatt-indopak", serif;
 
     font-size: 26px;
-    line-height: 2;
+    line-height: 3;
 
     text-align: right;
 
@@ -4490,13 +4491,10 @@ body.dark-mode .quran-selector select {
     padding: 5px 0;
 
     font-family:
-        "Noto Naskh Arabic",
-        "Amiri",
-        "Traditional Arabic",
-        serif;
+       "digitalkhatt-indopak", serif;
 
     font-size: 27px;
-    line-height: 2.05;
+    line-height: 3.05;
 
     text-align: right;
 
