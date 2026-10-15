@@ -1,551 +1,323 @@
 /* =========================================================
    QURAN SHARIF — DAILY CONTENT
-   =========================================================
+   Version 3.0
+
    📖 আজকের আয়াত
    📜 আজকের হাদিস
    🤲 আজকের দোয়া
 
-   নিয়ম:
-   - ২৪ ঘণ্টা একই Content থাকবে
-   - নতুন ২৪ ঘণ্টায় নতুন Random Content
-   - Offline-এ LocalStorage থেকে আগের Content পাওয়া যাবে
-
-   HADITH JSON SUPPORT:
-   ar          = Arabic
-   bn          = Bengali
-   hadith_id   = Hadith ID
-   narrator    = Narrator
+   FEATURES
+   - প্রতি স্থানীয় দিনে একই Content
+   - নতুন দিনে নতুন Random Content
+   - LocalStorage cache
+   - Offline fallback
+   - Quran JSON: 001.json - 114.json
+   - Hadith JSON: ar, bn, hadith_id, narrator, grade
+   - Chapter JSON support
+   - Dua API + cached data support
+   - Prevent duplicate initialization/loading
 ========================================================= */
 
 
 /* =========================================================
-   CONFIG
+   1. CONFIG
 ========================================================= */
 
 const DAILY_CONTENT_STORAGE_KEY =
     "quranSharif_dailyContent";
 
-const DAILY_CONTENT_VERSION = 2;
-
-
-/* =========================================================
-   QURAN
-========================================================= */
+const DAILY_CONTENT_VERSION = 3;
 
 const DAILY_QURAN_BASE_PATH =
     "data/quran/";
 
-
-/* =========================================================
-   HADITH
-========================================================= */
-
 const DAILY_HADITH_PATHS = {
-
-    bukhari:
-        "data/hadith/bukhari/",
-
-    muslim:
-        "data/hadith/muslim/",
-
-    tirmidhi:
-        "data/hadith/tirmidhi/"
-
+    bukhari: "data/hadith/bukhari/",
+    muslim: "data/hadith/muslim/",
+    tirmidhi: "data/hadith/tirmidhi/"
 };
-
-
-/* =========================================================
-   HADITH BOOK NAMES
-========================================================= */
 
 const DAILY_HADITH_BOOK_NAMES = {
-
-    bukhari:
-        "সহীহ বুখারী",
-
-    muslim:
-        "সহীহ মুসলিম",
-
-    tirmidhi:
-        "জামে আত-তিরমিযী"
-
+    bukhari: "সহীহ বুখারী",
+    muslim: "সহীহ মুসলিম",
+    tirmidhi: "জামে আত-তিরমিযী"
 };
+
+const DAILY_DUA_API =
+    "https://dua-api.hisnul.workers.dev/api";
+
+const DAILY_HADITH_CHAPTER_LIMIT = 50;
 
 
 /* =========================================================
-   STATE
+   2. STATE
 ========================================================= */
 
 let dailyContentLoading = false;
-
 let dailyContentData = null;
+let dailyContentLoadPromise = null;
+let dailyContentDateTimer = null;
 
 
 /* =========================================================
-   HELPER
+   3. FALLBACK CONTENT
+========================================================= */
+
+const DAILY_FALLBACK_AYAH = {
+    surah: 94,
+    ayah: 6,
+    arabic: "إِنَّ مَعَ الْعُسْرِ يُسْرًا",
+    bengali: "নিশ্চয়ই কষ্টের সাথে স্বস্তি রয়েছে।"
+};
+
+const DAILY_FALLBACK_HADITH = {
+    book: "সহীহ বুখারী",
+    number: "",
+    narrator: "",
+    grade: "",
+    chapter: "",
+    arabic: "",
+    bengali: "নিশ্চয়ই কাজসমূহ নিয়তের উপর নির্ভরশীল।"
+};
+
+const DAILY_FALLBACK_DUA = {
+    id: null,
+    title: "দোয়া",
+    arabic:
+        "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً",
+    bengali:
+        "হে আমাদের রব! আমাদের দুনিয়াতে কল্যাণ দান করুন এবং আখিরাতেও কল্যাণ দান করুন।",
+    reference: ""
+};
+
+
+/* =========================================================
+   4. RANDOM HELPER
 ========================================================= */
 
 function dailyRandomIndex(length) {
-
-    if (!length || length <= 0) {
+    if (!Number.isFinite(length) || length <= 0) {
         return 0;
     }
 
-    return Math.floor(
-        Math.random() * length
-    );
+    return Math.floor(Math.random() * length);
+}
 
+function dailyShuffle(items) {
+    const result = Array.isArray(items)
+        ? [...items]
+        : [];
+
+    for (let i = result.length - 1; i > 0; i--) {
+        const j = dailyRandomIndex(i + 1);
+
+        [result[i], result[j]] =
+            [result[j], result[i]];
+    }
+
+    return result;
 }
 
 
 /* =========================================================
-   TODAY KEY
-   =========================================================
-   একই দিনের জন্য একই Content রাখার জন্য
+   5. LOCAL DATE KEY
 ========================================================= */
 
 function getDailyDateKey() {
-
     const now = new Date();
 
-    const year =
-        now.getFullYear();
+    const year = now.getFullYear();
 
-    const month =
-        String(
-            now.getMonth() + 1
-        ).padStart(2, "0");
+    const month = String(
+        now.getMonth() + 1
+    ).padStart(2, "0");
 
-    const day =
-        String(
-            now.getDate()
-        ).padStart(2, "0");
+    const day = String(
+        now.getDate()
+    ).padStart(2, "0");
 
     return `${year}-${month}-${day}`;
-
 }
 
 
 /* =========================================================
-   LOAD SAVED DAILY CONTENT
+   6. SAFE LOCAL STORAGE
 ========================================================= */
 
-function getSavedDailyContent() {
-
+function dailyReadStorage(key) {
     try {
+        const value = localStorage.getItem(key);
 
-        const saved =
-            localStorage.getItem(
-                DAILY_CONTENT_STORAGE_KEY
-            );
-
-        if (!saved) {
+        if (!value) {
             return null;
         }
 
-        const data =
-            JSON.parse(saved);
-
-        if (!data) {
-            return null;
-        }
-
-        /*
-           Version check
-        */
-
-        if (
-            data.version !==
-            DAILY_CONTENT_VERSION
-        ) {
-            return null;
-        }
-
-        /*
-           Date check
-        */
-
-        if (
-            data.dateKey !==
-            getDailyDateKey()
-        ) {
-            return null;
-        }
-
-        /*
-           Required content check
-        */
-
-        if (
-            !data.ayah ||
-            !data.hadith ||
-            !data.dua
-        ) {
-            return null;
-        }
-
-        return data;
-
+        return JSON.parse(value);
     } catch (error) {
-
-        console.error(
-            "Daily content read error:",
+        console.warn(
+            "Daily storage read failed:",
+            key,
             error
         );
 
         return null;
-
     }
-
 }
 
-
-/* =========================================================
-   SAVE DAILY CONTENT
-========================================================= */
-
-function saveDailyContent(data) {
-
+function dailyWriteStorage(key, value) {
     try {
-
         localStorage.setItem(
-            DAILY_CONTENT_STORAGE_KEY,
-            JSON.stringify(data)
+            key,
+            JSON.stringify(value)
         );
 
         return true;
-
     } catch (error) {
-
-        console.error(
-            "Daily content save error:",
+        console.warn(
+            "Daily storage write failed:",
+            key,
             error
         );
 
         return false;
-
     }
-
 }
 
 
 /* =========================================================
-   FETCH JSON
+   7. LOAD SAVED DAILY CONTENT
+========================================================= */
+
+function getSavedDailyContent() {
+    const data = dailyReadStorage(
+        DAILY_CONTENT_STORAGE_KEY
+    );
+
+    if (!data || typeof data !== "object") {
+        return null;
+    }
+
+    if (
+        data.version !== DAILY_CONTENT_VERSION
+    ) {
+        return null;
+    }
+
+    if (
+        data.dateKey !== getDailyDateKey()
+    ) {
+        return null;
+    }
+
+    if (
+        !data.ayah ||
+        !data.hadith ||
+        !data.dua
+    ) {
+        return null;
+    }
+
+    return data;
+}
+
+
+/* =========================================================
+   8. SAVE DAILY CONTENT
+========================================================= */
+
+function saveDailyContent(data) {
+    if (!data || typeof data !== "object") {
+        return false;
+    }
+
+    return dailyWriteStorage(
+        DAILY_CONTENT_STORAGE_KEY,
+        data
+    );
+}
+
+
+/* =========================================================
+   9. FETCH JSON
 ========================================================= */
 
 async function dailyFetchJSON(url) {
-
-    const response =
-        await fetch(url, {
-            cache: "no-cache"
-        });
+    const response = await fetch(url, {
+        cache: "no-cache"
+    });
 
     if (!response.ok) {
-
         throw new Error(
             `HTTP ${response.status}: ${url}`
         );
-
     }
 
     return await response.json();
-
 }
 
 
 /* =========================================================
-   QURAN SURAH FILE
+   10. GET FIRST AVAILABLE VALUE
 ========================================================= */
 
-async function loadDailyQuranSurah(
-    surahNumber
-) {
+function getFirstValue(object, keys) {
+    if (!object || typeof object !== "object") {
+        return "";
+    }
 
-    const fileName =
-        String(
-            surahNumber
-        ).padStart(3, "0");
+    for (const key of keys) {
+        const value = object[key];
 
-    const url =
-        `${DAILY_QURAN_BASE_PATH}${fileName}.json`;
+        if (
+            value !== undefined &&
+            value !== null &&
+            typeof value !== "object" &&
+            String(value).trim() !== ""
+        ) {
+            return String(value).trim();
+        }
+    }
 
-    return await dailyFetchJSON(url);
-
+    return "";
 }
 
 
 /* =========================================================
-   EXTRACT ARRAY
-   বিভিন্ন JSON structure support করার জন্য
+   11. EXTRACT ARRAY FROM JSON
 ========================================================= */
 
 function extractArray(data) {
-
     if (Array.isArray(data)) {
         return data;
     }
 
-
-    if (
-        data &&
-        Array.isArray(data.data)
-    ) {
-        return data.data;
+    if (!data || typeof data !== "object") {
+        return [];
     }
 
+    const possibleKeys = [
+        "ayahs",
+        "verses",
+        "items",
+        "results",
+        "data"
+    ];
 
-    if (
-        data &&
-        Array.isArray(data.ayahs)
-    ) {
-        return data.ayahs;
+    for (const key of possibleKeys) {
+        if (Array.isArray(data[key])) {
+            return data[key];
+        }
     }
-
-
-    if (
-        data &&
-        Array.isArray(data.verses)
-    ) {
-        return data.verses;
-    }
-
-
-    if (
-        data &&
-        Array.isArray(data.items)
-    ) {
-        return data.items;
-    }
-
 
     return [];
-
 }
 
 
 /* =========================================================
-   QURAN FIELD HELPER
-========================================================= */
-
-function getFirstValue(
-    object,
-    keys
-) {
-
-    if (!object) {
-        return "";
-    }
-
-
-    for (
-        const key of keys
-    ) {
-
-        if (
-            object[key] !== undefined &&
-            object[key] !== null &&
-            String(object[key]).trim() !== ""
-        ) {
-
-            return String(
-                object[key]
-            ).trim();
-
-        }
-
-    }
-
-
-    return "";
-
-}
-
-
-/* =========================================================
-   FIND QURAN AYAH
-========================================================= */
-
-function normalizeDailyAyah(
-    item,
-    surahNumber
-) {
-
-    if (!item) {
-        return null;
-    }
-
-
-    const ayahNumber =
-        Number(
-            getFirstValue(
-                item,
-                [
-                    "ayah",
-                    "ayahNumber",
-                    "numberInSurah",
-                    "verse",
-                    "id"
-                ]
-            )
-        );
-
-
-    const arabic =
-        getFirstValue(
-            item,
-            [
-                "arabic",
-                "text",
-                "textArabic",
-                "uthmani",
-                "arabicText"
-            ]
-        );
-
-
-    const bengali =
-        getFirstValue(
-            item,
-            [
-                "bengali",
-                "bangla",
-                "translation",
-                "textBangla",
-                "translationBn",
-                "bn"
-            ]
-        );
-
-
-    if (!arabic && !bengali) {
-        return null;
-    }
-
-
-    return {
-
-        surah:
-            Number(surahNumber),
-
-        ayah:
-            ayahNumber || 1,
-
-        arabic:
-            arabic ||
-            "",
-
-        bengali:
-            bengali ||
-            ""
-
-    };
-
-}
-
-
-/* =========================================================
-   LOAD RANDOM QURAN AYAH
-========================================================= */
-
-async function getRandomDailyAyah() {
-
-    /*
-       সর্বোচ্চ ১০টি random চেষ্টা।
-       কোনো JSON structure আলাদা হলে
-       পরের surah চেষ্টা করবে।
-    */
-
-    for (
-        let attempt = 0;
-        attempt < 10;
-        attempt++
-    ) {
-
-        const surahNumber =
-            1 +
-            dailyRandomIndex(114);
-
-
-        try {
-
-            const data =
-                await loadDailyQuranSurah(
-                    surahNumber
-                );
-
-
-            const ayahs =
-                extractArray(data);
-
-
-            if (!ayahs.length) {
-                continue;
-            }
-
-
-            /*
-               প্রথমে random ayah
-            */
-
-            const randomIndex =
-                dailyRandomIndex(
-                    ayahs.length
-                );
-
-
-            const ayah =
-                normalizeDailyAyah(
-                    ayahs[randomIndex],
-                    surahNumber
-                );
-
-
-            if (ayah) {
-
-                return ayah;
-
-            }
-
-        } catch (error) {
-
-            console.warn(
-                "Quran load failed:",
-                surahNumber,
-                error
-            );
-
-        }
-
-    }
-
-
-    /*
-       সব fail হলে fallback
-    */
-
-    return {
-
-        surah: 94,
-
-        ayah: 6,
-
-        arabic:
-            "إِنَّ مَعَ الْعُسْرِ يُسْرًا",
-
-        bengali:
-            "নিশ্চয়ই কষ্টের সাথে স্বস্তি রয়েছে।"
-
-    };
-
-}
-
-
-/* =========================================================
-   SURAH NAME
+   12. QURAN SURAH NAME
 ========================================================= */
 
 const DAILY_SURAH_NAMES = [
-
     "আল-ফাতিহা",
     "আল-বাকারা",
     "আলে ইমরান",
@@ -660,1771 +432,1230 @@ const DAILY_SURAH_NAMES = [
     "আল-ইখলাস",
     "আল-ফালাক",
     "আন-নাস"
-
 ];
 
 
 /* =========================================================
-   QURAN REFERENCE
+   13. NORMALIZE QURAN AYAH
 ========================================================= */
 
-function getDailyQuranReference(
-    ayah
-) {
-
-    const surahNumber =
-        Number(ayah.surah);
-
-    const ayahNumber =
-        Number(ayah.ayah);
-
-    const surahName =
-        DAILY_SURAH_NAMES[
-            surahNumber - 1
-        ] ||
-        `সূরা ${surahNumber}`;
-
-    return `— সূরা ${surahName} (${surahNumber}:${ayahNumber})`;
-
-}
-
-
-/* =========================================================
-   HADITH OBJECT CHECK
-   =========================================================
-   IMPORTANT:
-
-   আপনার আসল Hadith JSON:
-
-   {
-       "hadith_id": 176,
-       "narrator": "...",
-       "bn": "...",
-       "ar": "...",
-       "grade_id": 2,
-       "grade": "সহিহ হাদিস"
-   }
-
-   তাই ar + bn অবশ্যই এখানে support করতে হবে।
-========================================================= */
-
-function isHadithLikeObject(
-    item
-) {
-
-    if (
-        !item ||
-        typeof item !== "object"
-    ) {
-        return false;
-    }
-
-
-    return Boolean(
-
-        /* =========================
-           Arabic
-        ========================= */
-
-        item.ar ||
-        item.arabic ||
-        item.arab ||
-        item.arabicText ||
-        item.hadithArabic ||
-
-
-        /* =========================
-           Bengali
-        ========================= */
-
-        item.bn ||
-        item.bengali ||
-        item.bangla ||
-        item.translation ||
-        item.translationBn ||
-        item.hadith ||
-        item.text ||
-        item.hadithText ||
-
-
-        /* =========================
-           Hadith ID
-        ========================= */
-
-        item.hadith_id ||
-        item.hadith_number ||
-        item.hadithNumber
-
-    );
-
-}
-
-
-/* =========================================================
-   NORMALIZE HADITH
-========================================================= */
-
-function normalizeDailyHadith(
-    item,
-    bookName
-) {
-
-    if (
-        !isHadithLikeObject(item)
-    ) {
+function normalizeDailyAyah(item, surahNumber) {
+    if (!item || typeof item !== "object") {
         return null;
     }
 
+    const arabic = getFirstValue(item, [
+        "arabic",
+        "textArabic",
+        "uthmani",
+        "arabicText",
+        "ar",
+        "text"
+    ]);
+
+    const bengali = getFirstValue(item, [
+        "bengali",
+        "bangla",
+        "translationBn",
+        "textBangla",
+        "bn",
+        "translation"
+    ]);
+
+    if (!arabic && !bengali) {
+        return null;
+    }
+
+    let ayahNumber = Number(
+        getFirstValue(item, [
+            "numberInSurah",
+            "ayahNumber",
+            "ayah",
+            "verse"
+        ])
+    );
+
+    if (!Number.isFinite(ayahNumber) || ayahNumber < 1) {
+        ayahNumber = 1;
+    }
+
+    return {
+        surah: Number(surahNumber),
+        ayah: ayahNumber,
+        arabic: arabic || "",
+        bengali: bengali || ""
+    };
+}
+
+
+/* =========================================================
+   14. LOAD QURAN SURAH FILE
+========================================================= */
+
+async function loadDailyQuranSurah(surahNumber) {
+    const fileName = String(
+        surahNumber
+    ).padStart(3, "0");
+
+    const url =
+        `${DAILY_QURAN_BASE_PATH}${fileName}.json`;
+
+    return await dailyFetchJSON(url);
+}
+
+
+/* =========================================================
+   15. GET RANDOM DAILY AYAH
+========================================================= */
+
+async function getRandomDailyAyah() {
+    const surahs = dailyShuffle(
+        Array.from(
+            { length: 114 },
+            (_, index) => index + 1
+        )
+    );
+
+    for (const surahNumber of surahs) {
+        try {
+            const data =
+                await loadDailyQuranSurah(
+                    surahNumber
+                );
+
+            const ayahs = extractArray(data);
+
+            if (!ayahs.length) {
+                continue;
+            }
+
+            const shuffledAyahs =
+                dailyShuffle(ayahs);
+
+            for (const item of shuffledAyahs) {
+                const ayah = normalizeDailyAyah(
+                    item,
+                    surahNumber
+                );
+
+                if (ayah) {
+                    return ayah;
+                }
+            }
+        } catch (error) {
+            console.warn(
+                "Daily Quran file unavailable:",
+                surahNumber,
+                error
+            );
+        }
+    }
+
+    return { ...DAILY_FALLBACK_AYAH };
+}
+
+
+/* =========================================================
+   16. QURAN REFERENCE
+========================================================= */
+
+function getDailyQuranReference(ayah) {
+    if (!ayah) {
+        return "";
+    }
+
+    const surahNumber = Number(ayah.surah);
+    const ayahNumber = Number(ayah.ayah);
+
+    const surahName =
+        DAILY_SURAH_NAMES[surahNumber - 1] ||
+        `সূরা ${surahNumber}`;
+
+    return `— সূরা ${surahName} (${surahNumber}:${ayahNumber})`;
+}
+
+
+/* =========================================================
+   17. HADITH OBJECT CHECK
+========================================================= */
+
+function isHadithLikeObject(item) {
+    if (!item || typeof item !== "object") {
+        return false;
+    }
+
+    if (Array.isArray(item)) {
+        return false;
+    }
+
+    const arabic = getFirstValue(item, [
+        "ar",
+        "arabic",
+        "arab",
+        "arabicText",
+        "hadithArabic"
+    ]);
+
+    const bengali = getFirstValue(item, [
+        "bn",
+        "bengali",
+        "bangla",
+        "translationBn",
+        "translation",
+        "hadith",
+        "hadithText",
+        "text"
+    ]);
 
     /*
-       Arabic
-
-       আপনার JSON:
-       ar
+       শুধু hadith_id থাকলেই কোনো Object-কে
+       হাদিস ধরা হবে না। মূল টেক্সট থাকতে হবে।
     */
 
-    const arabic =
-        getFirstValue(
-            item,
-            [
-
-                "ar",
-
-                "arabic",
-
-                "arab",
-
-                "arabicText",
-
-                "hadithArabic"
-
-            ]
-        );
+    return Boolean(arabic || bengali);
+}
 
 
-    /*
-       Bengali
+/* =========================================================
+   18. NORMALIZE HADITH
+========================================================= */
 
-       আপনার JSON:
-       bn
-    */
+function normalizeDailyHadith(item, bookName) {
+    if (!isHadithLikeObject(item)) {
+        return null;
+    }
 
-    const bengali =
-        getFirstValue(
-            item,
-            [
+    const arabic = getFirstValue(item, [
+        "ar",
+        "arabic",
+        "arab",
+        "arabicText",
+        "hadithArabic"
+    ]);
 
-                "bn",
+    const bengali = getFirstValue(item, [
+        "bn",
+        "bengali",
+        "bangla",
+        "translationBn",
+        "translation",
+        "hadith",
+        "hadithText",
+        "text"
+    ]);
 
-                "bengali",
+    const number = getFirstValue(item, [
+        "hadith_id",
+        "hadith_number",
+        "hadithNumber",
+        "hadith_no",
+        "number",
+        "id"
+    ]);
 
-                "bangla",
+    const narrator = getFirstValue(item, [
+        "narrator",
+        "rawi",
+        "raawi"
+    ]);
 
-                "translation",
-
-                "translationBn",
-
-                "hadith",
-
-                "text",
-
-                "hadithText"
-
-            ]
-        );
-
-
-    /*
-       Hadith Number
-
-       আপনার JSON:
-       hadith_id
-    */
-
-    const hadithNumber =
-        getFirstValue(
-            item,
-            [
-
-                "hadith_id",
-
-                "hadith_number",
-
-                "hadithNumber",
-
-                "number",
-
-                "id",
-
-                "hadith_no"
-
-            ]
-        );
-
-
-    /*
-       Narrator
-    */
-
-    const narrator =
-        getFirstValue(
-            item,
-            [
-
-                "narrator",
-
-                "rawi",
-
-                "raawi"
-
-            ]
-        );
-
-
-    /*
-       Grade
-    */
-
-    const grade =
-        getFirstValue(
-            item,
-            [
-
-                "grade",
-
-                "status",
-
-                "authenticity"
-
-            ]
-        );
-
-
-    /*
-       Chapter number
-
-       আপনার কিছু JSON-এ:
-
-       "chapter": {
-           "chapter_number": "1"
-       }
-    */
+    const grade = getFirstValue(item, [
+        "grade",
+        "status",
+        "authenticity"
+    ]);
 
     let chapterNumber = "";
-
 
     if (
         item.chapter &&
         typeof item.chapter === "object"
     ) {
-
-        chapterNumber =
-            getFirstValue(
-                item.chapter,
-                [
-
-                    "chapter_number",
-
-                    "number",
-
-                    "id"
-
-                ]
-            );
-
+        chapterNumber = getFirstValue(
+            item.chapter,
+            [
+                "chapter_number",
+                "number",
+                "id"
+            ]
+        );
+    } else if (
+        item.chapter !== undefined &&
+        item.chapter !== null
+    ) {
+        chapterNumber = String(item.chapter);
     }
-
 
     if (!chapterNumber) {
-
-        chapterNumber =
-            getFirstValue(
-                item,
-                [
-
-                    "chapter_number",
-
-                    "chapterNumber",
-
-                    "chapter_no"
-
-                ]
-            );
-
+        chapterNumber = getFirstValue(item, [
+            "chapter_number",
+            "chapterNumber",
+            "chapter_no"
+        ]);
     }
 
-
-    /*
-       কিছুই না থাকলে বাতিল
-    */
-
-    if (
-        !arabic &&
-        !bengali
-    ) {
-
+    if (!arabic && !bengali) {
         return null;
-
     }
-
 
     return {
-
-        book:
-            bookName || "",
-
-        number:
-            hadithNumber || "",
-
-        narrator:
-            narrator || "",
-
-        grade:
-            grade || "",
-
-        chapter:
-            chapterNumber || "",
-
-        arabic:
-            arabic || "",
-
-        bengali:
-            bengali || ""
-
+        book: bookName || "",
+        number: number || "",
+        narrator: narrator || "",
+        grade: grade || "",
+        chapter: chapterNumber || "",
+        arabic: arabic || "",
+        bengali: bengali || ""
     };
-
 }
 
 
 /* =========================================================
-   RECURSIVE HADITH EXTRACTION
+   19. RECURSIVE HADITH EXTRACTION
 ========================================================= */
 
-function collectHadithObjects(
-    data,
-    result = []
-) {
-
+function collectHadithObjects(data, result = []) {
     if (!data) {
         return result;
     }
 
-
-    /*
-       Array
-    */
-
-    if (
-        Array.isArray(data)
-    ) {
-
-        data.forEach(
-            item => {
-
-                if (
-                    isHadithLikeObject(
-                        item
-                    )
-                ) {
-
-                    result.push(
-                        item
-                    );
-
-                } else {
-
-                    collectHadithObjects(
-                        item,
-                        result
-                    );
-
-                }
-
-            }
-        );
-
+    if (Array.isArray(data)) {
+        for (const item of data) {
+            collectHadithObjects(item, result);
+        }
 
         return result;
-
     }
 
+    if (typeof data !== "object") {
+        return result;
+    }
 
     /*
-       Object
+       সরাসরি হাদিসের টেক্সট থাকলে যোগ করো।
     */
 
-    if (
-        typeof data === "object"
-    ) {
-
-        /*
-           নিজেই Hadith object হলে
-        */
-
-        if (
-            isHadithLikeObject(data)
-        ) {
-
-            result.push(
-                data
-            );
-
-        }
-
-
-        /*
-           ভিতরের object/array
-           recursively search
-        */
-
-        Object.keys(data)
-            .forEach(
-                key => {
-
-                    const value =
-                        data[key];
-
-
-                    if (
-                        !value ||
-                        typeof value !== "object"
-                    ) {
-                        return;
-                    }
-
-
-                    /*
-                       metadata বাদ
-                    */
-
-                    if (
-                        key === "meta" ||
-                        key === "metadata"
-                    ) {
-
-                        return;
-
-                    }
-
-
-                    collectHadithObjects(
-                        value,
-                        result
-                    );
-
-                }
-            );
-
+    if (isHadithLikeObject(data)) {
+        result.push(data);
+        return result;
     }
 
+    /*
+       Wrapper object হলে ভেতরের array/object খোঁজো।
+    */
+
+    for (const key of Object.keys(data)) {
+        if (
+            key === "meta" ||
+            key === "metadata"
+        ) {
+            continue;
+        }
+
+        const value = data[key];
+
+        if (value && typeof value === "object") {
+            collectHadithObjects(value, result);
+        }
+    }
 
     return result;
-
 }
 
 
 /* =========================================================
-   REMOVE DUPLICATE HADITH
+   20. REMOVE DUPLICATE HADITH
 ========================================================= */
 
-function removeDuplicateDailyHadith(
-    items
-) {
-
-    const seen =
-        new Set();
-
+function removeDuplicateDailyHadith(items) {
+    const seen = new Set();
     const result = [];
 
-
-    for (
-        const item of items
-    ) {
-
+    for (const item of items) {
         const key = [
-
             item.book || "",
-
             item.number || "",
-
             item.arabic || "",
-
             item.bengali || ""
-
         ].join("|");
 
-
-        if (
-            seen.has(key)
-        ) {
-
+        if (seen.has(key)) {
             continue;
-
         }
 
-
         seen.add(key);
-
-        result.push(
-            item
-        );
-
+        result.push(item);
     }
 
-
     return result;
-
 }
 
 
 /* =========================================================
-   FIND HADITH FILE
+   21. TRY A HADITH FILE
 ========================================================= */
 
-async function tryDailyHadithFile(
-    bookKey,
-    fileName
-) {
-
-    const basePath =
-        DAILY_HADITH_PATHS[
-            bookKey
-        ];
-
+async function tryDailyHadithFile(bookKey, fileName) {
+    const basePath = DAILY_HADITH_PATHS[bookKey];
 
     if (!basePath) {
         return [];
     }
 
-
-    /*
-       প্রথমে root file
-       তারপর Chapter file
-    */
-
     const possiblePaths = [
-
         `${basePath}${fileName}`,
-
-        `${basePath}${fileName}.json`,
-
-        `${basePath}Chapter/${fileName}`,
-
-        `${basePath}Chapter/${fileName}.json`
-
+        `${basePath}Chapter/${fileName}`
     ];
 
-
-    for (
-        const path of possiblePaths
-    ) {
-
+    for (const path of possiblePaths) {
         try {
+            const data = await dailyFetchJSON(path);
 
-            const data =
-                await dailyFetchJSON(
-                    path
-                );
+            const items = collectHadithObjects(data);
 
-
-            const items =
-                collectHadithObjects(
-                    data
-                );
-
-
-            if (
-                items.length
-            ) {
-
+            if (items.length) {
                 return items;
-
             }
-
         } catch (error) {
-
-            /*
-               File না থাকলে
-               পরের path চেষ্টা করবে
-            */
-
+            // ফাইল না পাওয়া গেলে পরের ফাইল চেষ্টা করবে।
         }
-
     }
-
 
     return [];
-
 }
 
 
 /* =========================================================
-   LOAD HADITH FROM CHAPTER FILES
-========================================================= */
-
-async function loadDailyHadithFromChapters(
-    bookKey,
-    bookName
-) {
-
-    const allItems = [];
-
-
-    /*
-       আপনার Hadith reader-এর
-       Chapter structure অনুযায়ী।
-
-       প্রথম ৫০টি Chapter চেষ্টা করা হচ্ছে।
-
-       File না থাকলে silently skip করবে।
-    */
-
-    for (
-        let chapterNumber = 1;
-        chapterNumber <= 50;
-        chapterNumber++
-    ) {
-
-        const fileName =
-            `${chapterNumber}.json`;
-
-
-        try {
-
-            const data =
-                await dailyFetchJSON(
-
-                    `${DAILY_HADITH_PATHS[bookKey]}` +
-                    `Chapter/${fileName}`
-
-                );
-
-
-            const items =
-                collectHadithObjects(
-                    data
-                );
-
-
-            for (
-                const item of items
-            ) {
-
-                const normalized =
-                    normalizeDailyHadith(
-                        item,
-                        bookName
-                    );
-
-
-                if (
-                    normalized
-                ) {
-
-                    allItems.push(
-                        normalized
-                    );
-
-                }
-
-            }
-
-        } catch (error) {
-
-            /*
-               Chapter না থাকলে
-               error দেখানোর প্রয়োজন নেই।
-            */
-
-        }
-
-    }
-
-
-    return removeDuplicateDailyHadith(
-        allItems
-    );
-
-}
-
-
-/* =========================================================
-   LOAD HADITH FROM COMMON FILES
+   22. LOAD COMMON HADITH FILES
 ========================================================= */
 
 async function loadDailyHadithFromCommonFiles(
     bookKey,
     bookName
 ) {
-
     const fileNames = [
-
-        "1.json",
-
-        "2.json",
-
-        "3.json",
-
-        "01.json",
-
-        "001.json",
-
         "hadith.json",
-
-        "data.json"
-
+        "data.json",
+        "1.json",
+        "01.json",
+        "001.json",
+        "2.json",
+        "02.json",
+        "002.json",
+        "3.json",
+        "03.json",
+        "003.json"
     ];
-
 
     const allItems = [];
 
+    for (const fileName of fileNames) {
+        const items = await tryDailyHadithFile(
+            bookKey,
+            fileName
+        );
 
-    for (
-        const fileName of fileNames
-    ) {
-
-        const items =
-            await tryDailyHadithFile(
-                bookKey,
-                fileName
+        for (const item of items) {
+            const normalized = normalizeDailyHadith(
+                item,
+                bookName
             );
 
-
-        for (
-            const item of items
-        ) {
-
-            const normalized =
-                normalizeDailyHadith(
-                    item,
-                    bookName
-                );
-
-
-            if (
-                normalized
-            ) {
-
-                allItems.push(
-                    normalized
-                );
-
+            if (normalized) {
+                allItems.push(normalized);
             }
-
         }
-
     }
 
-
-    return removeDuplicateDailyHadith(
-        allItems
-    );
-
+    return removeDuplicateDailyHadith(allItems);
 }
 
 
 /* =========================================================
-   GET RANDOM DAILY HADITH
+   23. LOAD RANDOM HADITH CHAPTERS
+   =========================================================
+   আগের মতো ৩টি বইয়ের ৫০টি করে অধ্যায়
+   ধারাবাহিকভাবে সব লোড করা হচ্ছে না।
+
+   এতে অ্যাপ চালুর সময় অপ্রয়োজনীয়
+   ১৫০টি Request হওয়ার ঝুঁকি কমে।
+========================================================= */
+
+async function loadDailyHadithFromChapters(
+    bookKey,
+    bookName
+) {
+    const allItems = [];
+
+    /*
+       কয়েকটি এলোমেলো অধ্যায় চেষ্টা করবে।
+       ফাইল না থাকলে অন্য অধ্যায় চেষ্টা করবে।
+    */
+
+    const chapterNumbers = dailyShuffle(
+        Array.from(
+            { length: DAILY_HADITH_CHAPTER_LIMIT },
+            (_, index) => index + 1
+        )
+    ).slice(0, 8);
+
+    for (const chapterNumber of chapterNumbers) {
+        const fileName =
+            `${chapterNumber}.json`;
+
+        const items = await tryDailyHadithFile(
+            bookKey,
+            fileName
+        );
+
+        for (const item of items) {
+            const normalized = normalizeDailyHadith(
+                item,
+                bookName
+            );
+
+            if (normalized) {
+                allItems.push(normalized);
+            }
+        }
+    }
+
+    return removeDuplicateDailyHadith(allItems);
+}
+
+
+/* =========================================================
+   24. GET RANDOM DAILY HADITH
 ========================================================= */
 
 async function getRandomDailyHadith() {
-
-    const books = [
-
+    const books = dailyShuffle([
         {
-            key:
-                "bukhari",
-
-            name:
-                DAILY_HADITH_BOOK_NAMES.bukhari
-
+            key: "bukhari",
+            name: DAILY_HADITH_BOOK_NAMES.bukhari
         },
-
         {
-            key:
-                "muslim",
-
-            name:
-                DAILY_HADITH_BOOK_NAMES.muslim
-
+            key: "muslim",
+            name: DAILY_HADITH_BOOK_NAMES.muslim
         },
-
         {
-            key:
-                "tirmidhi",
-
-            name:
-                DAILY_HADITH_BOOK_NAMES.tirmidhi
-
+            key: "tirmidhi",
+            name: DAILY_HADITH_BOOK_NAMES.tirmidhi
         }
-
-    ];
-
+    ]);
 
     /*
-       Book order random
+       প্রথমে সাধারণ JSON ফাইল পরীক্ষা।
     */
 
-    const shuffledBooks =
-        [...books].sort(
-            () =>
-                Math.random() - 0.5
-        );
-
-
-    /*
-       ================================================
-       প্রথমে Chapter structure
-       ================================================
-    */
-
-    for (
-        const book of shuffledBooks
-    ) {
-
+    for (const book of books) {
         try {
-
-            const chapterItems =
-                await loadDailyHadithFromChapters(
-                    book.key,
-                    book.name
-                );
-
-
-            if (
-                chapterItems.length
-            ) {
-
-                const selected =
-                    chapterItems[
-                        dailyRandomIndex(
-                            chapterItems.length
-                        )
-                    ];
-
-
-                console.log(
-                    "📜 Daily Hadith loaded from Chapter:",
-                    selected
-                );
-
-
-                return selected;
-
-            }
-
-        } catch (error) {
-
-            console.warn(
-                "Chapter Hadith load failed:",
-                book.key,
-                error
-            );
-
-        }
-
-    }
-
-
-    /*
-       ================================================
-       Chapter না পেলে common files
-       ================================================
-    */
-
-    for (
-        const book of shuffledBooks
-    ) {
-
-        try {
-
-            const commonItems =
+            const items =
                 await loadDailyHadithFromCommonFiles(
                     book.key,
                     book.name
                 );
 
-
-            if (
-                commonItems.length
-            ) {
-
-                const selected =
-                    commonItems[
-                        dailyRandomIndex(
-                            commonItems.length
-                        )
-                    ];
-
-
-                console.log(
-                    "📜 Daily Hadith loaded:",
-                    selected
-                );
-
-
-                return selected;
-
+            if (items.length) {
+                return items[
+                    dailyRandomIndex(items.length)
+                ];
             }
-
         } catch (error) {
-
             console.warn(
                 "Common Hadith load failed:",
                 book.key,
                 error
             );
-
         }
-
     }
 
-
     /*
-       ================================================
-       FINAL FALLBACK
-       ================================================
+       সাধারণ ফাইলে না পেলে অধ্যায়ভিত্তিক ফাইল।
     */
 
-    return {
+    for (const book of books) {
+        try {
+            const items =
+                await loadDailyHadithFromChapters(
+                    book.key,
+                    book.name
+                );
 
-        book:
-            "সহীহ বুখারী",
+            if (items.length) {
+                return items[
+                    dailyRandomIndex(items.length)
+                ];
+            }
+        } catch (error) {
+            console.warn(
+                "Chapter Hadith load failed:",
+                book.key,
+                error
+            );
+        }
+    }
 
-        number:
-            "",
+    /*
+       সব উৎস ব্যর্থ হলে fallback।
+    */
 
-        narrator:
-            "",
-
-        grade:
-            "",
-
-        chapter:
-            "",
-
-        arabic:
-            "",
-
-        bengali:
-            "নিশ্চয়ই কাজসমূহ নিয়তের উপর নির্ভরশীল।"
-
-    };
-
+    return { ...DAILY_FALLBACK_HADITH };
 }
 
 
 /* =========================================================
-   DUA
+   25. NORMALIZE DUA
 ========================================================= */
 
-async function getRandomDailyDua() {
-
-    /*
-       আপনার বর্তমান Dua system-এর
-       cached list ব্যবহার করার চেষ্টা।
-    */
-
-    try {
-
-        if (
-            typeof getDuaCache ===
-            "function"
-        ) {
-
-            const cached =
-                await getDuaCache();
-
-
-            if (
-                Array.isArray(cached) &&
-                cached.length
-            ) {
-
-                const item =
-                    cached[
-                        dailyRandomIndex(
-                            cached.length
-                        )
-                    ];
-
-
-                return normalizeDailyDua(
-                    item
-                );
-
-            }
-
-        }
-
-    } catch (error) {
-
-        console.warn(
-            "Dua cache read failed:",
-            error
-        );
-
-    }
-
-
-    /*
-       IndexedDB helper থাকলে
-       ব্যবহার করার জায়গা।
-    */
-
-    try {
-
-        if (
-            typeof duaDBGet ===
-            "function"
-        ) {
-
-            /*
-               আপনার dua.js-এর
-               existing DB system-এর সাথে
-               conflict না করার জন্য
-               এখানে সরাসরি key assume করা হচ্ছে না।
-            */
-
-        }
-
-    } catch (error) {
-
-        console.warn(
-            "Dua IndexedDB read failed:",
-            error
-        );
-
-    }
-
-
-    /*
-       API থেকে random dua
-    */
-
-    try {
-
-        const url =
-            "https://dua-api.hisnul.workers.dev/api/duas/random";
-
-
-        const response =
-            await fetch(url);
-
-
-        if (
-            response.ok
-        ) {
-
-            const result =
-                await response.json();
-
-
-            const item =
-                result.data ||
-                result.dua ||
-                result;
-
-
-            const dua =
-                normalizeDailyDua(
-                    item
-                );
-
-
-            if (
-                dua
-            ) {
-
-                return dua;
-
-            }
-
-        }
-
-    } catch (error) {
-
-        console.warn(
-            "Random Dua API failed:",
-            error
-        );
-
-    }
-
-
-    /*
-       Fallback
-    */
-
-    return {
-
-        id:
-            null,
-
-        title:
-            "দোয়া",
-
-        arabic:
-            "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً",
-
-        bengali:
-            "হে আমাদের রব! আমাদের দুনিয়াতে কল্যাণ দান করুন এবং আখিরাতেও কল্যাণ দান করুন।",
-
-        reference:
-            ""
-
-    };
-
-}
-
-
-/* =========================================================
-   NORMALIZE DUA
-========================================================= */
-
-function normalizeDailyDua(
-    item
-) {
-
-    if (!item) {
+function normalizeDailyDua(item) {
+    if (!item || typeof item !== "object") {
         return null;
     }
 
-
     /*
-       API Dua Detail
+       API-এর segments structure।
     */
 
     if (
-        Array.isArray(
-            item.segments
-        ) &&
+        Array.isArray(item.segments) &&
         item.segments.length
     ) {
+        const segments = item.segments;
 
-        const segment =
-            item.segments[0];
+        const arabicParts = [];
+        const bengaliParts = [];
 
+        for (const segment of segments) {
+            if (!segment || typeof segment !== "object") {
+                continue;
+            }
+
+            const arabic = getFirstValue(segment, [
+                "arabic",
+                "arabic_diacless",
+                "ar"
+            ]);
+
+            const bengali = getFirstValue(segment, [
+                "translations",
+                "translation",
+                "bengali",
+                "bangla",
+                "bn",
+                "bottom"
+            ]);
+
+            if (arabic) {
+                arabicParts.push(arabic);
+            }
+
+            if (bengali) {
+                bengaliParts.push(bengali);
+            }
+        }
 
         return {
-
-            id:
-                item.dua_global_id ||
-                item.id ||
-                null,
-
-            title:
-                item.duaname ||
-                "দোয়া",
-
-            arabic:
-                segment.arabic ||
-                segment.arabic_diacless ||
-                "",
-
-            bengali:
-                segment.translations ||
-                "",
-
+            id: item.dua_global_id || item.id || null,
+            title: item.duaname || item.title || "দোয়া",
+            arabic: arabicParts.join(" "),
+            bengali: bengaliParts.join(" "),
             reference:
+                item.reference ||
+                item.source ||
                 ""
-
         };
-
     }
 
+    const arabic = getFirstValue(item, [
+        "arabic",
+        "arabicText",
+        "arabic_diacless",
+        "ar"
+    ]);
+
+    const bengali = getFirstValue(item, [
+        "translations",
+        "translation",
+        "bengali",
+        "bangla",
+        "translationBn",
+        "bn",
+        "meaning"
+    ]);
 
     return {
-
-        id:
-            item.dua_global_id ||
-            item.id ||
-            null,
-
+        id: item.dua_global_id || item.id || null,
         title:
             item.duaname ||
             item.title ||
             item.name ||
             "দোয়া",
-
-        arabic:
-            item.arabic ||
-            item.arabicText ||
-            "",
-
-        bengali:
-            item.translations ||
-            item.translation ||
-            item.bengali ||
-            item.bangla ||
-            "",
-
+        arabic: arabic || "",
+        bengali: bengali || "",
         reference:
+            item.reference ||
+            item.source ||
             ""
-
     };
-
 }
 
 
 /* =========================================================
-   RENDER AYAH
+   26. GET RANDOM DUA
 ========================================================= */
 
-function renderDailyAyah(
-    ayah
-) {
+async function getRandomDailyDua() {
+    /*
+       প্রথমে আপনার বর্তমান Dua module-এর
+       getDuaCache() থাকলে সেটি ব্যবহার করবে।
 
-    const arabic =
-        document.getElementById(
-            "dailyAyahArabic"
+       Cache-এর format ভিন্ন হতে পারে,
+       তাই normalize করার আগে যাচাই করা হয়।
+    */
+
+    try {
+        if (typeof window.getDuaCache === "function") {
+            const cached = await window.getDuaCache();
+
+            if (Array.isArray(cached) && cached.length) {
+                const candidates = dailyShuffle(cached);
+
+                for (const item of candidates) {
+                    const dua = normalizeDailyDua(item);
+
+                    if (dua && (dua.arabic || dua.bengali)) {
+                        return dua;
+                    }
+                }
+            }
+        }
+    } catch (error) {
+        console.warn(
+            "Dua cache read failed:",
+            error
         );
-
-
-    const bengali =
-        document.getElementById(
-            "dailyAyahBengali"
-        );
-
-
-    const reference =
-        document.getElementById(
-            "dailyAyahReference"
-        );
-
-
-    if (arabic) {
-
-        arabic.textContent =
-            ayah.arabic ||
-            "—";
-
     }
 
+    /*
+       Random Dua API চেষ্টা।
+    */
+
+    try {
+        const result = await dailyFetchJSON(
+            `${DAILY_DUA_API}/duas/random`
+        );
+
+        const item =
+            result.data ||
+            result.dua ||
+            result;
+
+        const dua = normalizeDailyDua(item);
+
+        if (dua && (dua.arabic || dua.bengali)) {
+            return dua;
+        }
+    } catch (error) {
+        console.warn(
+            "Random Dua API failed:",
+            error
+        );
+    }
+
+    /*
+       Random endpoint কাজ না করলে
+       category list থেকে Dua খোঁজার চেষ্টা।
+    */
+
+    try {
+        const result = await dailyFetchJSON(
+            `${DAILY_DUA_API}/categories`
+        );
+
+        const categories = extractArray(result);
+
+        if (categories.length) {
+            const category = categories[
+                dailyRandomIndex(categories.length)
+            ];
+
+            const categoryId =
+                category.id ||
+                category.category_id;
+
+            if (categoryId !== undefined && categoryId !== null) {
+                const listResult = await dailyFetchJSON(
+                    `${DAILY_DUA_API}/categories/` +
+                    `${encodeURIComponent(categoryId)}/duas?page=1&limit=100`
+                );
+
+                const items = extractArray(listResult);
+
+                if (items.length) {
+                    const candidates = dailyShuffle(items);
+
+                    for (const item of candidates) {
+                        const dua = normalizeDailyDua(item);
+
+                        if (dua && (dua.arabic || dua.bengali)) {
+                            return dua;
+                        }
+                    }
+                }
+            }
+        }
+    } catch (error) {
+        console.warn(
+            "Dua category API failed:",
+            error
+        );
+    }
+
+    return { ...DAILY_FALLBACK_DUA };
+}
+
+
+/* =========================================================
+   27. RENDER AYAH
+========================================================= */
+
+function renderDailyAyah(ayah) {
+    if (!ayah) {
+        return;
+    }
+
+    const arabic = document.getElementById(
+        "dailyAyahArabic"
+    );
+
+    const bengali = document.getElementById(
+        "dailyAyahBengali"
+    );
+
+    const reference = document.getElementById(
+        "dailyAyahReference"
+    );
+
+    if (arabic) {
+        arabic.textContent = ayah.arabic || "—";
+        arabic.dir = "rtl";
+        arabic.lang = "ar";
+    }
 
     if (bengali) {
-
         bengali.textContent =
             ayah.bengali ||
             "অনুবাদ পাওয়া যায়নি।";
-
     }
-
 
     if (reference) {
-
         reference.textContent =
-            getDailyQuranReference(
-                ayah
-            );
-
+            getDailyQuranReference(ayah);
     }
-
 }
 
 
 /* =========================================================
-   RENDER HADITH
+   28. RENDER HADITH
 ========================================================= */
 
-function renderDailyHadith(
-    hadith
-) {
+function renderDailyHadith(hadith) {
+    if (!hadith) {
+        return;
+    }
 
-    const arabic =
-        document.getElementById(
-            "dailyHadithArabic"
-        );
+    const arabic = document.getElementById(
+        "dailyHadithArabic"
+    );
 
+    const bengali = document.getElementById(
+        "dailyHadithBengali"
+    );
 
-    const bengali =
-        document.getElementById(
-            "dailyHadithBengali"
-        );
-
-
-    const reference =
-        document.getElementById(
-            "dailyHadithReference"
-        );
-
-
-    /*
-       ================================================
-       Arabic
-       ================================================
-    */
+    const reference = document.getElementById(
+        "dailyHadithReference"
+    );
 
     if (arabic) {
-
         if (
-            hadith &&
             hadith.arabic &&
-            String(
-                hadith.arabic
-            ).trim()
+            String(hadith.arabic).trim()
         ) {
-
-            arabic.textContent =
-                hadith.arabic;
-
-            arabic.style.display =
-                "block";
-
-            arabic.dir =
-                "rtl";
-
-            arabic.lang =
-                "ar";
-
+            arabic.textContent = hadith.arabic;
+            arabic.style.display = "";
+            arabic.dir = "rtl";
+            arabic.lang = "ar";
         } else {
-
-            arabic.textContent =
-                "";
-
-            arabic.style.display =
-                "none";
-
+            arabic.textContent = "";
+            arabic.style.display = "none";
         }
-
     }
-
-
-    /*
-       ================================================
-       Bengali
-       ================================================
-    */
 
     if (bengali) {
-
         bengali.textContent =
-            (
-                hadith &&
-                hadith.bengali
-            ) ||
+            hadith.bengali ||
             "হাদিসের বাংলা অনুবাদ পাওয়া যায়নি।";
-
     }
 
-
-    /*
-       ================================================
-       Reference
-       ================================================
-    */
-
     if (reference) {
-
         const parts = [];
 
-
-        if (
-            hadith &&
-            hadith.book
-        ) {
-
-            parts.push(
-                hadith.book
-            );
-
+        if (hadith.book) {
+            parts.push(hadith.book);
         }
 
-
-        if (
-            hadith &&
-            hadith.number
-        ) {
-
-            parts.push(
-                `হাদিস ${hadith.number}`
-            );
-
+        if (hadith.number) {
+            parts.push(`হাদিস ${hadith.number}`);
         }
 
-
-        reference.textContent =
-            parts.length
-                ? `— ${parts.join(" • ")}`
-                : "";
-
+        reference.textContent = parts.length
+            ? `— ${parts.join(" • ")}`
+            : "";
     }
-
 }
 
 
 /* =========================================================
-   RENDER DUA
+   29. RENDER DUA
 ========================================================= */
 
-function renderDailyDua(
-    dua
-) {
-
-    const arabic =
-        document.getElementById(
-            "dailyDuaArabic"
-        );
-
-
-    const bengali =
-        document.getElementById(
-            "dailyDuaBengali"
-        );
-
-
-    const reference =
-        document.getElementById(
-            "dailyDuaReference"
-        );
-
-
-    if (arabic) {
-
-        arabic.textContent =
-            dua.arabic ||
-            "—";
-
+function renderDailyDua(dua) {
+    if (!dua) {
+        return;
     }
 
+    const arabic = document.getElementById(
+        "dailyDuaArabic"
+    );
+
+    const bengali = document.getElementById(
+        "dailyDuaBengali"
+    );
+
+    const reference = document.getElementById(
+        "dailyDuaReference"
+    );
+
+    if (arabic) {
+        arabic.textContent = dua.arabic || "—";
+        arabic.dir = "rtl";
+        arabic.lang = "ar";
+    }
 
     if (bengali) {
-
         bengali.textContent =
             dua.bengali ||
             "দোয়ার বাংলা অর্থ পাওয়া যায়নি।";
-
     }
-
 
     if (reference) {
-
         reference.textContent =
-            "";
-
+            dua.reference
+                ? `— ${dua.reference}`
+                : "";
     }
-
 }
 
+/* ========================= ANDROID DAILY CONTENT SYNC ========================= */
 
+function syncDailyContentToAndroid(data) {
+    try {
+        if (!data || !data.dateKey) return;
+
+        if (
+            window.AndroidDailyContent &&
+            typeof window.AndroidDailyContent.saveDailyContent === "function"
+        ) {
+            window.AndroidDailyContent.saveDailyContent(
+                JSON.stringify(data)
+            );
+        }
+    } catch (error) {
+        console.warn("Android Daily Content sync failed:", error);
+    }
+}
 /* =========================================================
-   RENDER ALL
+   30. RENDER ALL DAILY CONTENT
 ========================================================= */
 
-function renderDailyContent(
-    data
-) {
-
+function renderDailyContent(data) {
     if (!data) {
         return;
     }
 
-
-    if (
-        data.ayah
-    ) {
-
-        renderDailyAyah(
-            data.ayah
-        );
-
+    if (data.ayah) {
+        renderDailyAyah(data.ayah);
     }
 
-
-    if (
-        data.hadith
-    ) {
-
-        renderDailyHadith(
-            data.hadith
-        );
-
+    if (data.hadith) {
+        renderDailyHadith(data.hadith);
     }
 
-
-    if (
-        data.dua
-    ) {
-
-        renderDailyDua(
-            data.dua
-        );
-
+    if (data.dua) {
+        renderDailyDua(data.dua);
     }
-
 }
 
 
 /* =========================================================
-   GENERATE NEW DAILY CONTENT
+   31. GENERATE DAILY CONTENT
 ========================================================= */
 
 async function generateDailyContent() {
-
-    if (
-        dailyContentLoading
-    ) {
-
-        return;
-
+    if (dailyContentLoadPromise) {
+        return dailyContentLoadPromise;
     }
 
-
-    dailyContentLoading =
-        true;
-
-
-    try {
-
-        console.log(
-            "📖 Daily content তৈরি হচ্ছে..."
-        );
-
-
-        /*
-           তিনটি আলাদা Random content
-        */
-
-        const ayah =
-            await getRandomDailyAyah();
-
-
-        const hadith =
-            await getRandomDailyHadith();
-
-
-        const dua =
-            await getRandomDailyDua();
-
-
-        const data = {
-
-            version:
-                DAILY_CONTENT_VERSION,
-
-            dateKey:
-                getDailyDateKey(),
-
-            createdAt:
-                Date.now(),
-
-            ayah:
-                ayah,
-
-            hadith:
-                hadith,
-
-            dua:
-                dua
-
-        };
-
-
-        /*
-           Save
-        */
-
-        saveDailyContent(
-            data
-        );
-
-
-        dailyContentData =
-            data;
-
-
-        /*
-           Render
-        */
-
-        renderDailyContent(
-            data
-        );
-
-
-        console.log(
-            "✅ Daily content তৈরি হয়েছে:",
-            data
-        );
-
-
-        return data;
-
-    } catch (error) {
-
-        console.error(
-            "❌ Daily content error:",
-            error
-        );
-
-    } finally {
-
-        dailyContentLoading =
-            false;
-
+    if (dailyContentLoading) {
+        return dailyContentData;
     }
 
+    dailyContentLoading = true;
+
+    dailyContentLoadPromise = (async function () {
+        try {
+            console.log(
+                "📖 Daily Content তৈরি হচ্ছে..."
+            );
+
+            /*
+               Promise.allSettled ব্যবহার করা হয়েছে,
+               যাতে একটি উৎস ব্যর্থ হলেও
+               বাকি কনটেন্ট পাওয়া যায়।
+            */
+
+            const results = await Promise.allSettled([
+                getRandomDailyAyah(),
+                getRandomDailyHadith(),
+                getRandomDailyDua()
+            ]);
+
+            const ayah =
+                results[0].status === "fulfilled"
+                    ? results[0].value
+                    : { ...DAILY_FALLBACK_AYAH };
+
+            const hadith =
+                results[1].status === "fulfilled"
+                    ? results[1].value
+                    : { ...DAILY_FALLBACK_HADITH };
+
+            const dua =
+                results[2].status === "fulfilled"
+                    ? results[2].value
+                    : { ...DAILY_FALLBACK_DUA };
+
+            /*
+               দিনের মধ্যে কনটেন্ট তৈরির সময়
+               তারিখ বদলে গেলে পুরোনো দিনের
+               কনটেন্ট সংরক্ষণ করা হবে না।
+            */
+
+            const dateKey = getDailyDateKey();
+
+            const data = {
+                version: DAILY_CONTENT_VERSION,
+                dateKey,
+                createdAt: Date.now(),
+                ayah: ayah || { ...DAILY_FALLBACK_AYAH },
+                hadith: hadith || { ...DAILY_FALLBACK_HADITH },
+                dua: dua || { ...DAILY_FALLBACK_DUA }
+            };
+
+            dailyContentData = data;
+
+            
+if (dateKey === getDailyDateKey()) {
+    saveDailyContent(data);
+    dailyContentData = data;
+    renderDailyContent(data);
+
+    // Android notification-এর জন্য Daily Content পাঠানো
+    syncDailyContentToAndroid(data);
+} else {
+    return await loadDailyContent();
+}
+
+console.log(
+    "✅ Daily Content তৈরি হয়েছে:",
+    data
+);
+
+            return data;
+        } catch (error) {
+            console.error(
+                "Daily Content generation failed:",
+                error
+            );
+
+            /*
+               সম্পূর্ণ ব্যর্থ হলেও স্ক্রিন ফাঁকা রাখবে না।
+            */
+
+            const fallback = {
+                version: DAILY_CONTENT_VERSION,
+                dateKey: getDailyDateKey(),
+                createdAt: Date.now(),
+                ayah: { ...DAILY_FALLBACK_AYAH },
+                hadith: { ...DAILY_FALLBACK_HADITH },
+                dua: { ...DAILY_FALLBACK_DUA }
+            };
+
+            dailyContentData = fallback;
+            saveDailyContent(fallback);
+            renderDailyContent(fallback);
+          syncDailyContentToAndroid(fallback);
+            return fallback;
+        } finally {
+            dailyContentLoading = false;
+            dailyContentLoadPromise = null;
+        }
+    })();
+
+    return dailyContentLoadPromise;
 }
 
 
 /* =========================================================
-   LOAD DAILY CONTENT
+   32. LOAD DAILY CONTENT
 ========================================================= */
 
 async function loadDailyContent() {
-
     /*
-       আগে LocalStorage
+       একই সময়ে দ্বিতীয়বার load হলে
+       চলমান Promise-টাই ফেরত দেবে।
     */
 
-    const saved =
-        getSavedDailyContent();
-
-
-    if (saved) {
-
-        dailyContentData =
-            saved;
-
-
-        renderDailyContent(
-            saved
-        );
-
-
-        console.log(
-            "✅ আজকের Daily Content cache থেকে লোড হয়েছে"
-        );
-
-
-        return saved;
-
+    if (dailyContentLoadPromise) {
+        return dailyContentLoadPromise;
     }
 
+    const saved = getSavedDailyContent();
 
-    /*
-       নতুন Content
-    */
+    if (saved) {
+        dailyContentData = saved;
+
+        renderDailyContent(saved);
+        syncDailyContentToAndroid(saved);
+
+        console.log(
+            "✅ আজকের Content LocalStorage থেকে লোড হয়েছে"
+        );
+
+        return saved;
+    }
 
     return await generateDailyContent();
-
 }
 
 
 /* =========================================================
-   FORCE NEW CONTENT
-   DEBUG / TEST-এর জন্য
+   33. RESET DAILY CONTENT
+   DEBUG / TEST
 ========================================================= */
 
 function resetDailyContent() {
-
     try {
-
         localStorage.removeItem(
             DAILY_CONTENT_STORAGE_KEY
         );
-
     } catch (error) {
-
-        console.error(
+        console.warn(
+            "Daily Content reset failed:",
             error
         );
-
     }
 
+    dailyContentData = null;
 
-    dailyContentData =
-        null;
-
-
-    loadDailyContent();
-
+    return loadDailyContent();
 }
 
 
 /* =========================================================
-   NEXT DAY CHECK
+   34. CHECK FOR NEW DAY
 ========================================================= */
 
 function checkDailyContentDate() {
+    const currentDate = getDailyDateKey();
 
-    if (
-        !dailyContentData
-    ) {
+    if (!dailyContentData) {
+        /*
+           App আগে থেকেই চালু থাকলে
+           Content না থাকলে পুনরায় চেষ্টা করবে।
+        */
+
+        if (!dailyContentLoading) {
+            loadDailyContent();
+        }
 
         return;
-
     }
 
-
-    const currentDate =
-        getDailyDateKey();
-
-
-    if (
-        dailyContentData.dateKey !==
-        currentDate
-    ) {
-
+    if (dailyContentData.dateKey !== currentDate) {
         console.log(
             "🔄 নতুন দিন — নতুন Daily Content"
         );
 
+        dailyContentData = null;
 
         loadDailyContent();
-
     }
-
 }
 
 
 /* =========================================================
-   MIDNIGHT CHECK
+   35. START DATE CHECK TIMER
 ========================================================= */
 
-setInterval(
-    checkDailyContentDate,
-    60 * 1000
-);
-
-
-/* =========================================================
-   PAGE LOAD
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-        loadDailyContent();
-
+function startDailyContentDateTimer() {
+    if (dailyContentDateTimer) {
+        return;
     }
-);
+
+    dailyContentDateTimer = setInterval(
+        checkDailyContentDate,
+        60 * 1000
+    );
+}
 
 
 /* =========================================================
-   INITIAL LOAD
-   যদি DOMContentLoaded ইতিমধ্যে হয়ে যায়
+   36. INITIALIZE
 ========================================================= */
 
-if (
-    document.readyState ===
-    "interactive" ||
-    document.readyState ===
-    "complete"
-) {
-
+function initDailyContent() {
     loadDailyContent();
+    startDailyContentDateTimer();
+}
 
+
+/*
+   DOMContentLoaded আগে হয়ে গেলে সঙ্গে সঙ্গে
+   initialize হবে। না হলে event-এর জন্য অপেক্ষা করবে।
+*/
+
+if (document.readyState === "loading") {
+    document.addEventListener(
+        "DOMContentLoaded",
+        initDailyContent,
+        { once: true }
+    );
+} else {
+    initDailyContent();
 }
 
 
 /* =========================================================
-   GLOBAL EXPORT
+   37. GLOBAL EXPORT
 ========================================================= */
 
 window.loadDailyContent =
     loadDailyContent;
+
+window.generateDailyContent =
+    generateDailyContent;
 
 window.resetDailyContent =
     resetDailyContent;
@@ -2432,10 +1663,13 @@ window.resetDailyContent =
 window.getSavedDailyContent =
     getSavedDailyContent;
 
-window.generateDailyContent =
-    generateDailyContent;
+window.renderDailyContent =
+    renderDailyContent;
+
+window.checkDailyContentDate =
+    checkDailyContentDate;
 
 
 /* =========================================================
-   END
+   END — QURAN SHARIF DAILY CONTENT v3.0
 ========================================================= */
