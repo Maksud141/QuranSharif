@@ -17,23 +17,14 @@
     <link rel="stylesheet" href="css/responsive.css">
     
     <link rel="stylesheet" href="css/prayer-location-qibla.css">
-
+    <link rel="stylesheet" href="css/dua.css">
+    <link rel="stylesheet" href="css/hadith.css">
+    <link rel="stylesheet" href="css/audio.css">
 </head>
-
 
 <body>
 
-
-<!-- =====================================================
-     APP
-===================================================== -->
-
 <div id="app">
-
-
-    <!-- =================================================
-         HEADER
-    ================================================== -->
 
     <header class="top-header">
 
@@ -46,7 +37,6 @@
             ☰
         </button>
 
-
         <div class="header-title">
 
             <span>
@@ -54,7 +44,6 @@
             </span>
 
         </div>
-
 
         <button
             class="icon-btn"
@@ -68,21 +57,10 @@
 
     </header>
 
-
-
-    <!-- =================================================
-         HOME PAGE
-    ================================================== -->
-
     <main
         id="homePage"
         class="page active"
     >
-
-
-        <!-- =================================================
-             HOME HERO
-        ================================================== -->
 
         <section class="home-hero-banner">
 
@@ -90,18 +68,15 @@
                 🏮
             </div>
 
-
             <div class="home-hero-content">
 
                 <div class="home-bismillah">
                     بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
                 </div>
 
-
                 <div class="home-hero-title">
                     আসুন কুরআনের পথে চলি
                 </div>
-
 
                 <div class="home-hero-divider">
 
@@ -115,18 +90,11 @@
 
             </div>
 
-
             <div class="home-hero-decoration right">
                 📖
             </div>
 
         </section>
-
-
-
-        <!-- =================================================
-             LIVE CLOCK + DATE + LOCATION
-        ================================================== -->
 
         <section class="home-time-card">
 
@@ -139,7 +107,6 @@
                     00:00:00
                 </div>
 
-
                 <div
                     class="today-date"
                     id="todayDate"
@@ -148,7 +115,6 @@
                 </div>
 
             </div>
-
 
             <div class="location-text">
 
@@ -162,110 +128,51 @@
 
         </section>
 
-
-
-        <!-- =================================================
-             HOME PRAYER TIMES
-             এই কার্ডটি একবারই থাকবে
-        ================================================== -->
-
         <section class="prayer-card">
 
             <div class="section-title">
                 🕌 নামাজের সময়
             </div>
 
+           <div class="prayer-list">
 
-            <div class="prayer-list">
+    <div class="prayer-row">
+        <span>🌙 ফজর</span>
 
+        <strong id="fajrTime">--:--</strong>
+    </div>
 
-                <div class="prayer-row">
+    <div class="prayer-row">
+        <span>☀️ সূর্যোদয়</span>
+        <strong id="sunriseTime">--:--</strong>
+    </div>
 
-                    <span>
-                        🌙 ফজর
-                    </span>
+    <div class="prayer-row">
+        <span>☀️ যোহর</span>
 
-                    <strong id="fajrTime">
-                        --:--
-                    </strong>
+        <strong id="dhuhrTime">--:--</strong>
+    </div>
 
-                </div>
+    <div class="prayer-row">
+        <span>🌤️ আসর</span>
 
+        <strong id="asrTime">--:--</strong>
+    </div>
 
-                <div class="prayer-row">
+    <div class="prayer-row">
+        <span>🌇 মাগরিব</span>
 
-                    <span>
-                        ☀️ সূর্যোদয়
-                    </span>
+        <strong id="maghribTime">--:--</strong>
+    </div>
 
-                    <strong id="sunriseTime">
-                        --:--
-                    </strong>
+    <div class="prayer-row">
+        <span>🌙 এশা</span>
 
-                </div>
+        <strong id="ishaTime">--:--</strong>
+    </div>
 
-
-                <div class="prayer-row">
-
-                    <span>
-                        ☀️ যোহর
-                    </span>
-
-                    <strong id="dhuhrTime">
-                        --:--
-                    </strong>
-
-                </div>
-
-
-                <div class="prayer-row">
-
-                    <span>
-                        🌤️ আসর
-                    </span>
-
-                    <strong id="asrTime">
-                        --:--
-                    </strong>
-
-                </div>
-
-
-                <div class="prayer-row">
-
-                    <span>
-                        🌇 মাগরিব
-                    </span>
-
-                    <strong id="maghribTime">
-                        --:--
-                    </strong>
-
-                </div>
-
-
-                <div class="prayer-row">
-
-                    <span>
-                        🌙 এশা
-                    </span>
-
-                    <strong id="ishaTime">
-                        --:--
-                    </strong>
-
-                </div>
-
-
-            </div>
-
+</div>
         </section>
-
-
-
-        <!-- =================================================
-             LAST READ
-        ================================================== -->
 
         <section
             class="last-read-card"
@@ -276,13 +183,11 @@
                 📖
             </div>
 
-
             <div class="last-read-content">
 
                 <div class="section-title">
                     সর্বশেষ পড়া
                 </div>
-
 
                 <div class="last-read-info">
 
@@ -290,13 +195,11 @@
                         কোনো পড়া সংরক্ষণ করা হয়নি
                     </div>
 
-
                     <div id="lastReadAyah"></div>
 
                 </div>
 
             </div>
-
 
             <button
                 id="lastReadBtn"
@@ -307,16 +210,7 @@
 
         </section>
 
-
-
-        <!-- =================================================
-             QUICK ACCESS
-        ================================================== -->
-
         <section class="home-quick-section">
-
-
-            <!-- QURAN -->
 
             <button
                 class="home-feature-card home-feature-quran"
@@ -327,7 +221,6 @@
                 <div class="home-feature-icon">
                     📖
                 </div>
-
 
                 <div class="home-feature-text">
 
@@ -341,16 +234,11 @@
 
                 </div>
 
-
                 <div class="home-feature-arrow">
                     ›
                 </div>
 
             </button>
-
-
-
-            <!-- AUDIO -->
 
             <button
                 class="home-feature-card home-feature-audio"
@@ -361,7 +249,6 @@
                 <div class="home-feature-icon">
                     🔊
                 </div>
-
 
                 <div class="home-feature-text">
 
@@ -375,16 +262,11 @@
 
                 </div>
 
-
                 <div class="home-feature-arrow">
                     ›
                 </div>
 
             </button>
-
-
-
-            <!-- SEARCH -->
 
             <button
                 class="home-feature-card home-feature-search"
@@ -396,7 +278,6 @@
                 <div class="home-feature-icon">
                     🔍
                 </div>
-
 
                 <div class="home-feature-text">
 
@@ -410,16 +291,11 @@
 
                 </div>
 
-
                 <div class="home-feature-arrow">
                     ›
                 </div>
 
             </button>
-
-
-
-            <!-- BOOKMARK -->
 
             <button
                 class="home-feature-card home-feature-bookmark"
@@ -431,7 +307,6 @@
                 <div class="home-feature-icon">
                     🔖
                 </div>
-
 
                 <div class="home-feature-text">
 
@@ -445,16 +320,11 @@
 
                 </div>
 
-
                 <div class="home-feature-arrow">
                     ›
                 </div>
 
             </button>
-
-
-
-            <!-- TAFSIR -->
 
             <button
                 class="home-feature-card home-feature-tafsir"
@@ -466,7 +336,6 @@
                 <div class="home-feature-icon">
                     📚
                 </div>
-
 
                 <div class="home-feature-text">
 
@@ -480,16 +349,11 @@
 
                 </div>
 
-
                 <div class="home-feature-arrow">
                     ›
                 </div>
 
             </button>
-
-
-
-            <!-- HADITH -->
 
             <button
                 class="home-feature-card home-feature-hadith"
@@ -500,7 +364,6 @@
                 <div class="home-feature-icon">
                     📕
                 </div>
-
 
                 <div class="home-feature-text">
 
@@ -514,16 +377,11 @@
 
                 </div>
 
-
                 <div class="home-feature-arrow">
                     ›
                 </div>
 
             </button>
-
-
-
-            <!-- DUA -->
 
             <button
                 class="home-feature-card home-feature-dua"
@@ -534,7 +392,6 @@
                 <div class="home-feature-icon">
                     🤲
                 </div>
-
 
                 <div class="home-feature-text">
 
@@ -548,29 +405,18 @@
 
                 </div>
 
-
                 <div class="home-feature-arrow">
                     ›
                 </div>
 
             </button>
 
-
         </section>
-
-
-
-        <!-- =================================================
-             DAILY CONTENT
-        ================================================== -->
 
         <section
             class="daily-content-card"
             id="dailyContentCard"
         >
-
-
-            <!-- TODAY'S AYAH -->
 
             <div class="daily-item daily-ayah">
 
@@ -586,7 +432,6 @@
 
                 </div>
 
-
                 <div
                     class="daily-ayah-arabic"
                     id="dailyAyahArabic"
@@ -595,14 +440,12 @@
                     লোড হচ্ছে...
                 </div>
 
-
                 <div
                     class="daily-ayah-bengali"
                     id="dailyAyahBengali"
                 >
                     আজকের আয়াত লোড হচ্ছে...
                 </div>
-
 
                 <div
                     class="daily-ayah-reference"
@@ -612,10 +455,6 @@
                 </div>
 
             </div>
-
-
-
-            <!-- TODAY'S HADITH -->
 
             <div class="daily-item daily-hadith">
 
@@ -631,7 +470,6 @@
 
                 </div>
 
-
                 <div
                     class="daily-hadith-arabic"
                     id="dailyHadithArabic"
@@ -640,14 +478,12 @@
                     লোড হচ্ছে...
                 </div>
 
-
                 <div
                     class="daily-hadith-bengali"
                     id="dailyHadithBengali"
                 >
                     আজকের হাদিস লোড হচ্ছে...
                 </div>
-
 
                 <div
                     class="daily-hadith-reference"
@@ -657,10 +493,6 @@
                 </div>
 
             </div>
-
-
-
-            <!-- TODAY'S DUA -->
 
             <div class="daily-item daily-dua">
 
@@ -676,7 +508,6 @@
 
                 </div>
 
-
                 <div
                     class="daily-dua-arabic"
                     id="dailyDuaArabic"
@@ -685,14 +516,12 @@
                     লোড হচ্ছে...
                 </div>
 
-
                 <div
                     class="daily-dua-bengali"
                     id="dailyDuaBengali"
                 >
                     আজকের দোয়া লোড হচ্ছে...
                 </div>
-
 
                 <div
                     class="daily-dua-reference"
@@ -703,14 +532,7 @@
 
             </div>
 
-
         </section>
-
-
-
-        <!-- =================================================
-             SURAH LIST BUTTON
-        ================================================== -->
 
         <button
             class="surah-list-home-btn"
@@ -721,7 +543,6 @@
             <span class="surah-list-icon">
                 🕌
             </span>
-
 
             <span class="surah-list-text">
 
@@ -735,31 +556,20 @@
 
             </span>
 
-
             <span class="surah-list-arrow">
                 →
             </span>
 
         </button>
 
-
-
         <div class="home-bottom-space"></div>
 
-
     </main>
-
-
-
-    <!-- =================================================
-         QURAN PAGE
-    ================================================== -->
 
     <main
         id="quranPage"
         class="page"
     >
-
 
         <section class="quran-selector">
 
@@ -770,7 +580,6 @@
                 </option>
 
             </select>
-
 
             <select
                 id="ayahSelect"
@@ -783,7 +592,6 @@
 
             </select>
 
-
             <button
                 id="goAyahBtn"
                 class="go-btn"
@@ -793,8 +601,6 @@
             </button>
 
         </section>
-
-
 
         <section
             id="quranReader"
@@ -807,11 +613,9 @@
                     📖
                 </div>
 
-
                 <h2>
                     সূরা ও আয়াত নির্বাচন করুন
                 </h2>
-
 
                 <p>
                     উপরের তালিকা থেকে সূরা ও আয়াত নির্বাচন করে
@@ -822,20 +626,83 @@
 
         </section>
 
-
     </main>
 
+<section id="audioPage" class="page">
 
+    <div class="audio-page-header">
+        <h2>🎧 সূরার অডিও</h2>
+        <p>শুনুন, ডাউনলোড করুন, অফলাইনে চালান</p>
+    </div>
 
-    <!-- =================================================
-         TAFSIR PAGE
-    ================================================== -->
+    <div class="audio-controls">
+        <label for="audioReciterSelect">
+            কারি নির্বাচন করুন
+        </label>
+
+        <select id="audioReciterSelect">
+            <option value="">কারির তালিকা লোড হচ্ছে...</option>
+        </select>
+    </div>
+
+    <div class="audio-search">
+        <input
+            type="search"
+            id="audioSurahSearch"
+            placeholder="সূরার নাম লিখে খুঁজুন..."
+            aria-label="সূরা খুঁজুন"
+        >
+    </div>
+
+    <div class="audio-download-all">
+        <button id="downloadAllSurahsBtn" type="button">
+            ⬇ সব সূরা ডাউনলোড
+        </button>
+
+        <p id="audioDownloadSummary">
+            ডাউনলোড করা অডিও এখানে দেখা যাবে।
+        </p>
+    </div>
+
+    <div
+        id="audioDownloadProgress"
+        class="audio-download-progress"
+        hidden
+        aria-live="polite"
+    >
+        <p id="audioDownloadStatus">প্রস্তুত হচ্ছে...</p>
+
+        <progress
+            id="audioDownloadBar"
+            value="0"
+            max="100"
+        ></progress>
+
+        <button id="cancelAudioDownloadBtn" type="button">
+            ডাউনলোড বাতিল
+        </button>
+    </div>
+
+    <div id="surahAudioList" class="surah-audio-list">
+        <p>কারি ও সূরার তথ্য লোড হওয়ার অপেক্ষায়...</p>
+    </div>
+
+<div id="surahAudioPlayerBox" class="surah-audio-player" hidden>
+    <p id="surahAudioNowPlaying">কোনো অডিও চলছে না</p>
+
+    <audio id="surahAudioPlayer" controls preload="none"></audio>
+
+    <button id="stopSurahAudioBtn" type="button">
+        ⏹ অডিও বন্ধ করুন
+    </button>
+</div>
+
+</section>
 
     <main
         id="tafsirPage"
         class="page"
     >
-
 
         <section class="tafsir-page-header">
 
@@ -847,11 +714,9 @@
                 ←
             </button>
 
-
             <h1 id="tafsirSurahTitle">
                 আল-ফাতিহা
             </h1>
-
 
             <button
                 type="button"
@@ -863,14 +728,10 @@
 
         </section>
 
-
-
         <div
             class="tafsir-ayah-scroll"
             id="tafsirAyahScroll"
         ></div>
-
-
 
         <div
             class="tafsir-selector-scroll"
@@ -885,7 +746,6 @@
                 তাফসীরুল কুরআন
             </button>
 
-
             <button
                 type="button"
                 class="tafsir-source-tab"
@@ -894,7 +754,6 @@
                 তাফসীরে ইবনে কাসীর
             </button>
 
-
             <button
                 type="button"
                 class="tafsir-source-tab"
@@ -902,7 +761,6 @@
             >
                 তাফসীর ফাতহুল মাজীদ
             </button>
-
 
             <button
                 type="button"
@@ -913,8 +771,6 @@
             </button>
 
         </div>
-
-
 
         <section
             class="tafsir-ayah-card"
@@ -928,7 +784,6 @@
                 আল-ফাতিহা ১:১
             </div>
 
-
             <div
                 class="tafsir-arabic"
                 id="tafsirArabic"
@@ -936,7 +791,6 @@
             >
                 بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
             </div>
-
 
             <div
                 class="tafsir-bengali"
@@ -946,8 +800,6 @@
             </div>
 
         </section>
-
-
 
         <section class="tafsir-content-card">
 
@@ -963,14 +815,12 @@
 
             </div>
 
-
             <div
                 class="tafsir-selected-name"
                 id="tafsirSelectedName"
             >
                 তাফসীরুল কুরআন
             </div>
-
 
             <div
                 class="tafsir-page-content"
@@ -981,14 +831,7 @@
 
         </section>
 
-
     </main>
-
-
-
-    <!-- =================================================
-         SEARCH PAGE
-    ================================================== -->
 
     <main
         id="searchPage"
@@ -1001,7 +844,6 @@
                 🔍 কুরআন সার্চ
             </div>
 
-
             <div class="search-box">
 
                 <input
@@ -1010,7 +852,6 @@
                     placeholder="কুরআনে কিছু খুঁজুন..."
                     autocomplete="off"
                 >
-
 
                 <button
                     id="quranSearchBtn"
@@ -1021,7 +862,6 @@
                 </button>
 
             </div>
-
 
             <div
                 id="searchResults"
@@ -1038,12 +878,6 @@
 
     </main>
 
-
-
-    <!-- =================================================
-         BOOKMARK PAGE
-    ================================================== -->
-
     <main
         id="bookmarkPage"
         class="page"
@@ -1054,7 +888,6 @@
             <div class="search-title">
                 🔖 বুকমার্ক
             </div>
-
 
             <div
                 id="bookmarkList"
@@ -1067,11 +900,9 @@
                         🔖
                     </div>
 
-
                     <div class="bookmark-empty-title">
                         কোনো বুকমার্ক নেই
                     </div>
-
 
                     <div class="bookmark-empty-text">
                         কুরআনের কোনো আয়াত বুকমার্ক করলে
@@ -1086,12 +917,6 @@
 
     </main>
 
-
-
-    <!-- =================================================
-         HADITH PAGE
-    ================================================== -->
-
     <main
         id="hadithPage"
         class="page"
@@ -1103,11 +928,9 @@
                 📚 হাদিস গ্রন্থসমূহ
             </div>
 
-
             <div class="hadith-section-label">
                 📥 অফলাইনে প্রস্তুত
             </div>
-
 
             <div id="hadithBookList">
 
@@ -1122,7 +945,6 @@
                     </span>
                 </button>
 
-
                 <button
                     type="button"
                     class="hadith-book-card"
@@ -1133,7 +955,6 @@
                         অধ্যায়সমূহ দেখুন ›
                     </span>
                 </button>
-
 
                 <button
                     type="button"
@@ -1148,17 +969,11 @@
 
             </div>
 
-
-
             <div class="hadith-section-label">
                 🌐 অন্যান্য হাদিসের কিতাব
             </div>
 
-
             <div id="hadithDownloadBookList">
-
-
-                <!-- ABU DAUD -->
 
                 <div class="hadith-book-card hadith-download-card">
 
@@ -1168,14 +983,12 @@
                         ডাউনলোড করে অফলাইনে পড়ুন
                     </span>
 
-
                     <progress
                         id="abudaudDownloadProgress"
                         value="0"
                         max="43"
                         hidden
                     ></progress>
-
 
                     <button
                         type="button"
@@ -1186,10 +999,6 @@
                     </button>
 
                 </div>
-
-
-
-                <!-- NASAI -->
 
                 <div
                     class="hadith-book-card hadith-download-card"
@@ -1206,14 +1015,12 @@
 
                     </div>
 
-
                     <progress
                         id="nasaiDownloadProgress"
                         value="0"
                         max="50"
                         hidden
                     ></progress>
-
 
                     <button
                         type="button"
@@ -1225,31 +1032,29 @@
 
                 </div>
 
+               <div class="hadith-download-card">
 
+📕 সুনান ইবনে মাজাহ</h3>
 
-                <!-- IBN MAJAH -->
+  <span id="ibnemajahDownloadStatus">
+    অফলাইনে পড়ার জন্য ডাউনলোড করুন
+  </span>
 
-                <div class="hadith-book-card hadith-download-card">
+  <progress
+    id="ibnemajahDownloadProgress"
+    value="0"
+    max="38"
+    hidden>
+  </progress>
 
-                    📗 সুনান ইবনে মাজাহ
+  <button
+    type="button"
+    id="ibnemajahDownloadBtn"
+    data-download-book="ibnemajah">
+    ডাউনলোড করুন
+  </button>
 
-                    <span>
-                        ডাউনলোড সুবিধা শিগগিরই আসছে
-                    </span>
-
-                    <button
-                        type="button"
-                        disabled
-                    >
-                        ডাউনলোড করুন
-                    </button>
-
-                </div>
-
-
-
-                <!-- MUWATTA -->
-
+</div>
                 <div class="hadith-book-card hadith-download-card">
 
                     📗 মুওয়াত্তা ইমাম মালিক
@@ -1266,10 +1071,6 @@
                     </button>
 
                 </div>
-
-
-
-                <!-- MUSNAD AHMAD -->
 
                 <div class="hadith-book-card hadith-download-card">
 
@@ -1288,18 +1089,11 @@
 
                 </div>
 
-
             </div>
 
         </section>
 
     </main>
-
-
-
-    <!-- =================================================
-         HADITH CHAPTER PAGE
-    ================================================== -->
 
     <main
         id="hadithChapterPage"
@@ -1315,24 +1109,16 @@
                 ←
             </button>
 
-
             <div
                 class="search-title"
                 id="hadithChapterTitle"
             ></div>
-
 
             <div id="hadithChapterList"></div>
 
         </section>
 
     </main>
-
-
-
-    <!-- =================================================
-         HADITH READER PAGE
-    ================================================== -->
 
     <main
         id="hadithReaderPage"
@@ -1348,7 +1134,6 @@
                 ←
             </button>
 
-
             <div
                 class="search-title"
                 id="hadithReaderTitle"
@@ -1356,18 +1141,11 @@
                 হাদিস
             </div>
 
-
             <div id="hadithReaderList"></div>
 
         </section>
 
     </main>
-
-
-
-    <!-- =================================================
-         DUA PAGE
-    ================================================== -->
 
     <main
         id="duaPage"
@@ -1384,7 +1162,6 @@
                 ←
             </button>
 
-
             <div class="page-header-title">
 
                 <h2>
@@ -1397,7 +1174,6 @@
 
             </div>
 
-
             <button
                 class="header-icon-btn"
                 id="duaSearchBtn"
@@ -1408,17 +1184,13 @@
 
         </div>
 
-
-
         <div class="dua-container">
-
 
             <div class="dua-intro-card">
 
                 <div class="dua-intro-icon">
                     🤲
                 </div>
-
 
                 <div>
 
@@ -1434,16 +1206,11 @@
 
             </div>
 
-
-
-            <!-- DUA OFFLINE DOWNLOAD -->
-
             <div class="dua-offline-download-card">
 
                 <div class="dua-offline-download-icon">
                     📥
                 </div>
-
 
                 <div class="dua-offline-download-info">
 
@@ -1457,7 +1224,6 @@
 
                 </div>
 
-
                 <button
                     type="button"
                     id="duaDownloadAllBtn"
@@ -1467,8 +1233,6 @@
                 </button>
 
             </div>
-
-
 
             <div
                 id="duaDownloadProgress"
@@ -1488,7 +1252,6 @@
 
                 </div>
 
-
                 <div class="dua-download-progress-bar">
 
                     <div
@@ -1500,8 +1263,6 @@
 
             </div>
 
-
-
             <div class="section-title-row">
 
                 <h3>
@@ -1509,7 +1270,6 @@
                 </h3>
 
             </div>
-
 
             <div
                 id="duaCategoryList"
@@ -1532,12 +1292,6 @@
 
     </main>
 
-
-
-    <!-- =================================================
-         DUA LIST PAGE
-    ================================================== -->
-
     <main
         id="duaListPage"
         class="page"
@@ -1553,7 +1307,6 @@
                 ←
             </button>
 
-
             <div class="page-header-title">
 
                 <h2 id="duaListTitle">
@@ -1566,7 +1319,6 @@
 
             </div>
 
-
             <button
                 class="header-icon-btn"
                 id="duaListSearchBtn"
@@ -1576,7 +1328,6 @@
             </button>
 
         </div>
-
 
         <div class="dua-container">
 
@@ -1598,12 +1349,6 @@
 
     </main>
 
-
-
-    <!-- =================================================
-         DUA READER PAGE
-    ================================================== -->
-
     <main
         id="duaReaderPage"
         class="page"
@@ -1619,7 +1364,6 @@
                 ←
             </button>
 
-
             <div class="page-header-title">
 
                 <h2 id="duaReaderTitle">
@@ -1630,7 +1374,6 @@
 
             </div>
 
-
             <button
                 class="header-icon-btn"
                 id="duaBookmarkBtn"
@@ -1640,7 +1383,6 @@
             </button>
 
         </div>
-
 
         <div class="dua-reader-container">
 
@@ -1662,21 +1404,12 @@
 
     </main>
 
-
-
-    <!-- =================================================
-         PRAYER PAGE
-    ================================================== -->
-
     <main
         id="prayerPage"
         class="page"
     >
 
         <section class="prayer-page-container">
-
-
-            <!-- HEADER -->
 
             <div class="feature-page-header">
 
@@ -1688,13 +1421,11 @@
                     ←
                 </button>
 
-
                 <div class="feature-page-title">
 
                     <div class="feature-page-icon">
                         🕌
                     </div>
-
 
                     <div>
 
@@ -1710,7 +1441,6 @@
 
                 </div>
 
-
                 <button
                     type="button"
                     class="feature-header-btn"
@@ -1720,10 +1450,6 @@
                 </button>
 
             </div>
-
-
-
-            <!-- DATE -->
 
             <div class="prayer-date-card">
 
@@ -1737,16 +1463,11 @@
 
             </div>
 
-
-
-            <!-- NEXT PRAYER -->
-
             <div class="next-prayer-card">
 
                 <div class="next-prayer-label">
                     পরবর্তী নামাজ
                 </div>
-
 
                 <div
                     class="next-prayer-name"
@@ -1755,7 +1476,6 @@
                     —
                 </div>
 
-
                 <div
                     class="next-prayer-countdown"
                     id="nextPrayerCountdown"
@@ -1763,19 +1483,13 @@
                     --:--:--
                 </div>
 
-
                 <div class="next-prayer-label">
                     সময় বাকি
                 </div>
 
             </div>
 
-
-
-            <!-- PRAYER LIST -->
-
             <div class="prayer-full-list">
-
 
                 <div
                     class="prayer-full-row"
@@ -1792,14 +1506,11 @@
 
                     </div>
 
-
                     <strong id="pageFajrTime">
                         --:--
                     </strong>
 
                 </div>
-
-
 
                 <div
                     class="prayer-full-row"
@@ -1816,14 +1527,11 @@
 
                     </div>
 
-
                     <strong id="pageSunriseTime">
                         --:--
                     </strong>
 
                 </div>
-
-
 
                 <div
                     class="prayer-full-row"
@@ -1840,14 +1548,11 @@
 
                     </div>
 
-
                     <strong id="pageDhuhrTime">
                         --:--
                     </strong>
 
                 </div>
-
-
 
                 <div
                     class="prayer-full-row"
@@ -1864,14 +1569,11 @@
 
                     </div>
 
-
                     <strong id="pageAsrTime">
                         --:--
                     </strong>
 
                 </div>
-
-
 
                 <div
                     class="prayer-full-row"
@@ -1888,14 +1590,11 @@
 
                     </div>
 
-
                     <strong id="pageMaghribTime">
                         --:--
                     </strong>
 
                 </div>
-
-
 
                 <div
                     class="prayer-full-row"
@@ -1912,19 +1611,13 @@
 
                     </div>
 
-
                     <strong id="pageIshaTime">
                         --:--
                     </strong>
 
                 </div>
 
-
             </div>
-
-
-
-            <!-- LOCATION -->
 
             <button
                 type="button"
@@ -1939,17 +1632,9 @@
                 </span>
 
             </button>
-
-
-        </section>
+</section>
 
     </main>
-
-
-
-    <!-- =================================================
-         QIBLA PAGE
-    ================================================== -->
 
     <main
         id="qiblaPage"
@@ -1957,9 +1642,6 @@
     >
 
         <section class="qibla-page-container">
-
-
-            <!-- HEADER -->
 
             <div class="feature-page-header">
 
@@ -1971,13 +1653,11 @@
                     ←
                 </button>
 
-
                 <div class="feature-page-title">
 
                     <div class="feature-page-icon">
                         🧭
                     </div>
-
 
                     <div>
 
@@ -1995,16 +1675,11 @@
 
             </div>
 
-
-
-            <!-- COMPASS -->
-
             <div class="qibla-compass-card">
 
                 <div class="qibla-compass-title">
                     কিবলার দিক
                 </div>
-
 
                 <div class="qibla-compass">
 
@@ -2012,21 +1687,17 @@
                         N
                     </div>
 
-
                     <div class="qibla-direction east">
                         E
                     </div>
-
 
                     <div class="qibla-direction south">
                         S
                     </div>
 
-
                     <div class="qibla-direction west">
                         W
                     </div>
-
 
                     <div
                         class="qibla-arrow"
@@ -2037,14 +1708,12 @@
 
                 </div>
 
-
                 <div
                     class="qibla-degree"
                     id="qiblaDegree"
                 >
                     --°
                 </div>
-
 
                 <div
                     class="qibla-status"
@@ -2055,10 +1724,6 @@
 
             </div>
 
-
-
-            <!-- START -->
-
             <button
                 type="button"
                 class="qibla-start-btn"
@@ -2067,14 +1732,11 @@
                 🧭 কিবলা কম্পাস চালু করুন
             </button>
 
-
-
             <div class="qibla-info-card">
 
                 <div class="qibla-info-icon">
                     ℹ️
                 </div>
-
 
                 <p>
                     ফোনটি সমতলভাবে ধরে ধীরে ধীরে ঘোরান।
@@ -2083,10 +1745,6 @@
                 </p>
 
             </div>
-
-
-
-            <!-- LOCATION -->
 
             <button
                 type="button"
@@ -2102,16 +1760,9 @@
 
             </button>
 
-
         </section>
 
     </main>
-
-
-
-    <!-- =================================================
-         LOCATION PAGE
-    ================================================== -->
 
     <main
         id="locationPage"
@@ -2119,9 +1770,6 @@
     >
 
         <section class="location-page-container">
-
-
-            <!-- HEADER -->
 
             <div class="feature-page-header">
 
@@ -2133,13 +1781,11 @@
                     ←
                 </button>
 
-
                 <div class="feature-page-title">
 
                     <div class="feature-page-icon">
                         📍
                     </div>
-
 
                     <div>
 
@@ -2157,23 +1803,17 @@
 
             </div>
 
-
-
-            <!-- CURRENT LOCATION -->
-
             <div class="location-current-card">
 
                 <div class="location-current-icon">
                     📍
                 </div>
 
-
                 <div class="location-current-info">
 
                     <strong>
                         বর্তমান লোকেশন
                     </strong>
-
 
                     <span id="selectedLocationName">
                         কোনো লোকেশন নির্বাচন করা হয়নি
@@ -2183,10 +1823,6 @@
 
             </div>
 
-
-
-            <!-- GPS -->
-
             <button
                 type="button"
                 class="location-gps-btn"
@@ -2195,22 +1831,15 @@
                 📍 বর্তমান লোকেশন ব্যবহার করুন
             </button>
 
-
-
             <div class="location-section-title">
                 অথবা ম্যানুয়ালি নির্বাচন করুন
             </div>
-
-
-
-            <!-- MANUAL LOCATION -->
 
             <div class="location-form-card">
 
                 <label>
                     দেশ
                 </label>
-
 
                 <select id="locationCountry">
 
@@ -2220,11 +1849,9 @@
 
                 </select>
 
-
                 <label>
                     শহর
                 </label>
-
 
                 <select
                     id="locationCity"
@@ -2237,7 +1864,6 @@
 
                 </select>
 
-
                 <button
                     type="button"
                     class="location-save-btn"
@@ -2248,16 +1874,11 @@
 
             </div>
 
-
-
-            <!-- INFO -->
-
             <div class="location-info-card">
 
                 <div>
                     ℹ️
                 </div>
-
 
                 <p>
                     আপনার নির্বাচিত লোকেশন অনুযায়ী
@@ -2267,16 +1888,9 @@
 
             </div>
 
-
         </section>
 
     </main>
-
-
-
-    <!-- =================================================
-         ABOUT PAGE
-    ================================================== -->
 
     <main
         id="aboutPage"
@@ -2284,9 +1898,6 @@
     >
 
         <section class="about-page-container">
-
-
-            <!-- HEADER -->
 
             <div class="feature-page-header">
 
@@ -2298,13 +1909,11 @@
                     ←
                 </button>
 
-
                 <div class="feature-page-title">
 
                     <div class="feature-page-icon">
                         ℹ️
                     </div>
-
 
                     <div>
 
@@ -2322,26 +1931,19 @@
 
             </div>
 
-
-
-            <!-- APP INFO -->
-
             <div class="about-app-card">
 
                 <div class="about-app-logo">
                     🕌
                 </div>
 
-
                 <h2>
                     কুরআন শরীফ
                 </h2>
 
-
                 <p>
                     আলোর পথে, শান্তির পথে
                 </p>
-
 
                 <div class="about-version">
                     Version 1.0.0
@@ -2349,16 +1951,11 @@
 
             </div>
 
-
-
-            <!-- ABOUT -->
-
             <div class="about-info-card">
 
                 <div class="about-info-title">
                     📖 অ্যাপ সম্পর্কে
                 </div>
-
 
                 <p>
                     কুরআন শরীফ একটি ইসলামিক অ্যাপ,
@@ -2369,46 +1966,35 @@
 
             </div>
 
-
-
-            <!-- FEATURES -->
-
             <div class="about-info-card">
 
                 <div class="about-info-title">
                     ✨ অ্যাপের সুবিধা
                 </div>
 
-
                 <div class="about-feature-row">
                     📖 <span>পবিত্র কুরআন</span>
                 </div>
-
 
                 <div class="about-feature-row">
                     📚 <span>তাফসির</span>
                 </div>
 
-
                 <div class="about-feature-row">
                     📕 <span>হাদিস</span>
                 </div>
-
 
                 <div class="about-feature-row">
                     🤲 <span>দোয়া</span>
                 </div>
 
-
                 <div class="about-feature-row">
                     🕌 <span>নামাজের সময়</span>
                 </div>
 
-
                 <div class="about-feature-row">
                     🧭 <span>কিবলা নির্দেশনা</span>
                 </div>
-
 
                 <div class="about-feature-row">
                     📥 <span>অফলাইন সুবিধা</span>
@@ -2416,16 +2002,11 @@
 
             </div>
 
-
-
-            <!-- FOOTER -->
-
             <div class="about-footer">
 
                 <p>
                     কুরআন হলো হিদায়াতের আলো।
                 </p>
-
 
                 <span>
                     © কুরআন শরীফ
@@ -2433,32 +2014,20 @@
 
             </div>
 
-
         </section>
 
     </main>
-
-
-
-    <!-- =================================================
-         SETTINGS PAGE
-         FIXED
-    ================================================== -->
 
     <main
         id="settingsPage"
         class="page"
     >
 
-
-        <!-- SETTINGS TITLE -->
-
         <section class="settings-section">
 
             <div class="settings-title">
                 ⚙️ সেটিংস
             </div>
-
 
             <div class="settings-card">
 
@@ -2470,16 +2039,11 @@
 
         </section>
 
-
-
-        <!-- APPEARANCE -->
-
         <section class="settings-section">
 
             <div class="settings-title">
                 🎨 চেহারা ও থিম
             </div>
-
 
             <div class="settings-card">
 
@@ -2496,7 +2060,6 @@
                         </span>
 
                     </div>
-
 
                     <select id="themeSetting">
 
@@ -2516,21 +2079,13 @@
 
         </section>
 
-
-
-        <!-- QURAN READING SETTINGS -->
-
         <section class="settings-section">
 
             <div class="settings-title">
                 📖 কুরআন পড়ার সেটিংস
             </div>
 
-
             <div class="settings-card">
-
-
-                <!-- ARABIC FONT -->
 
                 <div class="setting-row">
 
@@ -2546,7 +2101,6 @@
 
                     </div>
 
-
                     <div class="font-size-control">
 
                         <button
@@ -2556,11 +2110,9 @@
                             −
                         </button>
 
-
                         <span id="arabicFontValue">
                             28
                         </span>
-
 
                         <button
                             type="button"
@@ -2572,10 +2124,6 @@
                     </div>
 
                 </div>
-
-
-
-                <!-- BANGLA FONT -->
 
                 <div class="setting-row">
 
@@ -2591,7 +2139,6 @@
 
                     </div>
 
-
                     <div class="font-size-control">
 
                         <button
@@ -2601,11 +2148,9 @@
                             −
                         </button>
 
-
                         <span id="banglaFontValue">
                             16
                         </span>
-
 
                         <button
                             type="button"
@@ -2618,14 +2163,9 @@
 
                 </div>
 
-
             </div>
 
         </section>
-
-
-
-        <!-- AUDIO SETTINGS -->
 
         <section class="settings-section">
 
@@ -2633,11 +2173,7 @@
                 🔊 অডিও সেটিংস
             </div>
 
-
             <div class="settings-card">
-
-
-                <!-- VOLUME -->
 
                 <div class="setting-row">
 
@@ -2653,7 +2189,6 @@
 
                     </div>
 
-
                     <div class="font-size-control">
 
                         <input
@@ -2665,7 +2200,6 @@
                             step="1"
                         >
 
-
                         <span id="audioVolumeValue">
                             100%
                         </span>
@@ -2673,10 +2207,6 @@
                     </div>
 
                 </div>
-
-
-
-                <!-- AUTO PLAY -->
 
                 <div class="setting-row">
 
@@ -2692,7 +2222,6 @@
 
                     </div>
 
-
                     <label class="settings-switch">
 
                         <input
@@ -2706,14 +2235,9 @@
 
                 </div>
 
-
             </div>
 
         </section>
-
-
-
-        <!-- READING OPTIONS -->
 
         <section class="settings-section">
 
@@ -2721,11 +2245,7 @@
                 📚 পড়ার সুবিধা
             </div>
 
-
             <div class="settings-card">
-
-
-                <!-- TRANSLATION -->
 
                 <div class="setting-row">
 
@@ -2741,7 +2261,6 @@
 
                     </div>
 
-
                     <label class="settings-switch">
 
                         <input
@@ -2755,10 +2274,6 @@
                     </label>
 
                 </div>
-
-
-
-                <!-- KEEP SCREEN ON -->
 
                 <div class="setting-row">
 
@@ -2774,7 +2289,6 @@
 
                     </div>
 
-
                     <label class="settings-switch">
 
                         <input
@@ -2788,14 +2302,9 @@
 
                 </div>
 
-
             </div>
 
         </section>
-
-
-
-        <!-- RESET -->
 
         <section class="settings-section">
 
@@ -2819,33 +2328,17 @@
 
         </section>
 
-
     </main>
-
-
-
-    <!-- =================================================
-         DRAWER OVERLAY
-    ================================================== -->
 
     <div
         id="drawerOverlay"
         class="drawer-overlay"
     ></div>
 
-
-
-    <!-- =================================================
-         DRAWER
-    ================================================== -->
-
     <aside
         id="drawer"
         class="drawer"
     >
-
-
-        <!-- DRAWER HEADER -->
 
         <div class="drawer-header">
 
@@ -2853,20 +2346,17 @@
                 🕌
             </div>
 
-
             <div>
 
                 <strong>
                     কুরআন শরীফ
                 </strong>
 
-
                 <small>
                     আলোর পথে, শান্তির পথে
                 </small>
 
             </div>
-
 
             <button
                 id="closeDrawerBtn"
@@ -2878,12 +2368,7 @@
 
         </div>
 
-
-
-        <!-- DRAWER MENU -->
-
         <nav class="drawer-menu">
-
 
             <button
                 type="button"
@@ -2902,8 +2387,6 @@
 
             </button>
 
-
-
             <button
                 type="button"
                 data-page="quranPage"
@@ -2920,8 +2403,6 @@
                 </b>
 
             </button>
-
-
 
             <button
                 type="button"
@@ -2940,7 +2421,6 @@
 
             </button>
 
-
 <button
   
     data-page="prayerPage"
@@ -2952,7 +2432,6 @@
        ›
     </b>
 </button>
-
 
             <button
                 type="button"
@@ -2971,8 +2450,6 @@
 
             </button>
 
-
-
             <button
                 type="button"
                 data-page="settingsPage"
@@ -2989,8 +2466,6 @@
                 </b>
 
             </button>
-
-
 
             <button
                 type="button"
@@ -3009,8 +2484,6 @@
 
             </button>
 
-
-
             <button
                 type="button"
                 data-page="aboutPage"
@@ -3028,12 +2501,7 @@
 
             </button>
 
-
         </nav>
-
-
-
-        <!-- DRAWER FOOTER -->
 
         <div class="drawer-footer">
 
@@ -3045,26 +2513,15 @@
 
             </div>
 
-
             <span>
                 📖
             </span>
 
         </div>
 
-
     </aside>
 
-
-
-    <!-- =================================================
-         BOTTOM NAVIGATION
-    ================================================== -->
-
     <nav class="bottom-nav">
-
-
-        <!-- HOME -->
 
         <button
             class="bottom-nav-btn active"
@@ -3076,16 +2533,11 @@
                 🏠
             </span>
 
-
             <small>
                 হোম
             </small>
 
         </button>
-
-
-
-        <!-- QURAN -->
 
         <button
             class="bottom-nav-btn"
@@ -3097,16 +2549,11 @@
                 📖
             </span>
 
-
             <small>
                 কুরআন
             </small>
 
         </button>
-
-
-
-        <!-- PRAYER -->
 
         <button
             class="bottom-nav-btn"
@@ -3118,16 +2565,11 @@
                 🕌
             </span>
 
-
             <small>
                 নামাজ
             </small>
 
         </button>
-
-
-
-        <!-- MORE -->
 
         <button
             class="bottom-nav-btn"
@@ -3139,24 +2581,15 @@
                 •••
             </span>
 
-
             <small>
                 আরও
             </small>
 
         </button>
 
-
     </nav>
 
-
 </div>
-
-
-
-<!-- =====================================================
-     JAVASCRIPT FILES
-===================================================== -->
 
 <script src="js/app.js"></script>
 
@@ -3175,12 +2608,7 @@
 <script src="js/daily.js"></script>
 
 <script src="js/prayer-location-qibla.js"></script>
-
-
-
-<!-- =====================================================
-     BOOKMARK JAVASCRIPT
-===================================================== -->
+<script src="js/audio.js"></script>
 
 <script>
 
@@ -3193,20 +2621,16 @@ function getSavedBookmarks() {
                 "quranBookmarks"
             );
 
-
         if (!saved) {
             return [];
         }
 
-
         const data =
             JSON.parse(saved);
-
 
         if (Array.isArray(data)) {
             return data;
         }
-
 
         return [];
 
@@ -3223,8 +2647,6 @@ function getSavedBookmarks() {
 
 }
 
-
-
 function renderBookmarkPage() {
 
     const bookmarkList =
@@ -3232,15 +2654,12 @@ function renderBookmarkPage() {
             "bookmarkList"
         );
 
-
     if (!bookmarkList) {
         return;
     }
 
-
     const bookmarks =
         getSavedBookmarks();
-
 
     if (bookmarks.length === 0) {
 
@@ -3252,11 +2671,9 @@ function renderBookmarkPage() {
                     🔖
                 </div>
 
-
                 <div class="bookmark-empty-title">
                     কোনো বুকমার্ক নেই
                 </div>
-
 
                 <div class="bookmark-empty-text">
                     কুরআনের কোনো আয়াত বুকমার্ক করলে
@@ -3271,9 +2688,7 @@ function renderBookmarkPage() {
 
     }
 
-
     bookmarkList.innerHTML = "";
-
 
     bookmarks.forEach(
         function(bookmark, index) {
@@ -3283,12 +2698,10 @@ function renderBookmarkPage() {
                     bookmark.surah
                 );
 
-
             const ayahNumber =
                 Number(
                     bookmark.ayah
                 );
-
 
             if (
                 !surahNumber ||
@@ -3297,11 +2710,9 @@ function renderBookmarkPage() {
                 return;
             }
 
-
             let surahName =
                 "সূরা " +
                 surahNumber;
-
 
             try {
 
@@ -3326,16 +2737,13 @@ function renderBookmarkPage() {
 
             }
 
-
             const item =
                 document.createElement(
                     "div"
                 );
 
-
             item.className =
                 "bookmark-item";
-
 
             item.innerHTML = `
 
@@ -3350,13 +2758,11 @@ function renderBookmarkPage() {
                         🔖
                     </div>
 
-
                     <div class="bookmark-item-info">
 
                         <div class="bookmark-item-surah">
                             ${surahName}
                         </div>
-
 
                         <div class="bookmark-item-ayah">
                             আয়াত ${ayahNumber}
@@ -3364,13 +2770,11 @@ function renderBookmarkPage() {
 
                     </div>
 
-
                     <div class="bookmark-item-arrow">
                         ›
                     </div>
 
                 </button>
-
 
                 <button
                     type="button"
@@ -3383,15 +2787,12 @@ function renderBookmarkPage() {
 
             `;
 
-
             bookmarkList.appendChild(
                 item
             );
 
         }
     );
-
-
 
     bookmarkList
         .querySelectorAll(
@@ -3409,12 +2810,10 @@ function renderBookmarkPage() {
                                 this.dataset.surah
                             );
 
-
                         const ayahNumber =
                             Number(
                                 this.dataset.ayah
                             );
-
 
                         if (
                             !surahNumber ||
@@ -3423,17 +2822,14 @@ function renderBookmarkPage() {
                             return;
                         }
 
-
                         showPage(
                             "quranPage"
                         );
-
 
                         const surahSelect =
                             document.getElementById(
                                 "surahSelect"
                             );
-
 
                         if (surahSelect) {
 
@@ -3441,7 +2837,6 @@ function renderBookmarkPage() {
                                 String(
                                     surahNumber
                                 );
-
 
                             surahSelect.dispatchEvent(
                                 new Event(
@@ -3451,7 +2846,6 @@ function renderBookmarkPage() {
 
                         }
 
-
                         setTimeout(
                             function() {
 
@@ -3459,7 +2853,6 @@ function renderBookmarkPage() {
                                     document.getElementById(
                                         "ayahSelect"
                                     );
-
 
                                 if (ayahSelect) {
 
@@ -3469,7 +2862,6 @@ function renderBookmarkPage() {
                                         );
 
                                 }
-
 
                                 if (
                                     typeof loadSurah ===
@@ -3493,8 +2885,6 @@ function renderBookmarkPage() {
             }
         );
 
-
-
     bookmarkList
         .querySelectorAll(
             ".bookmark-delete-btn"
@@ -3511,10 +2901,8 @@ function renderBookmarkPage() {
                                 this.dataset.index
                             );
 
-
                         const bookmarks =
                             getSavedBookmarks();
-
 
                         if (
                             index < 0 ||
@@ -3524,12 +2912,10 @@ function renderBookmarkPage() {
                             return;
                         }
 
-
                         bookmarks.splice(
                             index,
                             1
                         );
-
 
                         localStorage.setItem(
                             "quranBookmarks",
@@ -3537,7 +2923,6 @@ function renderBookmarkPage() {
                                 bookmarks
                             )
                         );
-
 
                         renderBookmarkPage();
 
@@ -3549,14 +2934,11 @@ function renderBookmarkPage() {
 
 }
 
-
-
 document.addEventListener(
     "DOMContentLoaded",
     function() {
 
         renderBookmarkPage();
-
 
         document
             .querySelectorAll(
@@ -3587,8 +2969,6 @@ document.addEventListener(
     }
 );
 
-
-
 window.addEventListener(
     "storage",
     function(event) {
@@ -3607,18 +2987,11 @@ window.addEventListener(
 
 </script>
 
-
-
-<!-- =====================================================
-     HOME BUTTON EVENTS
-===================================================== -->
-
 <script>
 
 document.addEventListener(
     "DOMContentLoaded",
     function() {
-
 
         /* HOME QURAN */
 
@@ -3626,7 +2999,6 @@ document.addEventListener(
             document.getElementById(
                 "openQuranBtn"
             );
-
 
         if (openQuranBtn) {
 
@@ -3643,15 +3015,12 @@ document.addEventListener(
 
         }
 
-
-
         /* HOME SEARCH */
 
         const homeSearchBtn =
             document.getElementById(
                 "homeSearchBtn"
             );
-
 
         if (homeSearchBtn) {
 
@@ -3668,15 +3037,12 @@ document.addEventListener(
 
         }
 
-
-
         /* HOME BOOKMARK */
 
         const homeBookmarkBtn =
             document.getElementById(
                 "homeBookmarkBtn"
             );
-
 
         if (homeBookmarkBtn) {
 
@@ -3687,7 +3053,6 @@ document.addEventListener(
                     showPage(
                         "bookmarkPage"
                     );
-
 
                     if (
                         typeof renderBookmarkPage ===
@@ -3710,15 +3075,12 @@ document.addEventListener(
 
         }
 
-
-
         /* HOME TAFSIR */
 
         const homeTafsirBtn =
             document.getElementById(
                 "homeTafsirBtn"
             );
-
 
         if (homeTafsirBtn) {
 
@@ -3735,15 +3097,12 @@ document.addEventListener(
 
         }
 
-
-
         /* HOME HADITH */
 
         const homeHadithBtn =
             document.getElementById(
                 "homeHadithBtn"
             );
-
 
         if (homeHadithBtn) {
 
@@ -3760,15 +3119,12 @@ document.addEventListener(
 
         }
 
-
-
         /* SURAH LIST */
 
         const surahListHomeBtn =
             document.getElementById(
                 "surahListHomeBtn"
             );
-
 
         if (surahListHomeBtn) {
 
@@ -3785,15 +3141,12 @@ document.addEventListener(
 
         }
 
-
-
         /* HOME AUDIO */
 
         const homeAudioBtn =
             document.getElementById(
                 "homeAudioBtn"
             );
-
 
         if (homeAudioBtn) {
 
@@ -3802,7 +3155,7 @@ document.addEventListener(
                 function() {
 
                     showPage(
-                        "quranPage"
+                        "audioPage"
                     );
 
                 }
@@ -3810,17 +3163,10 @@ document.addEventListener(
 
         }
 
-
     }
 );
 
 </script>
-
-
-
-<!-- =====================================================
-     SERVICE WORKER
-===================================================== -->
 
 <script>
 
@@ -3863,7 +3209,39 @@ if (
 }
 
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const currentLocation =
+        document.getElementById("currentLocation");
 
+    if (!currentLocation) return;
+
+    currentLocation.style.cursor = "pointer";
+
+    currentLocation.setAttribute(
+        "role",
+        "button"
+    );
+
+    currentLocation.setAttribute(
+        "aria-label",
+        "লোকেশন পরিবর্তন করুন"
+    );
+
+    currentLocation.addEventListener("click", function () {
+        if (typeof showPage === "function") {
+            showPage("locationPage");
+
+            if (
+                window.QuranSharifPrayer &&
+                typeof window.QuranSharifPrayer.refreshLocationPage === "function"
+            ) {
+                window.QuranSharifPrayer.refreshLocationPage();
+            }
+        }
+    });
+});
+</script>
 
 </body>
 
